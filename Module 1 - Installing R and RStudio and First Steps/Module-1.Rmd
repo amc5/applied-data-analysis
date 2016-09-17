@@ -16,7 +16,7 @@ knitr::opts_chunk$set(
 	echo = TRUE,
 	warning = TRUE,
 	comment = "##",
-	prompt = FALSE,
+	prompt = TRUE,
 	tidy = TRUE,
 	tidy.opts = list(width.cutoff = 75)
 )
@@ -41,10 +41,9 @@ Here are a few of the main ones, in a nutshell:
 - ***R*** is FREE (as in beer). Whereas licenses for other statistical software such as ***SAS***, ***SPSS***, or ***Stata*** may cost thousands of dollars, ***R*** is available free of charge.
 - ***R*** is available for multiple platforms. Installers are available for Windows, Mac OS, and other Unix based systems and most package are OS agnostic.
 - ***R*** is very extensible. If there is a procedure you want to run that is not included in one of the standard packages, it is likely available in one of the thousands of extensions packages that have been developed and are also freely available. You can also use ***R*** to control or interface with external applications, including other programming languages (like ***Python***, ***SQL***, ***C++***, ***NetLogo***), other analysis tools (like GIS software), and databases (like ***MySQL***, ***PostgreSQL***, ***SQLite***, etc). It is also always possible for you to improve ***R*** yourself. You can **literally** do just about anything in ***R***.
-- ***R*** has a vibrant, intelligent, and generous user community. LOTS of resources are available online for learning and troubleshooting (see, for example, the section on ***R*** at the [**Stack Overflow**] (http://stackoverflow.com/tags/r/info) website.
+- ***R*** has a vibrant, intelligent, and generous user community. LOTS of resources are available online for learning and troubleshooting (see, for example, the section on ***R*** at the [**Stack Overflow**](http://stackoverflow.com/tags/r/info) website.
 
 ***R*** can be run in several ways:
-
 - Interactively from the command line in a terminal window.
 - In batch mode, by sourcing commands from an ***R*** script file (which is a simple text file).
 - From within an ***R*** graphical user interface (or GUI) or integrated development envrionment (or IDE), which accommodates both of the above.
@@ -53,26 +52,25 @@ We are going to introduce several of these ways of working with ***R***, but the
 
 ## Getting Started - Installing ***R***
 
-- Download and install ***R*** from the [**Compehensive R Archive Network (CRAN)**] (https://cran.r-project.org/) website. Choose the correct version for your operating system.
+- Download and install ***R*** from the [**Compehensive R Archive Network (CRAN)**](https://cran.r-project.org/) website. Choose the correct version for your operating system.
 
-<center><img src="install-R.png" width= 500px/></center>
+<img src="install-R.png" width="500px"/>
 
-- If you are using MacOS, you should consider also installing [***XQuartz***] (https://www.xquartz.org/), which lets you use the **X11** X Windows management software.
+- If you are using MacOS, you should consider also installing [***XQuartz***](https://www.xquartz.org/), which lets you use the **X11** X Windows management software.
 
-<center><img src="install-XQuartz.png" width=500px/></center>
+<img src="install-XQuartz.png" width="500px"/>
 
 - Open the ***R*** program from wherever you installed it... you should see the console window and the `>` prompt. Note that your screen may look slightly different from the screenshots below. Note that you can also run ***R*** in a terminal window (MacOS or Unix) or from the Windows command shell after starting it with the command “r”.
 
-**On MacOS...**
+- **On MacOS...**
 
-<center><img src="R-console-Mac.png" width=500px/></center>
+<img src="R-console-Mac.png" width="500px"/>
 
-**On Windows...**
+- **On Windows...**
 
-<center><img src="RGui-windows.png" width=500px/></center>
+<img src="RGui-windows.png" width="500px"/>
 
 ## Taking Our First Steps in ***R***
-
 - ***R*** can be used as an interactive calculator from the console line
 	- Standard mathematic order of operations applies (PEMDAS - parentheses, exponents, multiplication/division, addition/subtraction)
 - The assignment operator can be used `<-` to assign a value, the results of an operation, or specific code to an *object*** (e.g., a variable, a function, a complex data structure)
@@ -92,7 +90,7 @@ We are going to introduce several of these ways of working with ***R***, but the
 	- To send a set of commands to the console as a *batch*, you can highlight the code lines of code you want to execute and then use `⌘-RETURN` (Mac) or `control-R` (PC)
 	- You can include comments in your scripts by prefacing them with `#`
 	- Script files can be saved just like any other type of text file, usually with the **.R** extension by default
-	
+
 - To view the names of all of the objects in your workspace, you can use the `ls()` function
 - To clear objects from your workspace, use the `rm()` function [where an individual object's name or a list of object names is included as the argument to `rm()`]
 - To remove all objects from your workspace, you can use `rm(list=ls())` [in this case, you are passing to `rm()` a list consisting of all the objects in the workspace, provided by the `ls()` function
@@ -223,14 +221,13 @@ Installing packages simply places them into a standard location on your computer
 - To update your installed packages to the latest version, you can use:
 	- `update.packages()`
 
-
 ## Getting Started with ***RStudio***
 
 Apart from the GUIs included in the MacOS and Windows installations of ***R***, there are several IDEs that connect to the ***R*** interpretator and provide lots of convenient functionality , but one of the most versatile and easy to use (and my favorite) is ***RStudio***.
 
-- Download and install the [**RStudio**] (https://www.rstudio.com/) Integrated Development Environment (IDE)
+- Download and install the [**RStudio**](https://www.rstudio.com/) Integrated Development Environment (IDE)
 
-<center><img src="install-RStudio.png" width= 500px/></center>
+<img src="install-RStudio.png" width="500px">
 
 - Open the ***RStudio*** program...
 
@@ -238,14 +235,14 @@ Note that the workspace you see is divided into four separate panes (**Source** 
 
 The **Source** pane is where you work with and edit various file types (e.g., scripts), while the **Console** pane is where you send commands to the ***R*** interpreter and see the results of those commands. The other two customizable panes provide easy access to useful tools and overviews of your interactions with ***R***. For example, the **Environment** tab lists all of the objects in your current workspace, the **History** tab shows the log of all of the commands you have sent to the interpreter, and the **Packages** tab provides a convenient interface for installing and loading packages. 
 
-<center><img src="RStudio.png" width= 500px/></center>
+<img src="RStudio.png" width="500px"</center>
 
 #### CHALLENGE 2:
 Repeat Challenge 1 from above using the editor and console in ***RStudio***.
 
 NOTE: In both the base GUI that ships with the ***R*** application and in ***RStudio***, the console supports *code completion*. Pressing `TAB` after starting to type a function or variable name will give you suggestions as to how to complete what you have begun to type. In ***RStudio***, this functionality is present also when you are typing code in the text editor in the **Source** pane. Also helpful in ***RStudio*** are popup windows that accompany code completion that show, for each function, what possible arguments that function can take and their default values.
 
-## ***R*** Basics - Objects, Classes, Attributes, and Vectors
+## Objects, Classes, Attributes, and Vectors
 
 Almost everything in ***R*** can be thought of as an *object*, including variables, functions, and complex data structures.
 
@@ -254,8 +251,6 @@ Objects in ***R*** fall into different *classes* or types. There are a few basic
 ***R*** also supports a variety of *data structure* objects, the most basic of which is the *vector*. Vectors are *variables with one or more values of the same type*, e.g., student's grades on an exam. The *class* of a vector has to be one of the atomic classes described above. [A scalar variable, such as a constant, is simply a vector with only 1 value.]
 
 - There are lots of ways to create vectors... one of the most common is to use the `c()` or "concatenate" command:
-
-**EXAMPLE:**
 
 ```	{r}
 x <- c(15, 16, 12, 3, 21, 45, 23)
@@ -270,16 +265,16 @@ z <- "once upon a time"
 z
 ```
 ``` {r}
+f <- function(){
+	# code to be evaluated
+}
 # this is the minimal definition for a function
-f <- function(){}
 ```
 - What is the *class* of **x**? Of **y**? of **f**? Use the `class()` function to check.
 - What happens if you try the following assignment: `x <- c("2", 2, "zombies")`? What is the class of **x** now?
 - What is the class of the built in function `mean()`? To check, use `class(mean)`
 	
 Another way to create a vector is to use the `:` sequence operator:
-
-**EXAMPLE:**
 
 ```	{r}
 x <- 1:10
@@ -304,8 +299,7 @@ Try some vector math using the console in ***RStudio***
 - Use the `mean()` and `sd()` functions to calculate the mean and standard deviation of **s**.
 
 ``` {r}
-x <- 15:28
-# or x <- c(15, 16, 17...)
+x <- 15:28 # or x <- c(15, 16, 17...)
 y <- 1:4
 x + y
 ```
@@ -342,10 +336,9 @@ Try writing a script containing a function.
 
 - Open a new blank document in ***RStudio***
 	- **File > New > R Script**
-- Type in the code below
+- Type in the code below to create the `sayhi()` function, which adds a name to a greeting:
 
 ``` {r}
-# sayhi: a function to add a name to a greeting
 sayhi <- function(x) {
   hi <- paste("greetings, ", x, "!", sep = "")
   # the paste command allows string concatenation
@@ -354,7 +347,7 @@ sayhi <- function(x) {
 ```
 Now, send this function to ***R*** by highlighting it and hitting `⌘-RETURN` (Mac) or `control-R` (PC) to it to the console.
 
-<center><img src="sayhi.png" width="500px"/></center>
+<img src="sayhi.png" width="500px"/>
 
 - Now we can create some test data and call the function. What are the results?
 
@@ -380,11 +373,11 @@ Saying "yes" will store all of the contents of your workspace in a single *hidde
 A second hidden file, **.Rhistory**, will also be stored in the same directory, which will contain a log of all commands you sent to the console.
 
 ## Updating ***R***
-***R*** has been under continuous and active development since its inception in the late 1990s, and several updates are made available each year. These update help to fix bugs, improve speed and computational efficiency, and add new functionality to the software. The following information on how to update ***R*** is based on [**this post from Stack Overflow**] (http://stackoverflow.com/questions/13656699/update-r-using-rstudio)
+***R*** has been under continuous and active development since its inception in the late 1990s, and several updates are made available each year. These update help to fix bugs, improve speed and computational efficiency, and add new functionality to the software. The following information on how to update ***R*** is based on [**this post from Stack Overflow**](http://stackoverflow.com/questions/13656699/update-r-using-rstudio)
 
 ### Step 1: Get the latest version of ***R***
 
-- Go to the [**R Project**] (http://www.r-project.org) website
+- Go to the [**R Project**](http://www.r-project.org) website
 - Click on **CRAN** in the sidebar on the left
 - Choose the **CRAN Mirror** site that you like
 - Click on **Download R for...** [choose your operating system]
