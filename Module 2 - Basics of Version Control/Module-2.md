@@ -38,21 +38,20 @@ The ***git*** software we just installed is strictly a command-line tool and is 
 
 <img src="img/github.png" width=500px/>
 
-#### CHALLENGE 1 - Create a new repository on ***GitHub***
+#### CHALLENGE 1:
+
+Create a new repository on ***GitHub***
 
 -   Follow the instructions laid out in the [**Hello World**](https://guides.github.com/activities/hello-world/) ***GitHub*** guide.
 
 <img src="img/hello-world.png" width=500px/>
 
--   In doing so, you should:
-
-    -   Create a **repository** (colloquially, a **repo**) and name it (e.g., "test-repo"). **NOTE:** Do not include spaces in your repo name!
+-   In doing so, you should create a **repository** (colloquially, a **repo**) and name it (e.g., "test-repo"). **NOTE:** Do not include spaces in your repo name!
 
 <img src="img/create-test-repo.png" width=500px/>
 
-    - Create a `README` file for your repo using the browser-based [**Markdown**](https://en.wikipedia.org/wiki/Markdown) editor. **Markdown** is basically a set of rules for how to easily style plain text files in such a way that can be easily converted and rendered in HTML, the structural language of the web. This module, for example, is written using **Markdown**! ***GitHub*** has a nice, short tutorial that you can follow about [**Mastering Markdown**](https://guides.github.com/features/mastering-markdown/).]
-    - Following the online guide, create a **fork** of your repo, make some edits to your `README` file, and then merge your edits back into the `master` branch of your repo.
-
+-   Create a `README` file for your repo using the browser-based [**Markdown**](https://en.wikipedia.org/wiki/Markdown) editor. **Markdown** is basically a set of rules for how to easily style plain text files in such a way that can be easily converted and rendered in HTML, the structural language of the web. This module, for example, is written using **Markdown**! ***GitHub*** has a nice, short tutorial that you can follow about [**Mastering Markdown**](https://guides.github.com/features/mastering-markdown/).
+-   Following the online guide, create a **fork** of your repo, make some edits to your `README` file, and then merge your edits back into the `master` branch of your repo.
 -   Be sure to also read the ***GitHub*** guide on ["Documenting your Projects on GitHub"](https://guides.github.com/features/wikis/) for a useful overview of the benefits of good documentation.
 
 Managing ***git*** from the Desktop with a GUI
@@ -66,7 +65,9 @@ Managing ***git*** from the Desktop with a GUI
 
 With ***`GitHub Desktop`***, we can download, work on, and update remote repos or we can create, work on, and push local repos to remote sites.
 
-### CHALLENGE 2 - Clone a remote repository from ***GitHub*** to your computer
+#### CHALLENGE 2:
+
+Clone a remote repository from ***GitHub*** to your computer
 
 -   You can create a *cloned copy* of your recently created repo at **GitHub.com** in **GitHub Desktop** as follows:
     -   Open **GitHub Desktop**
@@ -85,7 +86,9 @@ This should create a local copy of your repo. On MacOS, if you then *right-click
 -   Then switch to ***`GitHub Desktop`*** (where you should see the changes highlighted) and *Commit* the changes (to save them locally...
 -   Then `Sync` your changes with the remote master on ***GitHub***
 
-### CHALLENGE 3 - Create a local repository and push it to ***GitHub***
+#### CHALLENGE 3:
+
+Create a local repository and push it to ***GitHub***
 
 -   Open ***`GitHub Desktop`*** and create a new local repo (e.g., "local-repo")
 
