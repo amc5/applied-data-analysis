@@ -36,21 +36,21 @@ Getting Started - Installing ***R***
 
 -   Download and install ***R*** from the [**Compehensive R Archive Network (CRAN)**](https://cran.r-project.org/) website. Choose the correct version for your operating system.
 
-<img src="install-R.png" width="500px"/>
+<img src="img/install-R.png" width="500px"/>
 
 -   If you are using MacOS, you should consider also installing [***XQuartz***](https://www.xquartz.org/), which lets you use the **X11** X Windows management software.
 
-<img src="install-XQuartz.png" width="500px"/>
+<img src="img/install-XQuartz.png" width="500px"/>
 
 -   Open the ***R*** program from wherever you installed it... you should see the console window and the `>` prompt. Note that your screen may look slightly different from the screenshots below. Note that you can also run ***R*** in a terminal window (MacOS or Unix) or from the Windows command shell after starting it with the command “r”.
 
 -   **On MacOS...**
 
-<img src="R-console-Mac.png" width="500px"/>
+<img src="img/R-console-Mac.png" width="500px"/>
 
 -   **On Windows...**
 
-<img src="RGui-windows.png" width="500px"/>
+<img src="img/RGui-windows.png" width="500px"/>
 
 Taking Our First Steps in ***R***
 ---------------------------------
@@ -283,7 +283,7 @@ Apart from the GUIs included in the MacOS and Windows installations of ***R***, 
 
 -   Download and install the [**RStudio**](https://www.rstudio.com/) Integrated Development Environment (IDE)
 
-<img src="install-RStudio.png" width="500px">
+<img src="img/install-RStudio.png" width="500px">
 
 -   Open the ***RStudio*** program...
 
@@ -291,7 +291,7 @@ Note that the workspace you see is divided into four separate panes (**Source** 
 
 The **Source** pane is where you work with and edit various file types (e.g., scripts), while the **Console** pane is where you send commands to the ***R*** interpreter and see the results of those commands. The other two customizable panes provide easy access to useful tools and overviews of your interactions with ***R***. For example, the **Environment** tab lists all of the objects in your current workspace, the **History** tab shows the log of all of the commands you have sent to the interpreter, and the **Packages** tab provides a convenient interface for installing and loading packages.
 
-<img src="RStudio.png" width="500px"</center>
+<img src="img/RStudio.png" width="500px"</center>
 
 #### CHALLENGE 2:
 
@@ -451,7 +451,7 @@ Try writing a script containing a function.
 
 Now, send this function to ***R*** by highlighting it and hitting `⌘-RETURN` (Mac) or `control-R` (PC) to it to the console.
 
-<img src="sayhi.png" width="500px"/>
+<img src="img/sayhi.png" width="500px"/>
 
 -   Now we can create some test data and call the function. What are the results?
 
