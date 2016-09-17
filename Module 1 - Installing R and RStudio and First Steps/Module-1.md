@@ -1,8 +1,11 @@
-Module 1 - Installing ***R*** and ***RStudio***
+Module 1
 ================
 
+Installing ***R*** and ***RStudio***
+====================================
+
 Objectives
-==========
+----------
 
 > The goal of this module is to get everyone's computers set up for the semester and to provide background and an introduction to the ***R*** programming language and the ***R*** environment.
 
@@ -22,7 +25,7 @@ Here are a few of the main ones, in a nutshell:
 -   ***R*** is FREE (as in beer). Whereas licenses for other statistical software such as ***SAS***, ***SPSS***, or ***Stata*** may cost thousands of dollars, ***R*** is available free of charge.
 -   ***R*** is available for multiple platforms. Installers are available for Windows, Mac OS, and other Unix based systems and most package are OS agnostic.
 -   ***R*** is very extensible. If there is a procedure you want to run that is not included in one of the standard packages, it is likely available in one of the thousands of extensions packages that have been developed and are also freely available. You can also use ***R*** to control or interface with external applications, including other programming languages (like ***Python***, ***SQL***, ***C++***, ***NetLogo***), other analysis tools (like GIS software), and databases (like ***MySQL***, ***PostgreSQL***, ***SQLite***, etc). It is also always possible for you to improve ***R*** yourself. You can **literally** do just about anything in ***R***.
--   ***R*** has a vibrant, intelligent, and generous user community. LOTS of resources are available online for learning and troubleshooting (see, for example, the section on ***R*** at \[Stack Overflow\] (<http://stackoverflow.com/tags/r/info>).
+-   ***R*** has a vibrant, intelligent, and generous user community. LOTS of resources are available online for learning and troubleshooting (see, for example, the section on ***R*** at the \[**Stack Overflow**\] (<http://stackoverflow.com/tags/r/info>) website.
 
 ***R*** can be run in several ways:
 
@@ -40,7 +43,7 @@ Getting Started - Installing ***R***
 <center>
 <img src="install-R.png" width= 500px/>
 </center>
--   If you are using MacOS, you should consider also installing \[***XQuartz***\] (<https://www.xquartz.org/>), which lets you use the **X11** X Window management software.
+-   If you are using MacOS, you should consider also installing \[***XQuartz***\] (<https://www.xquartz.org/>), which lets you use the **X11** X Windows management software.
 
 <center>
 <img src="install-XQuartz.png" width=500px/>
@@ -66,7 +69,7 @@ Taking Our First Steps in ***R***
     -   You can also use `=`, but I prefer to use that only to assign values to function arguments (more on this later)
 -   To list the objects you have assigned in your *workspace*, you can use the function `ls()` with no arguments
 -   You can set various *settings* to customize your interactions with ***R***
-    -   To change the standard *prompt*, use the function `options()` with the `prompt` argument: `options(prompt="")` \[where you supply, between the quotes, what you want the prompt to say\]
+    -   To change the standard *prompt*, use the function `options()` with the `prompt` argument: `options(prompt="")` \[where you supply, between the quotes, text with what you want the prompt to say\]
     -   To list the current *working directory* (the default folder where dialog boxes will open and where files and output will be stored), use the function `getwd()`, which has no arguments
     -   To set the current *working directory*, use the function `setwd("")` \[where you supply, between the quotes, the path to the desired directory\]
     -   On MacOS, these directory options are also available under the **Misc** menu
@@ -255,7 +258,7 @@ If a package is loaded that has a function with the same name as one in a previo
     -   Select a package to install
     -   By default, packages are installed at the system level (inside of the **library** folder within your ***R*** installation), and any missing dependenices are also installed by default
 -   Installing packages from the ***R*** console prompt:
-    -   Use the function `install.packages("")` \[where you include, between the quotes, the name of the package\]. This command installs the package, by default, to the USER level, though this can be changed by providing a path to install to using the `lib` argument. Other arguments for this function can be set to specify the repository to download from, etc.
+    -   Use the function `install.packages("")` \[where you include, between the quotes, the name of the package you want to install\]. This command installs the package, by default, to the USER level, though this can be changed by providing a path to install to using the `lib` argument. Other arguments for this function can be set to specify the repository to download from, etc.
 
 Installing packages simply places them into a standard location on your computer. To actually use the functions they contain in an ***R*** session, you need to also load them into your ***R*** workspace.
 
@@ -498,11 +501,11 @@ A second hidden file, **.Rhistory**, will also be stored in the same directory, 
 Updating ***R***
 ----------------
 
-***R*** has been under continuous and active development since its inception in the late 1990s, and several updates are made available each year. These update help to fix bugs, improve speed and computational efficiency, and add new functionality to the software. The following information on how to update ***R*** is based on \[this post from Stack Overflow\] (<http://stackoverflow.com/questions/13656699/update-r-using-rstudio>)
+***R*** has been under continuous and active development since its inception in the late 1990s, and several updates are made available each year. These update help to fix bugs, improve speed and computational efficiency, and add new functionality to the software. The following information on how to update ***R*** is based on \[**this post from Stack Overflow**\] (<http://stackoverflow.com/questions/13656699/update-r-using-rstudio>)
 
 ### Step 1: Get the latest version of ***R***
 
--   Go to the \[R Project\] (<http://www.r-project.org>) website
+-   Go to the \[**R Project**\] (<http://www.r-project.org>) website
 -   Click on **CRAN** in the sidebar on the left
 -   Choose the **CRAN Mirror** site that you like
 -   Click on **Download R for...** \[choose your operating system\]
