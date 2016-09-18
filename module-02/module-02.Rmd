@@ -3,7 +3,8 @@ title: "Module 02"
 output:
     github_document:
     #html_document:
-    #  theme: tactile
+    #  keep_md: TRUE
+    #  theme: default
     #  highlight: textmate
 ---
 

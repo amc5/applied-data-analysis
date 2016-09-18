@@ -2,10 +2,10 @@
 title: "ANT 388 - Applied Data Analysis"
 output:
     github_document:
-    html_document:
-      keep_md: TRUE
-      theme: default
-      highlight: textmate
+    #html_document:
+    #  keep_md: TRUE
+    #  theme: default
+    #  highlight: textmate
 ---
 
 ```{r setup, include=FALSE}
