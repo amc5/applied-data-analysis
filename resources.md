@@ -1,19 +1,6 @@
 Useful Data Science Resources
 ================
 
-|                                                   |                                                             |
-|:--------------------------------------------------|:------------------------------------------------------------|
-| [**Software Tools**](#software-tools)             | [**Books**](#books)                                         |
-| - [Programming Languages](#programming-languages) | - [R and Basic Statistics](#r-and-basic-statistics)         |
-| - [Text Editors](#text-editors)                   | - [R Programming](#r-programming)                           |
-| - [Markdown Editors](#markdown-editors)           | - [R Reference](#r-reference)                               |
-| - [IDEs](#ides)                                   | - [R Graphics](#r-graphics)                                 |
-| - [Version Control Tools](#version-control)       | - [Data Science and Visualization](#data-science)           |
-| [**Web Resources**](#web-resources)               | - [Spatial Analysis](#spatial-analysis)                     |
-|                                                   | - [Mixed Effects Modeling](#mixed-effects-modeling)         |
-|                                                   | - [Web Scraping and Text Mining](#web-scraping)             |
-|                                                   | - [Statistics and Programming in Python](#stats-and-python) |
-
 <a name="software-tools"></a>Software Tools
 -------------------------------------------
 
@@ -55,6 +42,7 @@ Useful Data Science Resources
 -   [Stack Overflow](http://stackoverflow.com/)
 -   [Online R Exercises](http://r-exercises.com/start-here-to-learn-r/)
 -   [R-bloggers](https://www.r-bloggers.com/)
+-   [Mockaroo](https://mockaroo.com/)
 
 <a name="books"></a>Books
 -------------------------
@@ -84,7 +72,7 @@ Useful Data Science Resources
 ### <a name="r-graphics"></a>R Graphics
 
 -   Chang, W. (2013). *R Graphics Cookbook.* Sebastopol, CA: O’Reilly Media.
--   Wickham, H. (2016). *ggplot2: Elegant Graphics for Data Analysis* (Second Edition.). Springer International Publishing.
+-   Wickham, H. (2016). *ggplot2: Elegant Graphics for Data Analysis* (Second Edition). Springer International Publishing.
 
 ### <a name="data-science"></a>Data Science and Visualization
 
