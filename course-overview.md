@@ -8,9 +8,9 @@ ANT 388 - Applied Data Analysis
     Class: Thursdays, 2-5pm, SAC Room 5.112
     Office Hours: Fridays, 2-4pm, SAC Room 4.100H
 
-<center>
-<img src="img/math.png" style="width: 400px;"/>
-</center>
+<p align="center">
+<img src="img/math.png" style="width: 400px"/>
+</p>
 Overview
 --------
 
