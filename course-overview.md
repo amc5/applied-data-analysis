@@ -1,10 +1,10 @@
 # ANT 388 - Applied Data Analysis
-### *Practical Statistics, Programming, and Data Science Tools for the Natural and Social Sciences*
+### Practical Statistics, Programming, and Data Science Tools for the Natural and Social Sciences
 
-	UNIQUE # 31403
-	Professor Anthony Di Fiore
-	Class: Thursdays, 2-5pm, SAC Room 5.112
-	Office Hours: Fridays, 2-4pm, SAC Room 4.100H
+> UNIQUE # 31403
+Professor Anthony Di Fiore
+Class: Thursdays, 2-5pm, SAC Room 5.112
+Office Hours: Fridays, 2-4pm, SAC Room 4.100H
 
 <img src="img/math.png" width="300px"/>
 
