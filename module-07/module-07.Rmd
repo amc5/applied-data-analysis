@@ -229,6 +229,7 @@ plot(x,pnorm(x), cex=0.4)
 x<-seq(from = 0, to = 1, by = 0.01)
 plot(qnorm(x),x,cex=0.4)
 ```
+
 Returning to calculating CIs, suppose we have this vector:
 
 ``` {r}
