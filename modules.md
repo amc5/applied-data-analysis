@@ -1,6 +1,6 @@
 # Modules
 
-## Module 1 - Installing R and RStudio
+## Module 1 - [First Steps with R and RStudio](applied-data-analysis/Module 1 - First Steps with R and RStudio/Module-1.md)
 ## Module 2 - Basics of Version Control
 ## Module 3 - RMarkdown and Reproducible Research
 ## Module 4 -
