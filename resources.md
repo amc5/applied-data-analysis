@@ -1,19 +1,18 @@
 Useful Data Science Resources
 ================
 
-### [Software Tools](#software-tools)
-
--   [Programming Languages](#programming-languages)
--   [Text Editors](#text-editors)
--   [Markdown Editors](#markdown-editors)
--   [IDEs](#ides)
--   [Version Control Tools](#version-control)
-
-### [Web Resources](#web-resources)
-
-### [Books](#books)
-
--   [R and Basic Statistics](#r-and-basic-statistics)
+|                                                   |                                                             |
+|:--------------------------------------------------|:------------------------------------------------------------|
+| [**Software Tools**](#software-tools)             | [**Books**](#books)                                         |
+| - [Programming Languages](#programming-languages) | - [R and Basic Statistics](#r-and-basic-statistics)         |
+| - [Text Editors](#text-editors)                   | - [R Programming](#r-programming)                           |
+| - [Markdown Editors](#markdown-editors)           | - [R Reference](#r-reference)                               |
+| - [IDEs](#ides)                                   | - [R Graphics](#r-graphics)                                 |
+| - [Version Control Tools](#version-control)       | - [Data Science and Visualization](#data-science)           |
+| [**Web Resources**](#web-resources)               | - [Spatial Analysis](#spatial-analysis)                     |
+|                                                   | - [Mixed Effects Modeling](#mixed-effects-modeling)         |
+|                                                   | - [Web Scraping and Text Mining](#web-scraping)             |
+|                                                   | - [Statistics and Programming in Python](#stats-and-python) |
 
 <a name="software-tools"></a>Software Tools
 -------------------------------------------
@@ -35,14 +34,12 @@ Useful Data Science Resources
 -   [MacDown](http://macdown.uranusjr.com/) (MacOS)
 -   [MarkdownPad2](http://markdownpad.com/) (Windows)
 
-<a name="ides"></a>IDEs
------------------------
+### <a name="ides"></a>IDEs
 
 -   [RStudio](https://www.rstudio.com/) for **R** (current version is 0.99.903) (MacOS, Windows)
 -   [y-hat Rodeo](https://www.yhat.com/products/rodeo) for **Python** (current version is 2.0.13) (MacOS, Windows, Linux)
 
-<a name="version-control"></a>Version Control Tools
----------------------------------------------------
+### <a name="version-control"></a>Version Control Tools
 
 -   [GitHub](https://github.com/) (Website)
 -   [GitHub Desktop](https://desktop.github.com/) (MacOS, Windows)
@@ -89,7 +86,7 @@ Useful Data Science Resources
 -   Chang, W. (2013). *R Graphics Cookbook.* Sebastopol, CA: O’Reilly Media.
 -   Wickham, H. (2016). *ggplot2: Elegant Graphics for Data Analysis* (Second Edition.). Springer International Publishing.
 
-### <a name="data-science"></a>Data Science, Data Management, Data Visualization
+### <a name="data-science"></a>Data Science and Visualization
 
 -   Dale, K. (2016). *Data Visualization with Python and JavaScript.* Sebastopol, CA: O’Reilly Media.
 -   Grus, J. (2015). *Data Science from Scratch.* Sebastopol, CA: O’Reilly.
@@ -112,7 +109,7 @@ Useful Data Science Resources
 -   Mitchell, R. (2015). *Web Scraping with Python.* Sebastopol, CA: O’Reilly Media.
 -   Nolan, D., & Temple Lang, D. (2014). *XML and Web Technologies for Data Sciences with R.* New York: Springer.
 
-### <a name="statistics-and-python"></a>Statistics and Programming in Python
+### <a name="stats-and-python"></a>Statistics and Programming in Python
 
 -   Downey, A. (2014). *Think Stats* (Second Edition). Sebastopol, CA: O’Reilly Media.
 -   Lubanovic, B. (2014). *Introducing Python.* Sebastopol, CA: O’Reilly Media.
