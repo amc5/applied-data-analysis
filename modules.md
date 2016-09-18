@@ -1,9 +1,9 @@
 # Modules
 
-## Module 1 - [First Steps with R and RStudio](module-01/Module-1.md)
-## Module 2 - Basics of Version Control
-## Module 3 - RMarkdown and Reproducible Research
-## Module 4 -
-## Module 5 - Loading Data
-## Module 6 - Exploratory Data Analysis
-## Module 7 - Statistics Fundamentals
+## Module 01 - [First Steps with R and RStudio](module-01/module-01.md)
+## Module 02 - [Basics of Version Control](module-02/module-02.md)
+## Module 03 - [RMarkdown and Reproducible Research](module-03/module-03.md)
+## Module 04 -
+## Module 05 - Loading Data
+## Module 06 - Exploratory Data Analysis
+## Module 07 - Statistics Fundamentals
