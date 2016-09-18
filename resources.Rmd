@@ -1,10 +1,11 @@
 ---
 title: "Useful Data Science Resources"
 output:
-    github_document:
-    #html_document:
-    #  theme: tactile
-    #  highlight: textmate
+    # github_document:
+    html_document:
+      keep_md: TRUE
+      theme: default
+      highlight: textmate
 ---
 
 ```{r setup, include=FALSE}

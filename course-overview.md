@@ -1,23 +1,6 @@
----
-title: "ANT 388 - Applied Data Analysis"
-output:
-    # github_document:
-    html_document:
-      keep_md: TRUE
-      theme: default
-      highlight: textmate
----
+# ANT 388 - Applied Data Analysis
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(
-	echo = TRUE,
-	warning = TRUE,
-	comment = "##",
-	prompt = TRUE,
-	tidy = TRUE,
-	tidy.opts = list(width.cutoff = 75)
-)
-```
+
 
 ### Practical Statistics, Programming, and Data Science Tools for the Natural and Social Sciences
 
