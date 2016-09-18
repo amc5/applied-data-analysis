@@ -1,4 +1,4 @@
-Module 3
+Module 03
 ================
 
 Reproducible Research using **RMarkdown**

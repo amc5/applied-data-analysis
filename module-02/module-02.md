@@ -1,4 +1,4 @@
-Module-2
+Module 02
 ================
 
 Basics of Version Control

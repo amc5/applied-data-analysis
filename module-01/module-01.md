@@ -1,4 +1,4 @@
-Module 1
+Module 01
 ================
 
 First Steps with ***R*** and ***RStudio***
