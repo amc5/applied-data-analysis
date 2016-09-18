@@ -20,7 +20,7 @@ This data set consists of basic statistics (area, current population size, birth
 
 This is a version of the *Comparative Political Data Set (CPDS)*, which is "a collection of political and institutional country-level data provided by Prof. Dr. Klaus Armingeon and collaborators at the University of Berne. It consists of annual data for 36 democratic countries for the period of 1960 to 2014 or since their transition to democracy" (Armingeon et al. 2016). The full dataset consists of 300 variables, which I have pared down to a smaller set of economical and population size variables.
 
-> **CITATION:** Armingeon, Klaus, Christian Isler, Laura Knöpfel, David Weisstanner and Sarah Engler. 2016. Comparative Political Data Set 1960-2014. Bern: Institute of Political Science, University of Berne.
+> **CITATION:** Armingeon K, Isler C, Knöpfel L, Weisstanner D, and Engler S. 2016. Comparative Political Data Set 1960-2014. Bern: Institute of Political Science, University of Berne.
 
 -   Install these packages in ***R***: {readr}, {curl}, {readxl}, {XLConnect}, {rdrop2}, {repmis}
 
@@ -54,13 +54,13 @@ The generic `read.table()` function can be used to read data files where columns
 
 There are format-specific variants of `read.table()` (e.g., `read.csv()`) that have different defaults and may be quicker for certain file types. Note that when using this function from the {base} package, the argument `stringsAsFactors` is set to be TRUE by default, and we need to set it as FALSE if we want character strings to be loaded as actual strings.
 
-Let's read in one of the data sets that you have copied and stored locally: *CPDS-1960-2014-reduced.txt*.
+Let's read in one of the data sets that you have copied and stored locally: **CPDS-1960-2014-reduced.txt**.
 
 ### Reading from a local file
 
+The `file.choose()` command is useful and gives you a familiar dialog box to select a file. You can use this to specify the path to a locally-stored file.
+
 ``` r
-> # the `file.choose()` command is useful and gives you a familiar dialog box
-> # to select a file
 > f <- file.choose()
 ```
 
@@ -127,13 +127,14 @@ The file paths below refer to where I have saved the downloaded data, on my **De
     ## 1578       NA   6.2 318857.0 211545.9 46243.21   14.50
 
 ``` r
-> class(d)  # shows the tables are typically loaded as data frames
+> class(d)  # shows that tables are typically loaded as data frames
 ```
 
     ## [1] "data.frame"
 
+Or, alternatively...
+
 ``` r
-> # or, alternatively
 > d <- read.delim(f, header = TRUE, stringsAsFactors = FALSE)
 > head(d)
 ```
@@ -163,7 +164,6 @@ The file paths below refer to where I have saved the downloaded data, on my **De
 #### Loading comma-separated (`.csv`) text with {base} ***R*** functions
 
 ``` r
-> # using the {base} package
 > f <- "~/Desktop/CPDS-1960-2014-reduced.csv"
 > d <- read.table(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
 > head(d)
@@ -191,8 +191,9 @@ The file paths below refer to where I have saved the downloaded data, on my **De
     ## 5 11121.6   6857.3 948.1    8.52
     ## 6 11340.9   7014.6 966.3    8.52
 
+Or, alternatively...
+
 ``` r
-> # or, alternatively
 > d <- read.csv(f, header = TRUE, stringsAsFactors = FALSE)
 > head(d)
 ```
@@ -230,9 +231,8 @@ The {readr} package provides alternative functions to read in delimited text fil
     ## Loading required package: readr
 
 ``` r
-> # for tab-separated text files
 > f <- "~/Desktop/CPDS-1960-2014-reduced.txt"
-> d <- read_tsv(f, col_names = TRUE)
+> d <- read_tsv(f, col_names = TRUE)  # for tab-separated files
 ```
 
     ## Parsed with column specification:
@@ -271,11 +271,12 @@ The {readr} package provides alternative functions to read in delimited text fil
     ## [1] "tbl_df"     "tbl"        "data.frame"
 
 ``` r
-> # returns d as a data frame, but also as other table-based data structure
+> # returns d as a data frame, but also as other table-based data structures
 ```
 
+Or, alternatively...
+
 ``` r
-> # or, alternatively...
 > d <- read_delim(f, delim = "\t", col_names = TRUE)
 ```
 
@@ -309,10 +310,9 @@ The {readr} package provides alternative functions to read in delimited text fil
     ## #   pop15_64 <dbl>, pop65 <dbl>, elderly <dbl>
 
 ``` r
-> # for comma-separated text files
 > require(readr)
 > f <- "~/Desktop/CPDS-1960-2014-reduced.csv"
-> d <- read_csv(f, col_names = TRUE)
+> d <- read_csv(f, col_names = TRUE)  # for comma-separated files
 ```
 
     ## Parsed with column specification:
@@ -344,8 +344,9 @@ The {readr} package provides alternative functions to read in delimited text fil
     ## #   ttl_labf <dbl>, labfopar <dbl>, unemp <dbl>, pop <dbl>,
     ## #   pop15_64 <dbl>, pop65 <dbl>, elderly <dbl>
 
+Or, alternatively...
+
 ``` r
-> # or, alternatively...
 > d <- read_delim(f, delim = ",", col_names = TRUE)
 ```
 
@@ -378,12 +379,12 @@ The {readr} package provides alternative functions to read in delimited text fil
     ## #   ttl_labf <dbl>, labfopar <dbl>, unemp <dbl>, pop <dbl>,
     ## #   pop15_64 <dbl>, pop65 <dbl>, elderly <dbl>
 
-Loading Excel Files
--------------------
+Loading ***Excel*** Files
+-------------------------
 
-While you should never need to use Excel ;), sometimes will no doubt be given a spreadsheet file with some data in it that you want to read in ***R***. There are several packages available that provide functions for loading data into ***R*** from Excel spreadsheet files: {readxl}, {XLConnect}, {gdata}, and {xlsx}. The first two of these are fast, easy to use, and work well. {gdata} is a bit slower and requires that you have PERL installed someone on your computer (which it is likely to be by default). {xlsx} is much slower.
+While you should never need to use ***Excel***, sometimes you will no doubt be given a spreadsheet file with some data in it that you want to read in ***R***. There are several packages available that provide functions for loading data into ***R*** from ***Excel*** spreadsheet files: {readxl}, {XLConnect}, {gdata}, and {xlsx}. The first two of these are fast, easy to use, and work well. {gdata} is a bit slower and requires that you have PERL installed someone on your computer (which it is likely to be by default). {xlsx} is much slower.
 
-NOTE: always use `str()` to check if your variables come in as the correct data class.
+**NOTE:** always use `str()` to check if your variables come in as the correct data class.
 
 #### Using the {readxl} package
 
@@ -521,7 +522,7 @@ NOTE: always use `str()` to check if your variables come in as the correct data 
     ##  $ pop65     : num  875 895 914 933 948 ...
     ##  $ elderly   : num  8.51 8.51 8.54 8.55 8.52 ...
 
-The {XLConnect} package can also write data frames back out to **Excel** worksheets. If the file does not exist, it is created. If it does exist, data is cleared and overwritten. The second process is MUCH slower. I have included a conditional statement (`if(){}`) which will implement the `file.remove()` command here, in case it is useful.
+The {XLConnect} package can also write data frames back out to ***Excel*** worksheets. If the file does not exist, it is created. If it does exist, data is cleared and overwritten. The second process is MUCH slower. I have included a conditional statement (`if(){}`) which will implement the `file.remove()` command here, if needed.
 
 ``` r
 > f <- "~/Desktop/output.xlsx"
@@ -541,13 +542,15 @@ For futher information on using {XLConnect} check out [this blog post](http://al
 Loading Files Stored on a Remote Server
 ---------------------------------------
 
-We can also load files stored on a server elsewhere on the web, e.g., `Dropbox` or `GitHub`
+We can also load files stored on a server elsewhere on the web, e.g., ***Dropbox*** or ***GitHub***.
 
-To read `.csv` or `.txt` files directly from `GitHub`, use the {curl} or {readr} packages.
+To read `.csv` or `.txt` files directly from ***GitHub***, use the {curl} or {readr} packages.
 
-GO TO: **<https://github.com/difiore/ADA2016**>, select the `.csv` version of the **CPDS-1960-2014-reduced\*\* file, then press `RAW` and copy the URL from the address box of your browser window... this is what you need to use as an argument for the functions below (you will repeat this for the `.txt` version later on)
+GO TO: <https://github.com/difiore/ADA2016>, select the `.csv` version of the **CPDS-1960-2014-reduced** file, then press `RAW` and copy the URL from the address box of your browser window... this is what you need to use as an argument for the functions below (you will repeat this for the `.txt` version later on)
 
 ### Importing data from a file on a remote server using {curl}
+
+For a comma-separated value (`.csv`) text file...
 
 ``` r
 > library(curl)
@@ -561,7 +564,6 @@ GO TO: **<https://github.com/difiore/ADA2016**>, select the `.csv` version of th
     ##     parse_date
 
 ``` r
-> # for a .csv file...
 > f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/CPDS-1960-2014-reduced.csv")
 > d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
 > head(d)
@@ -591,8 +593,11 @@ GO TO: **<https://github.com/difiore/ADA2016**>, select the `.csv` version of th
 
 ``` r
 > # returns a data frame
-> 
-> # for a tab-delimited text (.tsv) file...
+```
+
+For a tab-delimited (`.tsv` or `txt`) text file...
+
+``` r
 > f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/CPDS-1960-2014-reduced.txt")
 > d <- read.table(f, header = TRUE, sep = "\t", stringsAsFactors = FALSE)
 > head(d)
@@ -662,8 +667,10 @@ GO TO: **<https://github.com/difiore/ADA2016**>, select the `.csv` version of th
     ## #   pop15_64 <dbl>, pop65 <dbl>, elderly <dbl>
 
 ``` r
-> # returns a new version of a data frame
-> 
+> # returns a 'tibble', a new version of a data frame
+```
+
+``` r
 > f <- "https://raw.githubusercontent.com/difiore/ADA2016/master/CPDS-1960-2014-reduced.txt"
 > d <- read_tsv(f, col_names = TRUE)
 ```
@@ -676,6 +683,7 @@ GO TO: **<https://github.com/difiore/ADA2016**>, select the `.csv` version of th
     ##   gov_party = col_integer(),
     ##   elect = col_character()
     ## )
+
     ## See spec(...) for full column specifications.
 
 ``` r
@@ -697,39 +705,40 @@ GO TO: **<https://github.com/difiore/ADA2016**>, select the `.csv` version of th
     ## #   pop15_64 <dbl>, pop65 <dbl>, elderly <dbl>
 
 ``` r
-> # returns a new version of a data frame
+> # returns a 'tibble', a new version of a data frame
 ```
 
-### Importing data from a file hosted on **Dropbox**
+### Importing data from a file hosted on ***Dropbox***
 
-To load data from a `.csv` located file in a *personal* **Dropbox** account you can use the {rdrop2} package.
+To load data from a `.csv` located file in a *personal* ***Dropbox*** account you can use the {rdrop2} package.
 
-NOTE: The following code block cannot be "knit" to show you the output because it requires an interactive ***R*** environment for `drop_auth()`, `drop_search()`, etc.
+**NOTE:** The following code block cannot be "knit" to show you the output because it requires an interactive ***R*** environment for `drop_auth()`, `drop_search()`, etc.
 
-    require(rdrop2)
-    # drop_auth() # opens a browser dialog box to ask for authorization...
-    drop_dir() # lists the contents of your dropbox folder
-    # what's the name of the file to read from?
-    f <- "CPDS-1960-2014-reduced.csv"
-    f <- drop_search(f) # searches your dropbox directory for file or directory names; this can be slow
-    f <- f$path # $path is the location of the results returned above
-    d <- drop_read_csv(f, header = TRUE, sep =",", stringsAsFactors = FALSE)
-    # by default, stringsAsFactors = TRUE
-    head(d)
-    str(d)
+``` r
+> require(rdrop2)
+> drop_auth()  # opens a browser dialog box to ask for authorization...
+> drop_dir()  # lists the contents of your dropbox folder
+> f <- "CPDS-1960-2014-reduced.csv"  # name of the file to read from
+> f <- drop_search(f)  # searches your dropbox directory for file or directory names; this can be slow
+> f <- f$path  # $path is the location of the results returned above
+> d <- drop_read_csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+> head(d)
+> str(d)
+```
 
-This same process can be done to load data from other types of delimited files in **Dropbox** by setting the appropriate `sep=` argument.
+This same process can be done to load data from other types of delimited files in ***Dropbox*** by setting the appropriate `sep=` argument.
 
-You can also read text files from someone else's **Dropbox** account using a link that they have shared with you.
+You can also read text files from someone else's ***Dropbox*** account using a link that they have shared with you.
 
 ``` r
 > link <- "https://www.dropbox.com/s/5x2go0xxgkf0ig1/CPDS-1960-2014-reduced.csv?dl=0"
-> # NOTE: Shared **Dropbox** links will take you to a webpage that has the
-> # data embedded... to get the raw data you need to change the end of the
-> # link from dl=0 to dl=1 or raw=1... that's what the next line of code does
+```
+
+**NOTE:** Shared ***Dropbox*** links like this one will take you to a webpage that has the data embedded... to get the raw data you need to change the end of the link from **dl=0** to **dl=1** or **raw=1**. That's what the next line of code does:
+
+``` r
 > link <- gsub(pattern = "dl=0", replacement = "dl=1", x = link)
 > d <- read.csv(link, header = TRUE, sep = ",", stringsAsFactors = FALSE)
-> # by default, stringsAsFactors = TRUE
 > head(d)
 ```
 
@@ -781,18 +790,16 @@ You can also read text files from someone else's **Dropbox** account using a lin
     ##  $ pop65     : num  875 895 914 933 948 ...
     ##  $ elderly   : num  8.51 8.51 8.54 8.55 8.52 8.52 8.5 8.47 8.44 8.37 ...
 
-You can also use the `source_data()` functon from the {repmis} package ("Miscellaneous Tools for Reproducible Research") to load data from a file on **Dropbox**. This function detects column types and gives a few more warnings than others if it encounters somthing odd.
+You can also use the `source_data()` function from the {repmis} package ("Miscellaneous Tools for Reproducible Research") to load data from a file on ***Dropbox***. This function detects column types and gives a few more warnings than others if it encounters somthing odd.
 
 ``` r
-> # the same updated link to the raw data you used above is what you need
-> # here, too
 > require(repmis)
 ```
 
     ## Loading required package: repmis
 
 ``` r
-> d <- source_data(link, header = TRUE, sep = ",")
+> d <- source_data(link, header = TRUE, sep = ",")  # use the same updated link to the raw data as above
 ```
 
     ## Downloading data from: https://www.dropbox.com/s/5x2go0xxgkf0ig1/CPDS-1960-2014-reduced.csv?dl=1
@@ -801,7 +808,6 @@ You can also use the `source_data()` functon from the {repmis} package ("Miscell
     ## cb733faba9bdc71bbf10b71996043365a5755240
 
 ``` r
-> # by default, stringsAsFactors = FALSE
 > head(d)
 ```
 
@@ -853,9 +859,9 @@ You can also use the `source_data()` functon from the {repmis} package ("Miscell
     ##  $ pop65     : num  875 895 914 933 948 ...
     ##  $ elderly   : num  8.51 8.51 8.54 8.55 8.52 8.52 8.5 8.47 8.44 8.37 ...
 
-### Importing data from files in **UT Box**
+### Importing data from files in ***UT Box***
 
-Finally, you can also load tabular data from **UT Box** using a *direct link* that someone has shared with you (these links are those that come from the *Advanced Settings* menu).
+Finally, you can also load tabular data from ***UT Box*** using a *direct link* that someone has shared with you (these links are those that come from the *Advanced Settings* menu).
 
 ``` r
 > link <- "https://utexas.box.com/shared/static/lize8oqc5bc0y3ucd7fzw49594wawbii.csv"
@@ -911,8 +917,9 @@ Finally, you can also load tabular data from **UT Box** using a *direct link* th
     ##  $ pop65     : num  875 895 914 933 948 ...
     ##  $ elderly   : num  8.51 8.51 8.54 8.55 8.52 8.52 8.5 8.47 8.44 8.37 ...
 
+Or, alternatively, using {repmis}...
+
 ``` r
-> # or, using {repmis}
 > require(repmis)
 > d <- source_data(link, header = TRUE, sep = ",")
 ```
@@ -923,7 +930,6 @@ Finally, you can also load tabular data from **UT Box** using a *direct link* th
     ## cb733faba9bdc71bbf10b71996043365a5755240
 
 ``` r
-> # by default, stringsAsFactors = FALSE
 > head(d)
 ```
 
@@ -975,23 +981,29 @@ Finally, you can also load tabular data from **UT Box** using a *direct link* th
     ##  $ pop65     : num  875 895 914 933 948 ...
     ##  $ elderly   : num  8.51 8.51 8.54 8.55 8.52 8.52 8.5 8.47 8.44 8.37 ...
 
-Downloading Files to Your Computer from a Remote Server
--------------------------------------------------------
+Downloading Files from a Remote Server
+--------------------------------------
 
-The {rdrop2} package can be used to **download** a file from a personal **Dropbox** account to your computer, rather than just connecting to a **Dropbox** file to read the data stored there. This should work with any file type.
+The {rdrop2} package can be used to **download** a file from a personal ***Dropbox*** account to your local computer, rather than just connecting to a ***Dropbox*** file to read the data stored there. This should work with any file type.
 
-NOTE: The following code block cannot be "knit" to show you the output because it requires an interactive ***R*** environment for `drop_search()`, etc.
+**NOTE:** The following code block cannot be "knit" to show you the output because it requires an interactive ***R*** environment for `drop_search()`, etc.
 
-    # what's the name of the file to download? this one is a .csv file
-    filename <- "CPDS-1960-2014-reduced.csv"
-    f <- drop_search(filename) # searches your dropbox directory for file or directory names; this can be slow
-    f <- f$path # $path is the location of the results returned above
-    drop_get(f, local_file = paste0("~/Desktop/",filename), overwrite = TRUE, progress = TRUE)
-    # the progress=TRUE argument gives you a reassuring progress bar... by defauly, this is set to FALSE
-    # this will save the file to the desktop
-    # the process works for other file types, too!
-    filename <- "CPDS-1960-2014-reduced.xlsx"
-    f <- drop_search(filename) # searches your dropbox directory for file or directory names; this can be slow
-    f <- f$path # $path is the location of the results returned above
-    drop_get(f, local_file = paste0("~/Desktop/",filename), overwrite = TRUE, progress = TRUE)
-    # again, saving to the desktop
+``` r
+> filename <- "CPDS-1960-2014-reduced.csv"  # name of file to download
+> f <- drop_search(filename)  # searches your dropbox directory for that file or directory name
+> f <- f$path  # $path is the location of the results returned above
+> drop_get(f, local_file = paste0("~/Desktop/", filename), overwrite = TRUE, progress = TRUE)
+> # this will save the file to the desktop
+```
+
+The `progress=TRUE` argument gives you a reassuring progress bar. By default, this argument is set to FALSE.
+
+**NOTE:** The process also works for other file types, e.g., ***Excel*** files:
+
+``` r
+> filename <- "CPDS-1960-2014-reduced.xlsx"
+> f <- drop_search(filename)  # searches your dropbox directory for file or directory names
+> f <- f$path  # $path is the location of the results returned above
+> drop_get(f, local_file = paste0("~/Desktop/", filename), overwrite = TRUE, progress = TRUE)
+> # again, saves to the desktop
+```

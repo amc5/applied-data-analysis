@@ -402,5 +402,7 @@ A second hidden file, **.Rhistory**, will also be stored in the same directory, 
 
 ``` {r eval=FALSE}
 version
+```
+``` {r eval=FALSE}
 packageStatus()
 ```

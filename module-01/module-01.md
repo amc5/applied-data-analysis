@@ -516,5 +516,8 @@ Updating ***R***
 
 ``` r
 > version
+```
+
+``` r
 > packageStatus()
 ```
