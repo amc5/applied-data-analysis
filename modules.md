@@ -1,6 +1,7 @@
 # Applied Data Analysis
 
-# [Overview](https://difiore.github.io/applied-data-analysis/course-overview.html)
+# [Course Overview](course-overview.md)
+# [Resources](resources.md)
 
 # Week 1
 ## Module 01 - [First Steps with R and RStudio](module-01/module-01.md)
