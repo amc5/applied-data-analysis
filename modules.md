@@ -12,4 +12,4 @@
 ## Module 05 - [Getting Data into ***R***](module-05/module-05.md)
 # Week 3
 ## Module 06 - [Exploratory Data Analysis](module-06/module-06.md)
-## Module 07 - [Statistics Fundamentals - Central Tendency and Variance]
+## Module 07 - [Statistics Fundamentals - Central Tendency and Variance](module-07/module-07.md)
