@@ -26,8 +26,8 @@
 - [MarkdownPad2](http://markdownpad.com/) (Windows)
 
 ## <a name="ides"></a>IDEs
-- R: [RStudio](https://www.rstudio.com/) (current version is 0.99.903) (Mac, Windows)
-- Python: [y-hat Rodeo](https://www.yhat.com/products/rodeo) (current version is 2.0.13) (Mac, Windows, Linux)
+- [RStudio](https://www.rstudio.com/) for **R** (current version is 0.99.903) (Mac, Windows)
+- [y-hat Rodeo](https://www.yhat.com/products/rodeo) for **Python** (current version is 2.0.13) (Mac, Windows, Linux)
 
 ## <a name="version-control"></a>Version Control Tools
 - [GitHub](https://github.com/) (Website)
