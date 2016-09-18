@@ -11,5 +11,5 @@
 ## Module 04 - [Working with Other Data Structures](module-04/module-04.md)
 ## Module 05 - [Getting Data into ***R***](module-05/module-05.md)
 # Week 3
-## Module 06 - [Exploratory Data Analysis]
+## Module 06 - [Exploratory Data Analysis](module-06/module-06.md)
 ## Module 07 - [Statistics Fundamentals - Central Tendency and Variance]
