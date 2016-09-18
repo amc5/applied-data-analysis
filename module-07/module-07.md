@@ -181,7 +181,7 @@ In ***R*** we can write...
 > pop_sd(x)
 ```
 
-    ## [1] 1.838361
+    ## [1] 1.754879
 
 ``` r
 > sample_sd <- function(x) {
@@ -190,7 +190,7 @@ In ***R*** we can write...
 > sample_sd(x)
 ```
 
-    ## [1] 1.857025
+    ## [1] 1.772696
 
 The built-in ***R*** function `sd()` can be used to calculate the standard deviation of a sample.
 
@@ -222,7 +222,7 @@ or
 > SE1(x)
 ```
 
-    ## [1] 0.2626231
+    ## [1] 0.250697
 
 ``` r
 > SE2 <- function(x) {
@@ -231,7 +231,7 @@ or
 > SE2(x)
 ```
 
-    ## [1] 0.2626231
+    ## [1] 0.250697
 
 The package {sciplot} also includes the function, `se()`, for calculating standard errors (as do others).
 
@@ -240,7 +240,7 @@ The package {sciplot} also includes the function, `se()`, for calculating standa
 > se(x)
 ```
 
-    ## [1] 0.2626231
+    ## [1] 0.250697
 
 ### Calculating confidence intervals from standard errors
 
@@ -293,7 +293,6 @@ Returning to calculating CIs, suppose we have this vector:
 > v <- var(x)
 > s <- sd(x)
 > e <- sqrt(v/n)
-> 
 > upper <- mean(x) + qnorm(0.975) * se(x)
 > lower <- mean(x) + qnorm(0.025) * se(x)
 > # or lower <- mean(x) - qnorm(0.975)*se(x)

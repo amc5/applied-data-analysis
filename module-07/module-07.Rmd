@@ -239,7 +239,6 @@ n <- length(x)
 v <- var(x)
 s <- sd(x)
 e <- sqrt(v/n)
-
 upper <- mean(x) + qnorm(0.975)*se(x)
 lower <- mean(x) + qnorm(0.025)*se(x)
 # or lower <- mean(x) - qnorm(0.975)*se(x)
