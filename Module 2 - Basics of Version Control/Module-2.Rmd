@@ -64,13 +64,13 @@ Create a new repository on ***GitHub***
 
 ## Managing ***git*** from the Desktop with a GUI
 
-***git*** is a command-line tool, but both local (on your computer) and hosted (e.g., on ***GitHub***) repositories can be managed using a GUI, such as ***`GitHub Desktop`***, ***`GitUp`***, or a host of others. I find ***`GitHub Desktop`*** the easiest one to use.
+***git*** is a command-line tool, but both local (on your computer) and hosted (e.g., on ***GitHub***) repositories can be managed using a GUI, such as ***GitHub Desktop***, ***GitUp***, or a host of others. I find ***GitHub Desktop*** the easiest one to use.
 
-- Download and install [***`GitHub Desktop`***](https://desktop.github.com/)
+- Download and install [***GitHub Desktop***](https://desktop.github.com/)
 
 <img src="img/install-github-desktop.png" width=500px/>
 
-With ***`GitHub Desktop`***, we can download, work on, and update remote repos or we can create, work on, and push local repos to remote sites.
+With ***GitHub Desktop***, we can download, work on, and update remote repos or we can create, work on, and push local repos to remote sites.
 
 #### CHALLENGE 2:
 
@@ -89,28 +89,28 @@ This should create a local copy of your repo. On MacOS, if you then *right-click
 
 <img src="img/test-repo.png" width=500px/>
 
-- Try making some edits to your `README` file in your local copy using **Atom** or another text editor...
-- Then switch to ***`GitHub Desktop`*** (where you should see the changes highlighted) and *Commit* the changes (to save them locally...
-- Then `Sync` your changes with the remote master on ***GitHub***
+- Try making some edits to your **README** file in your local copy using **Atom** or another text editor...
+- Then switch to ***GitHub Desktop*** (where you should see the changes highlighted) and **Commit** the changes (to save them locally...
+- Then **Sync** your changes with the remote master on ***GitHub***
 
 #### CHALLENGE 3:
 Create a local repository and push it to ***GitHub***
 
-- Open ***`GitHub Desktop`*** and create a new local repo (e.g., "local-repo")
+- Open ***GitHub Desktop*** and create a new local repo (e.g., "local-repo")
 
 <img src="img/create-local-repo.png" width=500px/>
 
 - On MacOS, navigate to the folder of the repo you just created by *right-clicking* on the repo and choosing **Open in Atom**. You can also choose **Open in Finder**, though the next steps will then be a bit different. The process will be similar, though not identical, on Windows.
-- If you opened in ***`Atom`***, you should see the folder **.git**, which is a hidden folder (indicated by the "."). You probably will **not** see this if you opened in the Finder, since "." prefaced files are hidden by default.
+- If you opened in ***Atom***, you should see the folder **.git**, which is a hidden folder (indicated by the "."). You probably will **not** see this if you opened in the Finder, since "." prefaced files are hidden by default.
 
 <img src="img/empty-repo.png" width=500px/>
 
-- The ***`Atom`*** editor should also have opened a new, *untitled* plain text file. If it did not, you can simply create a new file.
+- The ***Atom*** editor should also have opened a new, *untitled* plain text file. If it did not, you can simply create a new file.
 - Type something into this plain text file using [**Markdown**](https://en.wikipedia.org/wiki/Markdown) syntax and save it as "README.md".
 
 <img src="img/README.png" width=500px/>
 
-- Switch back to ***`GitHub Desktop`*** and then *Commit* your `README.md` file to the `master` branch, providing a short bit of text describing your commit (e.g., "my first README file").
+- Switch back to ***GitHub Desktop*** and then **Commit** your `README.md` file to the `master` branch, providing a short bit of text describing your commit (e.g., "Initial commit").
 
 **NOTE:** This file is still located only in your local ***git*** repository, and not on ***GitHub***'s servers.
 
