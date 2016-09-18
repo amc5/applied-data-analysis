@@ -1,43 +1,44 @@
 ---
-title: "Module 5 - Loading Data"
+title: "Module 05"
 output:
-    #github_document:
-    html_document:
-      theme: cerulean
-      highlight: textmate
-    code_folding: show
+    github_document:
+    #html_document:
+    #  keep_md: TRUE
+    #  theme: default
+    #  highlight: textmate
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(
 	echo = TRUE,
 	warning = FALSE,
-	comment = "",
+	comment = "##",
 	prompt = TRUE,
 	tidy = TRUE,
 	tidy.opts = list(width.cutoff = 75)
 )
 ```
+# Getting Data into ***R***
 
-# Objectives
+## Objectives
 > The objective of this module to learn how to download data sets from various local and online sources.
 
 ## Preliminaries
 
-- GO TO: `https://github.com/difiore/ADA2016`, select the `.txt` version of *Country-Data-2016*, then press the `RAW` button, highlight, and copy the text to a text editor and save it locally. Do the same for the `.csv` version.
+- GO TO: https://github.com/difiore/ADA2016, select the `.txt` version of *Country-Data-2016*, then press the `RAW` button, highlight, and copy the text to a text editor and save it locally. Do the same for the `.csv` version.
 
-This data set consists of basic statistics (area, current population size, birth rate, death rate, life expectancy, and form of government) for 249 countries taken from [**https://www.worlddata.info**] (https://www.worlddata.info) that I have combined with data from the International Union for the Conservation of Nature (IUCN)'s [Red List Summary Statistics] (http://www.iucnredlist.org/about/summary-statistics) about the number of threatened animal species by country.
+This data set consists of basic statistics (area, current population size, birth rate, death rate, life expectancy, and form of government) for 249 countries taken from [WorldData.info](https://www.worlddata.info) that I have combined with data from the International Union for the Conservation of Nature (IUCN)'s [Red List Summary Statistics](http://www.iucnredlist.org/about/summary-statistics) about the number of threatened animal species by country.
 
 - From the same page, select the `.xlsx` version of **CPDS-1960-2014-reduced**, then press `DOWNLOAD` and save it locally. Also download these data in `.txt` and `.csv` formats using the procedure described above.
 
 This is a version of the *Comparative Political Data Set (CPDS)*, which is "a collection of political and institutional country-level data provided by Prof. Dr. Klaus Armingeon and collaborators at the University of Berne. It consists of annual data for 36 democratic countries for the period of 1960 to 2014 or since their transition to democracy" (Armingeon et al. 2016). The full dataset consists of 300 variables, which I have pared down to a smaller set of economical and population size variables.
 
-**CITATION:** Armingeon, Klaus, Christian Isler, Laura Knöpfel, David Weisstanner and Sarah Engler. 2016. Comparative Political Data Set 1960-2014. Bern: Institute of Political Science, University of Berne.
+> **CITATION:** Armingeon, Klaus, Christian Isler, Laura Knöpfel, David Weisstanner and Sarah Engler. 2016. Comparative Political Data Set 1960-2014. Bern: Institute of Political Science, University of Berne.
 
-- Install these packages in `R`: {readr}, {curl}, {readxl}, {XLConnect}, {rdrop2}, {repmis}
+- Install these packages in ***R***: {readr}, {curl}, {readxl}, {XLConnect}, {rdrop2}, {repmis}
 
 ## The Backstory
-So far, we have seen how to create a variety of data structures by hand (e.g., using the `c()` function), but for larger data sets we will need mechanisms to import data into `R`. There are many methods for importing tabular data, stored in various formats (like text files, spreadsheets, and databases).
+So far, we have seen how to create a variety of data structures by hand (e.g., using the `c()` function), but for larger data sets we will need mechanisms to import data into ***R***. There are many methods for importing tabular data, stored in various formats (like text files, spreadsheets, and databases).
 
 ## The Tao of Text
 Plain text files are, arguably, the best way to store data (and scripts and other documents) as they are a standard format that has been around longer than most operating systems and are unlikely to change anytime soon.
@@ -55,35 +56,38 @@ Plain text files are, arguably, the best way to store data (and scripts and othe
 
 ## Loading Different Types of Plain Text Files
 
-In ***`R`***, we can load a data set from a plain text file using the `read.table()` function from the {base} package, with the path to the file as the first (`file`) argument for the function. An additional argument (`header`) can be used to specify whether the first row of the data file consists of column/field names.
+In ***R***, we can load a data set from a plain text file using the `read.table()` function from the {base} package, with the path to the file as the first (`file=`) argument for the function. An additional argument (`header=`) can be used to specify whether the first row of the data file consists of column/field names.
 
-The generic `read.table()` function can be used to read data files where columns are separated by tabs, commas, white space, or some other delimeter. The `sep` argument tells `R` what character is used as a delimiter. The `skip` argument can be used to start reading a file after a set number of rows.
+The generic `read.table()` function can be used to read data files where columns are separated by tabs, commas, white space, or some other delimeter. The `sep=` argument tells ***R*** what character is used as a delimiter. The `skip=` argument can be used to start reading a file after a set number of rows.
 
-There are format-specific variants of `read.table()` (e.g., `read.csv()`) that have different defaults and may be quicker for certain file types. Note that when using this function from the {base} package, *stringsAsFactors* is set to be TRUE by default, and we need to set it as FALSE if we want character strings to be loaded as actual strings.
+There are format-specific variants of `read.table()` (e.g., `read.csv()`) that have different defaults and may be quicker for certain file types. Note that when using this function from the {base} package, the argument `stringsAsFactors` is set to be TRUE by default, and we need to set it as FALSE if we want character strings to be loaded as actual strings.
 
-Let's read in one of the data sets that you have copied and stored locally: *CPDS-1960-2014-reduced.txt*.
+Let's read in one of the data sets that you have copied and stored locally: **CPDS-1960-2014-reduced.txt**.
 
 ### Reading from a local file
-```{r undefinedeval=FALSE, eval=FALSE, include=FALSE}
-# the `file.choose()` command is very useful and gives you a familiar dialog box to choose a file
+
+The `file.choose()` command is useful and gives you a familiar dialog box to select a file. You can use this to specify the path to a locally-stored file.
+
+``` {r eval=FALSE}
 f <- file.choose()
 ```
 
 The file paths below refer to where I have saved the downloaded data, on my **Desktop**.
 
-#### Loading tab-separated (`.tsv`, `.txt`) text with {base} ***`R`*** functions
+#### Loading tab-separated (`.tsv`, `.txt`) text with {base} ***R*** functions
+
+**NOTE:** In the following snippet, you can change the `sep=` argument as needed to use other delimiters
 
 ``` {r}
 f <- "~/Desktop/CPDS-1960-2014-reduced.txt"
 d <- read.table(f, header = TRUE, sep ="\t", stringsAsFactors = FALSE)
-# you can change the sep argument as needed to use other delimiters
-head(d)
-# the head function lists the first 6 lines of data
-# with bracket notation you can modify this (e.g., head(d)[1:10])
-tail(d)
-# the tail function works similarly, to show the end of your data
-class(d)
-# shows you that tables are typically loaded in as data frames
+head(d) # lists the first 6 lines of data
+```
+**NOTE:** With bracket notation, you can modify how many lines the `head()` function will return: e.g., `head(d)[1:10])`
+
+``` {r}
+tail(d) # shows the last 6 lines of data
+class(d) # shows the tables are typically loaded as data frames
 ```
 
 ``` {r}
@@ -92,7 +96,7 @@ d <- read.delim(f, header = TRUE, stringsAsFactors = FALSE)
 head(d)
 ```
 
-#### Loading comma-separated (`.csv`) text with {base} ***`R`*** functions
+#### Loading comma-separated (`.csv`) text with {base} ***R*** functions
 
 ``` {r}
 # using the {base} package
@@ -142,7 +146,7 @@ head(d)
 ```
 
 ## Loading Excel Files
-While you should never need to use Excel ;), sometimes will no doubt be given a spreadsheet file with some data in it that you want to read in `R`. There are several packages available that provide functions for loading data into `R` from Excel spreadsheet files: {readxl}, {XLConnect}, {gdata}, and {xlsx}. The first two of these are fast, easy to use, and work well. {gdata} is a bit slower and requires that you have PERL installed someone on your computer (which it is likely to be by default). {xlsx} is much slower.
+While you should never need to use Excel ;), sometimes will no doubt be given a spreadsheet file with some data in it that you want to read in ***R***. There are several packages available that provide functions for loading data into ***R*** from Excel spreadsheet files: {readxl}, {XLConnect}, {gdata}, and {xlsx}. The first two of these are fast, easy to use, and work well. {gdata} is a bit slower and requires that you have PERL installed someone on your computer (which it is likely to be by default). {xlsx} is much slower.
 
 NOTE: always use `str()` to check if your variables come in as the correct data class.
 
@@ -164,7 +168,7 @@ head(d)
 str(d)
 ```
 
-The {XLConnect} package can also write data frames back out to Excel worksheets. If the file does not exist, it is created. If it does exist, data is cleared and overwritten. The second process is MUCH slower. I have included (but commented out) the `file.remove()` command here, in case it is useful.
+The {XLConnect} package can also write data frames back out to **Excel** worksheets. If the file does not exist, it is created. If it does exist, data is cleared and overwritten. The second process is MUCH slower. I have included a conditional statement (`if(){}`) which will implement the `file.remove()` command here, in case it is useful.
 
 ``` {r}
 f <- "~/Desktop/output.xlsx"
@@ -172,14 +176,14 @@ if (file.exists(f)) {file.remove(f)}
 writeWorksheetToFile(f, d, sheet = "myData", clearSheets = TRUE)
 ```
 
-For futher information on using {XLConnect} check out [this blog post] (http://altons.github.io/r/2015/02/13/quick-intro-to-xlconnect/#worksheet).
+For futher information on using {XLConnect} check out [this blog post](http://altons.github.io/r/2015/02/13/quick-intro-to-xlconnect/#worksheet).
 
 ## Loading Files Stored on a Remote Server
 We can also load files stored on a server elsewhere on the web, e.g., `Dropbox` or `GitHub`
 
 To read `.csv` or `.txt` files directly from `GitHub`, use the {curl} or {readr} packages.
 
-GO TO: `https://github.com/difiore/ADA2016`, select the `.csv` version of the **CPDS-1960-2014-reduced** file, then press `RAW` and copy the URL from the address box of your browser window... this is what you need to use as an argument for the functions below (you will repeat this for the `.txt` version later on)
+GO TO: **https://github.com/difiore/ADA2016**, select the `.csv` version of the **CPDS-1960-2014-reduced** file, then press `RAW` and copy the URL from the address box of your browser window... this is what you need to use as an argument for the functions below (you will repeat this for the `.txt` version later on)
 
 ### Importing data from a file on a remote server using {curl}
 ``` {r}
@@ -213,9 +217,9 @@ head(d)
 
 ### Importing data from a file hosted on **Dropbox**
 
-To load data from a `.csv` located file in your *personal* **Dropbox** account you can use the {rdrop2} package.
+To load data from a `.csv` located file in a *personal* **Dropbox** account you can use the {rdrop2} package.
 
-NOTE: The following code block cannot be "knit" to show you the output because it requires an interactive ***`R`*** environment for `drop_auth()`, `drop_search()`, etc.
+NOTE: The following code block cannot be "knit" to show you the output because it requires an interactive ***R*** environment for `drop_auth()`, `drop_search()`, etc.
 
 ```
 require(rdrop2)
@@ -278,7 +282,7 @@ str(d)
 ## Downloading Files to Your Computer from a Remote Server
 The {rdrop2} package can be used to **download** a file from a personal **Dropbox** account to your computer, rather than just connecting to a **Dropbox** file to read the data stored there. This should work with any file type.
 
-NOTE: The following code block cannot be "knit" to show you the output because it requires an interactive ***`R`*** environment for `drop_search()`, etc.
+NOTE: The following code block cannot be "knit" to show you the output because it requires an interactive ***R*** environment for `drop_search()`, etc.
 
 ```
 # what's the name of the file to download? this one is a .csv file

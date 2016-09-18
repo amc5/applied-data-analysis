@@ -514,7 +514,7 @@ Updating ***R***
 
 -   Finally, to reassure yourself that you have done everything correctly, type these two commands in the ***RStudio*** console to see what you've got in terms of what version of ***R*** you are running and what packages you have installed:
 
-<!-- -->
-
-    version
-    packageStatus()
+``` r
+> version
+> packageStatus()
+```

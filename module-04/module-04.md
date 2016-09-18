@@ -12,7 +12,7 @@ Objectives
 Preliminaries
 -------------
 
--   GO TO: **<https://github.com/difiore/ADA2016**>, select the **random-people.csv\*\* file, then press the `RAW` button, highlight, and copy the text to a text editor and save it locally.
+-   GO TO: <https://github.com/difiore/ADA2016>, select the **random-people.csv** file, then press the `RAW` button, highlight, and copy the text to a text editor and save it locally.
 
 -   Install this package in ***R***: {stringr}
 
@@ -216,9 +216,9 @@ You can also use a function or a calculation to subset a vector. What does the f
 
 -   Then, extract every third element of this vector.
 
-    -   Hint 1: Take a look at the {stringr} package and the function `str_split()` to see if you can easily divide a single string into a vector of substrings.
+    -   **HINT 1:** Take a look at the {stringr} package and the function `str_split()` to see if you can easily divide a single string into a vector of substrings.
 
-    -   Hint 2: If you're ambitious, the following function, `gsub("[[:punct:]]","",*string*)`, applied to `*string*`, will remove punction and special characters from that string.
+    -   **HINT 2:** If you're ambitious, the following function, `gsub("[[:punct:]]","",*string*)`, applied to `*string*`, will remove punction and special characters from that string.
 
 As an example for a matrix, suppose you have the following:
 
@@ -397,7 +397,7 @@ Now, you can use the name of an item in the list to refer to it:
 
 #### CHALLENGE 4:
 
--   Create a **list** representing this (simplified) primate taxonomy. Hint: you can use **lists** as elements in a list.
+-   Create a **list** representing this (simplified) primate taxonomy. **HINT:** you can use **lists** as elements in a list.
 
 -   Primates
     -   Haplorhini
