@@ -1,11 +1,7 @@
 ---
 title: "Module 04"
 output:
-    github_document:
-    #html_document:
-    #  keep_md: TRUE
-    #  theme: default
-    #  highlight: textmate
+    github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -15,7 +11,8 @@ knitr::opts_chunk$set(
 	comment = "##",
 	prompt = TRUE,
 	tidy = TRUE,
-	tidy.opts = list(width.cutoff = 75)
+	tidy.opts = list(width.cutoff = 75),
+	fig.path = "img/"
 )
 ```
 # Working with Other Data Structures

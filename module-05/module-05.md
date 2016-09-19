@@ -529,11 +529,6 @@ The {XLConnect} package can also write data frames back out to ***Excel*** works
 > if (file.exists(f)) {
 +     file.remove(f)
 + }
-```
-
-    ## [1] TRUE
-
-``` r
 > writeWorksheetToFile(f, d, sheet = "myData", clearSheets = TRUE)
 ```
 

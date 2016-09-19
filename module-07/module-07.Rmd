@@ -1,11 +1,7 @@
 ---
 title: "Module 07"
 output:
-    github_document:
-    #html_document:
-    #  keep_md: TRUE
-    #  theme: default
-    #  highlight: textmate
+    github_document
 ---
 
 ```{r setup, include=FALSE}

@@ -181,7 +181,7 @@ In ***R*** we can write...
 > pop_sd(x)
 ```
 
-    ## [1] 2.22373
+    ## [1] 2.081597
 
 ``` r
 > sample_sd <- function(x) {
@@ -190,7 +190,7 @@ In ***R*** we can write...
 > sample_sd(x)
 ```
 
-    ## [1] 2.246306
+    ## [1] 2.102731
 
 The built-in ***R*** function `sd()` can be used to calculate the standard deviation of a sample.
 
@@ -222,7 +222,7 @@ or
 > SE1(x)
 ```
 
-    ## [1] 0.3176756
+    ## [1] 0.297371
 
 ``` r
 > SE2 <- function(x) {
@@ -231,7 +231,7 @@ or
 > SE2(x)
 ```
 
-    ## [1] 0.3176756
+    ## [1] 0.297371
 
 The package {sciplot} also includes the function, `se()`, for calculating standard errors (as do others).
 
@@ -240,7 +240,7 @@ The package {sciplot} also includes the function, `se()`, for calculating standa
 > se(x)
 ```
 
-    ## [1] 0.3176756
+    ## [1] 0.297371
 
 ### Calculating confidence intervals from standard errors
 
