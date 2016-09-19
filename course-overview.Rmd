@@ -29,6 +29,9 @@ Office Hours: Fridays, 2-4pm, SAC Room 4.100H
 <img src="img/math.png" style="width: 400px"/>
 </p>
 
+- [Resources](resources.html)
+- [Modules](modules.html)
+
 ## Overview
 
 <img src="img/p-values.png" style="width: 250px; padding-top: 10px; padding-left: 20px; padding-right: 20px; padding-bottom: 10px" align="right"/>
