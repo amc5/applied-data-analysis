@@ -158,14 +158,14 @@ In this formula, *n - 1* is the number of *degrees of freedom* implied by the sa
 for (*counter* in *vector*){*code to run*}
 
 ``` r
-> for (n in seq(5,50,5)) # samples of 5, 10, 15...
->   {
->   for(i in 1:50)  # 50 replicates
->       {
->           x<- rnorm(n, mean=10 ,sd=2)
->           points(n,var(x))
->       }
->   }
+> for (n in seq(5, 50, 5)) # samples of 5, 10, 15...
+> {
++     for (i in 1:50) # 50 replicates
++     {
++         x <- rnorm(n, mean = 10, sd = 2)
++         points(n, var(x))
++     }
++ }
 ```
 
 ![](img/unnamed-chunk-9-1.png)
@@ -181,7 +181,7 @@ In ***R*** we can write...
 > pop_sd(x)
 ```
 
-    ## [1] 1.754879
+    ## [1] 2.22373
 
 ``` r
 > sample_sd <- function(x) {
@@ -190,7 +190,7 @@ In ***R*** we can write...
 > sample_sd(x)
 ```
 
-    ## [1] 1.772696
+    ## [1] 2.246306
 
 The built-in ***R*** function `sd()` can be used to calculate the standard deviation of a sample.
 
@@ -222,7 +222,7 @@ or
 > SE1(x)
 ```
 
-    ## [1] 0.250697
+    ## [1] 0.3176756
 
 ``` r
 > SE2 <- function(x) {
@@ -231,7 +231,7 @@ or
 > SE2(x)
 ```
 
-    ## [1] 0.250697
+    ## [1] 0.3176756
 
 The package {sciplot} also includes the function, `se()`, for calculating standard errors (as do others).
 
@@ -240,7 +240,7 @@ The package {sciplot} also includes the function, `se()`, for calculating standa
 > se(x)
 ```
 
-    ## [1] 0.250697
+    ## [1] 0.3176756
 
 ### Calculating confidence intervals from standard errors
 
@@ -294,19 +294,18 @@ Returning to calculating CIs, suppose we have this vector:
 > s <- sd(x)
 > e <- sqrt(v/n)
 > upper <- mean(x) + qnorm(0.975) * se(x)
-> lower <- mean(x) + qnorm(0.025) * se(x)
-> # or lower <- mean(x) - qnorm(0.975)*se(x)
+> lower <- mean(x) + qnorm(0.025) * se(x)  # or lower <- mean(x) - qnorm(0.975)*se(x)
 > ci <- c(lower, upper)
 > ci
 ```
 
     ## [1]  5.736829 10.263171
 
+Or, alternatively...
+
 ``` r
-> # alternatively
 > upper <- m + qnorm(0.975) * e
-> lower <- m + qnorm(0.025) * e
-> # or lower <- m - qnorm(0.975)*e
+> lower <- m + qnorm(0.025) * e  # or lower <- m - qnorm(0.975)*e
 > ci <- c(lower, upper)
 > ci
 ```
@@ -322,9 +321,7 @@ Alternatively, we can define our own generic CI function based on the normal dis
 +     ci <- c(lower, upper)
 +     return(ci)
 + }
-> 
-> # call the function
-> normalCI(x, 0.95)
+> normalCI(x, 0.95)  # call the function
 ```
 
     ## [1]  5.736829 10.263171
@@ -365,4 +362,4 @@ The `quantile()` function returns, for your set of data, the observations satisf
 #### CHALLENGE 5:
 
 -   How does the CI calculated this way, by simulation, compares to that calculated based on assuming a normal distribution?
--   How does the width of the CI change with decreasing or increasing **n** (the number of observations drawn from your sample with replacement)? For example, if we set n at 5? At 50? At 500?
+-   How does the width of the CI change with decreasing or increasing **n** (the number of observations drawn from your sample with replacement)? For example, if we set **n** at 5? At 50? At 500?

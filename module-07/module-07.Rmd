@@ -132,9 +132,11 @@ plot(c(0, 50), c(0, 15), type="n", xlab= "Sample size", ylab="Variance")
 for (*counter* in *vector*){*code to run*}
 
 ``` {r eval=FALSE}
-for (n in seq(5,50,5)) # samples of 5, 10, 15...
+for (n in seq(5,50,5))
+	# samples of 5, 10, 15...
 	{
-	for(i in 1:50) 	# 50 replicates
+	for(i in 1:50)
+		# 50 replicates
 		{
 			x<- rnorm(n, mean=10 ,sd=2)
 			points(n,var(x))
@@ -240,14 +242,14 @@ v <- var(x)
 s <- sd(x)
 e <- sqrt(v/n)
 upper <- mean(x) + qnorm(0.975)*se(x)
-lower <- mean(x) + qnorm(0.025)*se(x)
-# or lower <- mean(x) - qnorm(0.975)*se(x)
+lower <- mean(x) + qnorm(0.025)*se(x) # or lower <- mean(x) - qnorm(0.975)*se(x)
 ci <- c(lower,upper)
 ci
-# alternatively
+```
+Or, alternatively...
+``` {r}
 upper <- m + qnorm(0.975)*e
-lower <- m + qnorm(0.025)*e
-# or lower <- m - qnorm(0.975)*e
+lower <- m + qnorm(0.025)*e # or lower <- m - qnorm(0.975)*e
 ci <- c(lower,upper)
 ci
 ```
@@ -261,9 +263,7 @@ normalCI = function(x, CIlevel = 0.95) {
 	ci <- c(lower, upper)
 	return(ci)
 	}
-	
-# call the function
-normalCI(x, 0.95)
+normalCI(x, 0.95) # call the function
 ```
 
 **Interpretation of CIs:**
@@ -292,4 +292,4 @@ quantile(set, c(0.025, 0.975))
 
 #### CHALLENGE 5:
 - How does the CI calculated this way, by simulation, compares to that calculated based on assuming a normal distribution?
-- How does the width of the CI change with decreasing or increasing **n** (the number of observations drawn from your sample with replacement)? For example, if we set n at 5? At 50? At 500?
+- How does the width of the CI change with decreasing or increasing **n** (the number of observations drawn from your sample with replacement)? For example, if we set **n** at 5? At 50? At 500?
