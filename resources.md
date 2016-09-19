@@ -3,7 +3,7 @@ Useful Data Science Resources
 
 #### [Course Overview](course-overview.html)
 
-#### [Resources](modules.html)
+#### [Modules](modules.html)
 
 <a name="software-tools"></a>Software Tools
 -------------------------------------------
