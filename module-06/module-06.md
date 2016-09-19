@@ -322,7 +322,9 @@ Or, alternatively...
 +     ylab = "density", ylim = c(0, 0.2))
 ```
 
-![](img/unnamed-chunk-6-1.png) **NOTE:** You can add a line to your histograms (e.g., to show the mean value for a variable) using the `abline()` command, with arguments. For exmaple, to show a single *vertical* line representing the mean log(population size), you would add the argument `v=mean(log(population))`)
+![](img/unnamed-chunk-6-1.png)
+
+**NOTE:** You can add a line to your histograms (e.g., to show the mean value for a variable) using the `abline()` command, with arguments. For exmaple, to show a single *vertical* line representing the mean log(population size), you would add the argument `v=mean(log(population))`)
 
 -   Density plot : The `density()` function computes a non-parametric estimate of the distribution of a variable, which can be combined with `plot()` to also yield a graphical view of the distribution of the data. If your data have missing values, then you need to add the argument `na.rm=TRUE` to the `density()` function. To superimpose a `density()` curve on a histogram, you can use the `lines(density())` function.
 
