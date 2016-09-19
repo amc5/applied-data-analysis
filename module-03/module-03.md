@@ -69,7 +69,7 @@ We now need to set up ***RStudio*** to interface with ***git***.
 
 <img src="img/r-global-options.png" width=500px/>
 
--   From this same window, also hit `Create RSA key` so you can use **SSH**\*, a secure information transfer protocol, to send and receive data from remote servers.
+-   From this same window, also hit `Create RSA key` so you can use **SSH**, a secure information transfer protocol, to send and receive data from remote servers.
 
 <img src="img/create-rsa-key.png" width=500px/>
 
@@ -85,11 +85,11 @@ RStudio's version control features are tied to the use of **Projects** (which ar
 
 <img src="img/r-new-project-vcs.png" width=500px/>
 </center>
--   Choose the top option to cloe a project from an existing ***git*** repository.
+-   Choose the top option to clone a project from an existing ***git*** repository.
 
 <img src="img/version-control.png" width=500px/>
 </center>
--   In the following dialog box, provide the repository URL (which should be the URL for the repository you just created, likely *<https://github.com/*> followed by *your GitHub username*/*your repo name*. The `Project directory name` should be *your repo name\*, and you should choose a parent directory for your local copy of the repo using the `Create project as a subdirectory of:` text field. Then click **Create Project**.
+-   In the following dialog box, provide the repository URL (which should be the URL for the repository you just created, likely <https://github.com/> followed by *your GitHub username*/*your repo name*. The `Project directory name` should be *your repo name*, and you should choose a parent directory for your local copy of the repo using the `Create project as a subdirectory of:` text field. Then click **Create Project**.
 
 <img src="img/clone-git-repo.png" width=500px/>
 </center>
@@ -211,7 +211,7 @@ Now you will want to create a remote repository on ***GitHub*** to which you can
 git remote add origin git@github.com:<i>your GitHub user name</i>/<i>your repo name</i>.git
 git push -u origin master
 </pre>
-The first line tells ***git*** the remote URL that you are going to push to, and the second pushes you local repo up to the remote master.
+The first line tells ***git*** the remote URL that you are going to push to, and the second pushes your local repo up to the remote master.
 
 -   From within ***RStudio***, you can now open the project and repo that you just pushed to ***GitHub***. In the project, you can add or edit files, and you can locally commit any changes you make to those files and push them up to GitHub as described above.
 
