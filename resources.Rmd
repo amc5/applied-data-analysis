@@ -15,6 +15,8 @@ knitr::opts_chunk$set(
 	fig.path = "img/"
 )
 ```
+#### [Course Overview](course-overview.html)
+#### [Resources](modules.html)
 
 ## <a name="software-tools"></a>Software Tools
 
