@@ -1,0 +1,64 @@
+---
+title: "Module 08"
+output:
+    github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = FALSE,
+	comment = "##",
+	prompt = TRUE,
+	tidy = TRUE,
+	tidy.opts = list(width.cutoff = 75),
+	fig.path = "img/"
+)
+```
+# Statistical Inference
+
+## Objectives
+> The objective of this module to begin our discussion of statistical inference from a frequentist statistics approach. Doing so means that we need to cover basics of probability and distributions
+
+## Important Terms and Concepts to Reiterate
+
+- **Population** = includes **all** of the elements from a set of data = ***N***
+- **Sample** = one or more observations from a population = ***n***
+- **Parameter** = a measurable characteristic of a population
+- **Statistic** = a measureable characteristic about a sample
+
+When we do **inference** we are basically trying to draw conclusions about a *population* based on measurement from a noisy *sample* or, conversely, evaluate whether it is reasonable to assume that our samples is drawn from a particular population.
+
+This process of trying to draw conclusions is complicated by the fact that...
+- Our sample is biased, non-random, or non-representative in some way
+- There may be unknown or unobserved variables that impact how the sample is related to the population
+- The assumptions we make about the population that our sample is drawn from might not be correct
+
+- **PROBABILITY** = a population-level variable that describes the magnitude of the chance associated with a particular observation or event; summarizes the possible outcomes of an experiment. E.g., rolling a (fair) die, there are 6 possible outcomes, each has a probability of occurring of 1 in 6. This is referred to as a *frequentist* or *classical* way of thinking about outcomes... the relative frequency with which an event occurs over numerous identical, objective trials.
+
+**Rules of Probability**
+
+Pr (something happening) = 1
+Pr (nothing happens) = 0
+Pr (a particular event happens) >= 0 and <= 1
+
+**Union of two events** = probability that event A **or** event B occurs
+
+Pr (A ∪ B) = Pr(A) + Pr(B) - Pr (A ∩ B)
+
+If A and B are mutually exclusive, then this simplifies toPr(A) + Pr(B)
+
+**Intersection of two events** = probability that both A **and** B occur simultaneously
+Pr (A ∩ B)  = Pr (A|B) × Pr (B) or Pr (B|A) × Pr (A)
+
+If Pr (A ∩ B) = 0, then events are mutually exclusive (e.g., you cannot have a die roll be 1 and 2)
+
+If these 2 events are independent, then Pr (A ∩ B) = Pr (A) × Pr (B) 
+
+**Conditional Probability** = probability that one event occurs after taking into account the occurrence of another event, i.e., a second event is conditioned on the occurrence of a first event
+
+e.g., the probability of a die coming up as "1" given that it had come up as odd
+
+Pr (A|B) = Pr (A ∩ B) / Pr (B)
+
+If A and B are independent, then Pr (A | B) = (Pr (A) × Pr (B)) / Pr (B) = Pr (A)
