@@ -15,10 +15,10 @@ knitr::opts_chunk$set(
 	fig.path = "img/"
 )
 ```
-# Statistical Inference 1 - Probabilities and Distributions
+# Statistical Inference - Probabilities and Distributions
 
 ## Objectives
-> The objective of this module to begin our discussion of statistical inference from a frequentist statistics approach. Doing so means that we need to cover basics of probability and distributions
+> The objective of this module is to begin our discussion of *statistical inference* from a frequentist/classical statistics approach. Doing so means that we need to cover basics of probability and distributions.
 
 ## Important Terms and Concepts to Reiterate
 
@@ -27,7 +27,7 @@ knitr::opts_chunk$set(
 - **Parameter** = a measurable characteristic of a *population*
 - **Statistic** = a measureable characteristic about a *sample*
 
-When we do **statistical inference** we are basically trying to draw conclusions about a *population* based on measurements from a noisy *sample* or we are trying to evaluate whether it is reasonable to assume that our sample is drawn from a particular population.
+When we do **statistical inference** we are basically trying to draw conclusions about a *population* based on measurements from a noisy *sample* or trying to evaluate whether it is reasonable to assume that our sample is drawn from a particular population.
 
 This process of trying to draw conclusions is complicated by the fact that...
 
@@ -35,13 +35,15 @@ This process of trying to draw conclusions is complicated by the fact that...
 - there may be unknown or unobserved variables that impact how the sample is related to the population
 - the assumptions we make about the population that our sample is drawn from might not be correct
 
-### PROBABILITY
+### Probability
 
-The term **PROBABILITY** is applied to a population level variables that describe the magnitude of chance associated with a particular observation or event. Probabilities summarize the relative frequencies of possible outcomes of an experiment.
+The term **probability** is applied to population level variables that describe the magnitude of chance associated with particular observations or event. Probabilities summarize the relative frequencies of possible outcomes.
 
 Example: if we roll a (fair) die, there are 6 possible outcomes, each has a probability of occurring of 1 in 6. This is referred to as a *frequentist* or *classical* way of thinking about the probability of different outcomes... the relative frequency with which an event occurs over numerous identical, objective trials.
 
-Simulating die rolling with the `sample()` function... let's play with changing the number of rolls.
+#### Simulating Die Rolling
+
+We will use the {manipulate} package and the `sample()` function to explore the effects of sample size on estimates of the probability of different outcomes. The probability of each outcome (rolling a "1", "2",..., "6") is 1 in 6, but our estimate of the probability of each possible outcome will change with sample size.
 
 ``` {r eval = FALSE}
 library(manipulate)
@@ -56,122 +58,139 @@ manipulate(
 	n=slider(0, 10000, initial=100, step=100)
 )
 ```
+
 #### CHALLENGE:
-Write a function to simulate die rolling where you pass the number of rolls as an argument. Then, use your function to simulate rolling two dice 1000 times and take the sum of the rolls. Plot a histogram of those results.
+Write a function to simulate rolling a die where you pass the number of rolls as an argument. Then, use your function to simulate rolling two dice 1000 times and take the sum of the rolls. Plot a histogram of those results.
 
 ``` {r}
+nrolls <- 1000
 roll <- function(x) {sample(1:6, x, replace = TRUE)}
-two_dice <- roll(2000)+roll(2000)
+two_dice <- roll(nrolls)+roll(nrolls)
 hist(two_dice,breaks=c(1.5:12.5), probability = TRUE, main="Rolling Two Dice", xlab = "sum of rolls", ylab = "probability")
 ```
 
-### RULES OF PROBABILITY
+### Rules of Probability
 
-1. $Pr$ (+) = Probability that something occurs = 1
-2. $Pr$ ($\emptyset$) = Probability that nothing occurs = 0
-3. $Pr$ (A) = Probability that a particular event, A, occurs
+1. $Pr$ $(+)$ = Probability that something occurs = 1
+2. $Pr$ $(\emptyset)$ = Probability that nothing occurs = 0
+3. $Pr$ $(A)$ = Probability that a particular event $A$ occurs
 
-	$Pr$ (A) $\geq$ 0 and $Pr$ (A) $\leq$ 1
+	0 $\leq$ $Pr$ $(A)$ $\leq$ 1
 
-4. $Pr$ (A $\cup$ B) = Probability that particular event A *or* event B occurs = **UNION**
+4. $Pr$ $(A$ $\cup$ $B)$ = Probability that a particular event $A$ *or* a particular event $B$ occurs = **UNION**
 
-	$Pr$ (A $\cup$ B) = $Pr$(A) + $Pr$(B) - $Pr$ (A $\cap$ B)
+	$Pr$ $(A$ $\cup$ $B)$ = $Pr$ $(A)$ + $Pr$ $(B)$ - $Pr$ $(A$ $\cap$ $B)$
 
-	If A and B are mutually exclusive, then this simplifies to $Pr$ (A) + $Pr$ (B)
+	If event $A$ and $B$ are *mutually exclusive*, then this simplifies to $Pr$ $(A)$ + $Pr$ $(B)$
 
-5. $Pr$ (A $\cap$ B) = Probability that both A *and* B occur simultaneously = **INTERSECTION**.
+5. $Pr$ $(A$ $\cap$ $B)$ = Probability that both $A$ *and* $B$ occur simultaneously = **INTERSECTION**
 
-	$Pr$ (A $\cap$ B)  = $Pr$ (A|B) × $Pr$ (B) = $Pr$ (B|A) × $Pr$ (A)
+	$Pr$ $(A$ $\cap$ $B)$  = $Pr$ $(A$ $\vert$ $B)$ $\times$ $Pr$ $(B)$ = $Pr$ $(B$ $\vert$ $A)$ $\times$ $Pr$ $(A)$
 
-	Where the pipe operator ("|") can be read as "given".
+	where the pipe operator ( $\vert$ ) can be read as "given".
 	
-	If the 2 events are *independent* (i.e., the probability of one does not depend on the probability of the other), then $Pr$ (A $\cap$ B) simplifies to $Pr$ (A) × $Pr$ (B).
+	If the 2 events are *independent* (i.e., if the probability of one does not depend on the probability of the other), then $Pr$ $(A$ $\cap$ $B)$ simplifies to
 	
-#### CHALLENGE:
-What is the probability that a card drawn at random from a deck is both from a red suit (hearts or diamond) (2/4) and a face card (12/52)?
+	$Pr$ $(A)$ $\times$ $Pr$ $(B)$
+	
+	If $Pr$ $(A$ $\cap$ $B)$ = 0, then we say the events are *mutually exclusive* (e.g., you cannot have a die roll be 1 *and* 2)
 
-$Pr$ (A) = 1/2
+6. $Pr$ $(\bar A)$ = Probabilty of the complement of $A$ (i.e., *not* $A$) = 1 - $Pr$ $(A)$a
 
-$Pr$ (B) = 12/52
+7. *Conditional Probability* is the probability of an event occuring after taking into account the occurrence of another event, i.e., one event is *conditioned* on the occurrence of a different event.
 
-Pr A $\cap$ B = $Pr$ (A|B) (0.5) $\times$ $Pr$ (B) (12/52)
+	For example, the probability of a die coming up as a "1" given that we know the die came up as an odd number ("1", "3", or "5").
 
-If $Pr$ (A $\cap$ B) = 0, then we say the events are *mutually exclusive* (e.g., you cannot have a die roll be 1 *and* 2)
-
-6. $Pr$ ($\bar A$) = Probabilty of the complement of A (i.e., *not* A) = 1 - $Pr$ (A)
-
-
-**CONDITIONAL PROBABILITY** - probability that one event occurs after taking into account the occurrence of another event. I.e., a second event is *conditioned* on the occurrence of a first event, e.g., the probability of a die coming up as a "1" given that we know the die came up as "odd".
-
-$Pr$ (A|B) = $Pr$ (A $\cap$ B) / $Pr$ (B)
-
-If A and B are *independent*, then $Pr$ (A|B) = ($Pr$ (A) × $Pr$ (B)) / $Pr$ (B) = $Pr$ (A)
-If A and B are *dependent* then $Pr$ (A|B) ≠ $Pr$ (A)
-
-**RANDOM VARIABLE** -- a variable whose outcomes are assumed to arise by chance or according to some random or stochastic mechanism; the chances of observing a specific value or a value within a specific interval for this random variable has associated with it a probability.
-
-Random variables come in two varieties:
-
-*Discrete Random Variables* - random variables that can assume only a countable number of discrete possibilities (e.g., counts of occurrences in a particular category); we can assign probabilities to the occurence of each value
+	$Pr$ $(A$ $\vert$ $B)$ = $Pr$ $(A$ $\cap$ $B)$ $\div$ $Pr$ $(B)$
+	
+	If event $A$ and event $B$ are *independent*, then $Pr$ $(A$ $\vert$ $B)$ = $[$ $Pr$ $(A)$ $\times$ $Pr$ $(B)$ $]$ $\div$ $Pr$ $(B)$ = $Pr$ $(A)$
+	
+	If event $A$ and $B$ are *dependent*, then  $Pr$ $(A$ $\vert$ $B)$ ≠ $Pr$ $(A)$
 
 #### CHALLENGE:
 You have a deck of 52 cards, Ace to 10 + 3 face cards in each suit. You draw a card at random.
 
-- What is the probability that you draw a face card?
-- What is the probability that you draw a King?
-- What is the probability that you draw a spade?
-- What is the probability that you draw a space given that you draw a face card?
-- What is the probability that you draw a King given that you draw a face card?
+- What is the probability that you draw a *face card*?
+- What is the probability that you draw a *King*?
+- What is the probability that you draw a *spade*?
+- What is the probability that you draw a *spade* given that you draw a *face card*?
+- What is the probability that you draw a *King* given that you draw a *face card*?
+- What is the probability that you draw a card that is both from a *red* suit (hearts or diamonds) and a *face card*?
 
-*Continuous Random Variables* - random variables that can assume any real number value within a given range (e.g., measurements). We cannot assign probabilities to the occurrence of each value, but we can assign probabilites to intervals of values.
+	$Pr$ $(A)$ = *red suit* = 26/52 = 1/2
+
+	$Pr$ $(B)$ = *face card* = 12/52 =
+
+	$Pr$ $(A$ $\vert$ $B)$ = *red suit given face card* = 6/12
+
+	$Pr$ $(A$ $\cap$ $B)$ = $Pr$ $(A$ $\vert$ $B)$ $\times$ $Pr$ $(B)$ = 6/12 $\times$ 12/52 = 6/52 = 0.1153846
+
+- What is the probability that you draw a card that is either a *club* or *not a face card*?
+
+	$Pr$ $(A)$ = *club* = 13/52 = 13/52
+
+	$Pr$ $(B)$ = *not a face card* = 40/52
+
+	$Pr$ $(A$ $\cap$ $B)$ = *club* and *not a face card* = 10/52
+
+	$Pr$ $(A$ $\cup$ $B)$ = $Pr$ $(A)$ + $Pr$ $(B)$ - $Pr$ $(A$ $\cap$ $B)$ = 13/52 + 40/52 - 10/52 = 43/52
+
+### Random Variables
+
+A **random variable** is a variable whose outcomes are assumed to arise by chance or according to some random or stochastic mechanism. The chances of observing a specific outcome or an outcome value within a specific interval has associated with it a **probability**.
+
+Random variables come in two varieties:
+
+1. *Discrete Random Variables* are random variables that can assume only a countable number of discrete possibilities (e.g., counts of outcomes in a particular category). We can assign a probability to each possible outcome.
+
+2. *Continuous Random Variables* are random variables that can assume any real number value within a given range (e.g., measurements). We cannot assign a specific probability to each possible outcome value as the set of possible outcomes is infinite, but we can assign probabilites to intervals of outcome values.
 
 With these basics in mind, we can define a few more terms:
 
-### PROBABILITY FUNCTION
-A **PROBABILITY FUNCTION** is a mathematical function that describes the chance associated with a random variable having a particular value or falling within a given range of values.
+A **probability function** is a mathematical function that describes the chance associated with a random variable having a particular outcome or falling within a given range of outcome values.
 
-As for kinds of variable, we can distinguish two types of probability functions:
+We can also distinguish two types of probability functions:
 
-*Probability Mass Functions (PMF)* - associated with discrete random variables; describe the probability that a random variable takes a particular value
+1. *Probability Mass Functions (PMFs)* are associated with discrete random variables. These functions describe the probability that a random variable takes a particular discrete value.
 
 To be a valid *PMF*, a function $f(x)$ must satisfy the following:
 
   1. There are $k$ distinct outcomes $x_1, x_2,...,x_k$
-  2. $Pr(X=x_i)$ $\geq$ 0 and $\leq$ 1 for all $x_i$
-  3. $\sum_{i=1}^k Pr(X=x_i)$ = 1
+  2. 0 $\leq$ $Pr$ $(X=x_i)$ $\leq$ 1 for all $x_i$
+  3. $\sum_{i=1}^k$ $Pr$ $(X=x_i)$ = 1
 
-Example:
+#### Flipping a Fair Coin
 ``` {r}
 outcomes <- c("heads","tails")
 prob <- c(1/2,1/2)
-barplot(prob,ylim=c(0,0.6),names.arg=outcomes,space=0.1,
-           xlab="x",ylab="Pr(X = x)")
+barplot(prob,ylim=c(0,0.6),names.arg=outcomes,space=0.1, xlab="outcome",ylab="Pr(X = outcome)",main="Probability Mass Function")
 cumprob <- cumsum(prob)
-barplot(cumprob,names.arg=outcomes,space=0.1,main = "Cumulative Probability", xlab="x",ylab="Pr(X <= x)")
-
-outcomes <- c(1,2,3,4,5,6)
-prob <- c(1/6,1/6,1/6,1/6,1/6,1/6)
-barplot(prob,ylim=c(0,0.5),names.arg=outcomes,space=0.1,
-           xlab="x",ylab="Pr(X = x)")
-
-cumprob <- cumsum(prob)
-
-barplot(cumprob,names.arg=outcomes,space=0.1,main = "Cumulative Probability",xlab="x",ylab="Pr(X <= x)")
+barplot(cumprob,names.arg=outcomes,space=0.1,xlab="outcome",ylab="Cumulative Pr(X)",main = "Cumulative Probability")
 ```
 
-*Probability Density Function (PDF)* - associated with continuous random variables; describes the probability that a random variable falls within a given range of values
+#### Rolling a Fair Die
 
-To be a valid *PDF*, a function $f(x)$ must satisfy
+``` {r}
+outcomes <- c(1,2,3,4,5,6)
+prob <- c(1/6,1/6,1/6,1/6,1/6,1/6)
+barplot(prob,ylim=c(0,0.5),names.arg=outcomes,space=0.1,xlab="outcome",ylab="Pr(X = outcome)",main="Probability Mass Function")
+cumprob <- cumsum(prob)
+barplot(cumprob,names.arg=outcomes,space=0.1,xlab="outcome",ylab="Cumulative Pr(X)",main = "Cumulative Probability")
+```
 
-1. $f(x) \geq 0$ for all $-\infty\leq x \leq+\infty$
-2. $\int_{-\infty}^{+\infty} f(x) dx$ = 1. That is, the total area under $f(x)$ = 1
+2. *Probability Density Functions (PDFs)* are associated with continuous random variables. These functions describe the probability that a random variable falls within a given range of outcome values.
 
-Example:
-The **Beta Distribution** refers to a family of continuous probability distributions defined over the interval [0, 1], parametrized by two positive shape parameters, denoted by α and β, that appear as exponents of the random variable and control the shape of the distribution.
+To be a valid *PDF*, a function $f(x)$ must satisfy the following:
 
-$f(x)=Kx^{\alpha-1}(1-x)^{\beta-1}$
+  1. $f(x)$ $\geq$ 0 for all $-\infty$ $\leq$ $x$ $\leq$ $+\infty$
+  2. $\int_{-\infty}^{+\infty}$ $f(x)$ $dx$ = 1. That is, the total area under $f(x)$ = 1
 
-Let's set $K$ = 2, $\alpha$ = 2, and $\beta$ = 1 and restrict the domain of $x$ to [0, 1]. This will give us a triangular function that we can graph as follows:
+#### An Example
+The **Beta Distribution** refers to a family of continuous probability distributions defined over the interval [0, 1] and parametrized by two positive shape parameters, denoted by $\alpha$ and $\beta$, that appear as exponents of the random variable $x$ and control the shape of the distribution.
+
+$f(x)$ = $K$ $x^{\alpha-1}(1-x)^{\beta-1}$
+
+If we set $K$ = 2, $\alpha$ = 2, and $\beta$ = 1 and restrict the domain of $x$ to [0, 1], it gives us a triangular function that we can graph as follows:
 
 ``` {r eval = FALSE}
 library(ggplot2)
@@ -179,28 +198,30 @@ a <- 2
 b <- 1
 K <- 2
 x <- seq(from= 0, to=1, by = 0.025)
-y <- K*x^(a-1)*(1-x)^(b-1)
-lowerx <- seq(from=-0.25, to=0, by= 0.025)
-upperx <- seq(from=1, to=1.25, by= 0.025)
-lowery <- rep(0,11)
-uppery <- rep(0,11)
-x<-c(lowerx,x,upperx)
-y<-c(lowery,y,uppery)
-d<-as.data.frame(cbind(x,y))
-p <- ggplot(data = d, aes(x=x, y=y), xlab = "x", ylab = "y") + geom_line()
+fx <- K*x^(a-1)*(1-x)^(b-1)
+lower_x <- seq(from=-0.25, to=0, by= 0.025) # add some values of x less than zero
+upper_x <- seq(from=1, to=1.25, by= 0.025) # add some values of x greater than one
+lower_fx <- rep(0,11) # add fx=0 values to x<0
+upper_fx <- rep(0,11) # add fx=0 values to x>1
+x<-c(lower_x,x,upper_x) # paste xs together
+fx<-c(lower_fx,fx,upper_fx) # paste fxs together
+d<-as.data.frame(cbind(x,fx))
+p <- ggplot(data = d, aes(x=x, y=fx)) + xlab("x") + ylab("f(x)") + geom_line()
 p
 ```
-Is this a *PDF*? Why or why not?
+Is this a *PDF*? Why or why not? Yes... it satisfies both criteria for a *PDF*.
 
-Yes... the total area under the function is 1.
+  1. $f(x)$ $\geq$ 0 for all $-\infty$ $\leq$ $x$ $\leq$ $+\infty$
+  2. The total area under $f(x)$ = 1
 
-We can explore this interactively with the code below:
+We can show this interactively using the code below:
 ``` {r eval = FALSE}
 library(manipulate)
 manipulate({
-	ggplot(data = d, aes(x=x, y=y), xlab = "x", ylab = "y") +
+	ggplot(data = d, aes(x=x, y=fx)) +
+		xlab("x") + ylab("f(x)") +
 		geom_line() +
-		geom_polygon(data=data.frame(xvals=c(0,n,n,0),yvals=c(0,K*n^(a-1)*(1-n)^(b-1),0,0)), aes(x=xvals,y=yvals)) +
+		geom_polygon(data=data.frame(xvals=c(0,n,n,0),fxvals=c(0,K*n^(a-1)*(1-n)^(b-1),0,0)), aes(x=xvals,y=fxvals)) +
 		ggtitle(paste("Area Under Function = ", 0.5 * n * K*n^(a-1)*(1-n)^(b-1),sep=" "))
 		},
   #define variable that will be changed in plot
@@ -208,9 +229,9 @@ manipulate({
 )
 ```
 
-The shaded area here represents the **cumulative probability distribution**.
+The shaded area here represents the **cumulative probability** integrated across $f(x)$ from $-\inf$ to $x$.
 
-The **cumulative distribution function**, or CDF, of a random variable is defined as the probability of observing a random variable $X$ taking the value of $x$ or less, i.e., $f(x) = Pr (X \leq x)$
+The **cumulative distribution function**, or **CDF**, of a random variable is defined as the probability of observing a random variable $X$ taking the value of $x$ or less, i.e., $f(x)$ = $Pr$ $(X$ $\leq$ $x)$
 
 - This definition applies regardless of whether $X$ is discrete or continuous.
 
@@ -220,25 +241,25 @@ prob <- 0.5 * x * K*x^(a-1)*(1-x)^(b-1)
 barplot(prob,names.arg=x,space=0,main = "Cumulative Probability", xlab="x",ylab="Pr(X <= x)")
 ```
 
-The built in ***R*** function for the beta distribution, `pbeta()`, can give us this directly, if we specify the values of $\alpha$ = 2 and $\beta$ = 1.
+The built in ***R*** function for the **Beta Distribution**, `pbeta()`, can give us the cumulative probability directly, if we specify the values of $\alpha$ = 2 and $\beta$ = 1.
 
 ``` {r}
-pbeta(0.75, 2, 1)
-pbeta(0.5, 2, 1)
+pbeta(0.75, 2, 1) # cumulative probability for x ≤ 0.75
+pbeta(0.5, 2, 1) # cumulative probability for x ≤ 0.50
 ```
 
-In general, we find the cumulative probability for a continuous random variable by calculating the area under the density function of interest from −$\infty$ to $x$. This is what is returned from `pbeta()`. The other related functions for the *Beta Distribution** -- `rbeta()`, `dbeta`, and `qbeta()` -- are also useful. `rbeta()` draws random observations from the specfied beta distribution. `dbeta()` gives the point estimate of the density function at the value of the argument, and `qbeta()` is essentially the converse of `pbeta()` -- it tells you the value of $x$ that is associated with a particular proportion, or quantile, of the cumulative distribution function.
+In general, we find the cumulative probability for a continuous random variable by calculating the area under the probability density function of interest from $-\infty$ to $x$. This is what is is being returned from `pbeta()`. The other related **Beta Distribution** functions, e.g., `rbeta()`, `dbeta()`, and `qbeta()`, are also useful. `rbeta()` draws random observations from a specfied beta distribution. `dbeta()` gives the point estimate of the beta density function at the value of the argument $x$, and `qbeta()` is essentially the converse of `pbeta()` -- it tells you the value of $x$ that is associated with a particular cumulative probability, or quantile, of the cumulative distribution function. Other *PMFs* and *PDFs* have comparable `r`, `d`, `p`, and `q` functions.
 
-``` {r eval =FALSE}
-dbeta()
+Note the relationship between the `p` and `q` functions:
+``` {r}
 pbeta (0.7,2,1) # yields .49
 qbeta (0.49,2,1) # yield 0.7
-dbeta (0.7) # yields 1.4
 ```
 
-Finally, we can define the **survival function** of a random variable $X$ as $S(x) = Pr(X > x)$ = 1 - $f(x)$
+Finally, we can define the **survival function** for a random variable $X$ as $S(x)$ = $Pr$ $(X$ $\gt$ $x)$ = 1 - $Pr$ $(X$ $\leq$ $x)$ = 1 - $f(x)$
 
-## Mean and Variance of Random Variables
+
+## Expected Mean and Variance of Random Variables
 
 The mean (or expected) value for a random varible with a given probability mass function can be expressed generally as follows:
 
@@ -380,7 +401,7 @@ probset<-dpois(x=x,lambda=l)
 barplot(probset,names.arg=x,space=0,xlab="x",ylab="Pr(X = x)")
 ```
 
-As we did for other distibutions, we can also use the built in function `ppois()` to return the value of the **cumulative distribution function**, i.e., the probability of observing up to and including $X$ events occurring in the given interval.
+As we did for other distributions, we can also use the built in function `ppois()` to return the value of the **cumulative distribution function**, i.e., the probability of observing up to and including $X$ events occurring in the given interval.
 
 ```{r}
 x <- 0:10
