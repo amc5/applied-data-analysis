@@ -181,7 +181,7 @@ In ***R*** we can write...
 > pop_sd(x)
 ```
 
-    ## [1] 2.081597
+    ## [1] 2.263323
 
 ``` r
 > sample_sd <- function(x) {
@@ -190,7 +190,7 @@ In ***R*** we can write...
 > sample_sd(x)
 ```
 
-    ## [1] 2.102731
+    ## [1] 2.286301
 
 The built-in ***R*** function `sd()` can be used to calculate the standard deviation of a sample.
 
@@ -222,7 +222,7 @@ or
 > SE1(x)
 ```
 
-    ## [1] 0.297371
+    ## [1] 0.3233318
 
 ``` r
 > SE2 <- function(x) {
@@ -231,7 +231,7 @@ or
 > SE2(x)
 ```
 
-    ## [1] 0.297371
+    ## [1] 0.3233318
 
 The package {sciplot} also includes the function, `se()`, for calculating standard errors (as do others).
 
@@ -240,7 +240,7 @@ The package {sciplot} also includes the function, `se()`, for calculating standa
 > se(x)
 ```
 
-    ## [1] 0.297371
+    ## [1] 0.3233318
 
 ### Calculating confidence intervals from standard errors
 
@@ -250,7 +250,7 @@ The 95% confidence interval, then, describes the range of values into which a st
 
 For example, suppose we wanted to calculate a 95% confidence interval around our estimate of the mean for a particular set of observations, assuming those data reflect a *random variable* that is *normally* distributed and that our observations are independent. We would simply find the values corresponding to the numbers of standard errors away from the mean our statistic would be expected to fall 95% of the time.
 
-We can calculate this by multiplying our estimate of the standard error by the quantile normal (`qnorm(`)) function. Basically, we give the `qnorm()` function a probability, and it returns the value of the cumulative distribution function at that probability (i.e., a number of standard deviations). For example, `qnorm(0.025)` tells us the number of standard deviations away from the mean that correspond with up to 2.5% of of the normal distribution. `qnorm(0.975)` tells us the number of standard deviations up to which 97.5% of observations should fall.
+We can calculate this by multiplying our estimate of the standard error by the quantile normal (`qnorm(`)) function. Basically, we give the `qnorm()` function a quantile, and it returns the value of *X* below which that proportion of the cumulative probability function falls. For example, `qnorm(0.025, mean=0, sd=1)` tells us the number of standard deviations away from the mean that correspond with up to 2.5% of of the normal distribution with mean=0 and sd=1. `qnorm(0.975, mean=0, sd=1)` tells us the number of standard deviations up to which 97.5% of observations should fall.
 
 Let's take a quick look at the NORMAL DISTRIBUTION. Here, we use the `rnorm()` function to sample 10000 numbers from a normal distribution with mean = 0 and standard deviation = 1. \[I am using `set.seed()` here so that each time I run this function, I return the same set of random numbers.\]
 
@@ -293,8 +293,8 @@ Returning to calculating CIs, suppose we have this vector:
 > v <- var(x)
 > s <- sd(x)
 > e <- sqrt(v/n)
-> upper <- mean(x) + qnorm(0.975) * se(x)
-> lower <- mean(x) + qnorm(0.025) * se(x)  # or lower <- mean(x) - qnorm(0.975)*se(x)
+> upper <- mean(x) + qnorm(0.975, mean = 0, sd = 1) * se(x)
+> lower <- mean(x) + qnorm(0.025, mean = 0, sd = 1) * se(x)  # or lower <- mean(x) - qnorm(0.975)*se(x)
 > ci <- c(lower, upper)
 > ci
 ```
@@ -304,8 +304,8 @@ Returning to calculating CIs, suppose we have this vector:
 Or, alternatively...
 
 ``` r
-> upper <- m + qnorm(0.975) * e
-> lower <- m + qnorm(0.025) * e  # or lower <- m - qnorm(0.975)*e
+> upper <- m + qnorm(0.975, mean = 0, sd = 1) * e
+> lower <- m + qnorm(0.025, mean = 0, sd = 1) * e  # or lower <- m - qnorm(0.975)*e
 > ci <- c(lower, upper)
 > ci
 ```
