@@ -99,8 +99,8 @@ e.g., the probability of a die coming up as a "1" given that we know the die cam
 
 	$Pr$ (A|B) = $Pr$ (A $\cap$ B) / $Pr$ (B)
 
-	If A and B are *independent*, then $Pr$ (A|B) = ($Pr$ (A) × $Pr$ (B)) / $Pr$ (B) = $Pr$ (A)
-	If A and B are *dependent* then $Pr$ (A|B) ≠ $Pr$ (A)
+If A and B are *independent*, then $Pr$ (A|B) = ($Pr$ (A) × $Pr$ (B)) / $Pr$ (B) = $Pr$ (A)
+If A and B are *dependent* then $Pr$ (A|B) ≠ $Pr$ (A)
 
 **RANDOM VARIABLE** -- a variable whose outcomes are assumed to arise by chance or according to some random or stochastic mechanism; the chances of observing a specific value or a value within a specific interval for this random variable has associated with it a probability.
 
@@ -192,6 +192,7 @@ Is this a *PDF*? Why or why not? Yes... the total area under the function is 1.
 
 We can explore this interactively with the code below:
 ``` {r eval = FALSE}
+library(manipulate)
 manipulate({
 	ggplot(data = d, aes(x=x, y=y), xlab = "x", ylab = "y") +
 		geom_line() +
@@ -223,28 +224,37 @@ pbeta(0.75, 2, 1)
 pbeta(0.5, 2, 1)
 ```
 
-You find a cumulative probability for a continuous random variable by calculating the area under the density function of interest from −∞ to $x$. This is what is returned from `pbeta()` [the other related functions, `rbeta()`, `dbeta`, and `qbeta()`] are also useful. The first, draws random observations from that distribution, the 
-
-Finally, the **survival function** of a random variable $X$ is defined as
-$S(x) = P(X > x)$ = 1 - $F(x)$
 
 
+You find a cumulative probability for a continuous random variable by calculating the area under the density function of interest from −$\infty$ to $x$. This is what is returned from `pbeta()` [the other related functions, `rbeta()`, `dbeta`, and `qbeta()`] are also useful. The first, draws random observations from the specfied beta distribution. `dbeta()` gives the point estimate of the function at the value of the argument, and `qbeta()` is essentially the converse of `pbeta()` -- it tells you the value of the density function that is associated with a particular quantile.
 
-
-For continuous random variables, the PDF is equivalent to the derivative of the CDF.
-
-``` {p}
-
-pbeta(0.5,2,1)
-
+``` {r eval =FALSE}
+dbeta()
+pbeta (0.7,2,1) # yields .49
+qbeta (0.49,2,1) # yield 0.7
+dbeta (0.7) # yields 1.4
 ```
 
-## Mean of a Discret Random Variable
+Finally, the **survival function** of a random variable $X$ is defined as $S(x) = P(X > x)$ = 1 - $F(x)$
 
-We can calculate the mean (or expected) value of for a random varible with a given probability mass function as follows:
 
-$\mu X$ = Expectation of $X$ = $\sum_{i=1}^k x_i\times Pr(X=x_i)$
- 
-i=1
-=
-xi Pr(X = xi )
+## Mean and Variance of Discrete and Continuous Random Variable
+
+We can calculate the mean (or expected) value for a random varible with a given probability mass function as follows:
+
+$\mu_X$ = Expectation of $X$ = $\sum_{i=1}^k x_i\times Pr(X=x_i)$
+
+$\sigma_X^2$ = Variance = $\sum_{i=1}^k (x_i - \mu_X) \times Pr (X=x_i)$
+
+
+We can calculate the mean (or expected) value and variance for a random varible with a given probability density function as follows:
+
+$\mu_X$ = Expectation of $X$ = $\sum_{i=1}^k x f(x) dx$
+
+$\sigma_X^2$ = Variance in $X$ = $\int_{-\infty}^{+\infty} (x - \mu_X)^2f(x)dx$
+
+
+#### CHALLANGE:
+
+Select 1000 random numbers from a normal distribution with mean 3.5 and SD 4.0
+
