@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 	fig.path = "img/"
 )
 ```
-# Statistical Inference
+# Statistical Inference 1 - Probabilities and Distributions
 
 ## Objectives
 > The objective of this module to begin our discussion of statistical inference from a frequentist statistics approach. Doing so means that we need to cover basics of probability and distributions
@@ -91,6 +91,7 @@ hist(two_dice,breaks=c(1.5:12.5), probability = TRUE, main="Rolling Two Dice", x
 What is the probability that a card drawn at random from a deck is both from a red suit (hearts or diamond) (2/4) and a face card (12/52)?
 
 $Pr$ (A) = 1/2
+
 $Pr$ (B) = 12/52
 
 Pr A $\cap$ B = $Pr$ (A|B) (0.5) $\times$ $Pr$ (B) (12/52)
@@ -111,9 +112,7 @@ If A and B are *dependent* then $Pr$ (A|B) ≠ $Pr$ (A)
 
 Random variables come in two varieties:
 
-*Discrete random variables* - random variables that can assume only a countable number of discrete possibilities (e.g., counts of occurrences in a particular category); we can assign probabilities to the occurence of each value
-
-  * $Pr(X = k)$
+*Discrete Random Variables* - random variables that can assume only a countable number of discrete possibilities (e.g., counts of occurrences in a particular category); we can assign probabilities to the occurence of each value
 
 #### CHALLENGE:
 You have a deck of 52 cards, Ace to 10 + 3 face cards in each suit. You draw a card at random.
@@ -124,20 +123,18 @@ You have a deck of 52 cards, Ace to 10 + 3 face cards in each suit. You draw a c
 - What is the probability that you draw a space given that you draw a face card?
 - What is the probability that you draw a King given that you draw a face card?
 
-*Continuous random variables* - random variables that can assume any real number value within a given range (e.g., measurements). We cannot assign probabilities to the occurrence of each value, but we can assign probabilites to intervals of values.
-
-  * $Pr(X \in A)$
+*Continuous Random Variables* - random variables that can assume any real number value within a given range (e.g., measurements). We cannot assign probabilities to the occurrence of each value, but we can assign probabilites to intervals of values.
 
 With these basics in mind, we can define a few more terms:
 
 ### PROBABILITY FUNCTION
-A probability function is a mathematical function that describes the chance associated with a random variable having a particular value or falling within a given range of values.
+A **PROBABILITY FUNCTION** is a mathematical function that describes the chance associated with a random variable having a particular value or falling within a given range of values.
 
 As for kinds of variable, we can distinguish two types of probability functions:
 
 *Probability Mass Functions (PMF)* - associated with discrete random variables; describe the probability that a random variable takes a particular value
 
-To be a valid *PMF*, a function, $f$, must satisfy the following:
+To be a valid *PMF*, a function $f(x)$ must satisfy the following:
 
   1. There are $k$ distinct outcomes $x_1, x_2,...,x_k$
   2. $Pr(X=x_i)$ $\geq$ 0 and $\leq$ 1 for all $x_i$
@@ -164,15 +161,15 @@ barplot(cumprob,names.arg=outcomes,space=0.1,main = "Cumulative Probability",xla
 
 *Probability Density Function (PDF)* - associated with continuous random variables; describes the probability that a random variable falls within a given range of values
 
-To be a valid *PDF*, a function $f$ must satisfy
+To be a valid *PDF*, a function $f(x)$ must satisfy
 
 1. $f(x) \geq 0$ for all $-\infty\leq x \leq+\infty$
 2. $\int_{-\infty}^{+\infty} f(x) dx$ = 1. That is, the total area under $f(x)$ = 1
 
 Example:
-The beta distribution refers to a family of continuous probability distributions defined over the interval [0, 1], parametrized by two positive shape parameters, denoted by α and β, that appear as exponents of the random variable and control the shape of the distribution.
+The **Beta Distribution** refers to a family of continuous probability distributions defined over the interval [0, 1], parametrized by two positive shape parameters, denoted by α and β, that appear as exponents of the random variable and control the shape of the distribution.
 
-$f(x;\alpha,\beta)=Kx^{\alpha-1}(1-x)^{\beta-1}$
+$f(x)=Kx^{\alpha-1}(1-x)^{\beta-1}$
 
 Let's set $K$ = 2, $\alpha$ = 2, and $\beta$ = 1 and restrict the domain of $x$ to [0, 1]. This will give us a triangular function that we can graph as follows:
 
@@ -193,7 +190,9 @@ d<-as.data.frame(cbind(x,y))
 p <- ggplot(data = d, aes(x=x, y=y), xlab = "x", ylab = "y") + geom_line()
 p
 ```
-Is this a *PDF*? Why or why not? Yes... the total area under the function is 1.
+Is this a *PDF*? Why or why not?
+
+Yes... the total area under the function is 1.
 
 We can explore this interactively with the code below:
 ``` {r eval = FALSE}
@@ -211,8 +210,7 @@ manipulate({
 
 The shaded area here represents the **cumulative probability distribution**.
 
-The **cumulative distribution function** (CDF) of a random variable is defined as the probability of observing a random variable $X$ taking the value of $x$ or less. 
-$$f(x) = Pr (X \leq x)$$
+The **cumulative distribution function**, or CDF, of a random variable is defined as the probability of observing a random variable $X$ taking the value of $x$ or less, i.e., $f(x) = Pr (X \leq x)$
 
 - This definition applies regardless of whether $X$ is discrete or continuous.
 
@@ -229,7 +227,7 @@ pbeta(0.75, 2, 1)
 pbeta(0.5, 2, 1)
 ```
 
-You find a cumulative probability for a continuous random variable by calculating the area under the density function of interest from −$\infty$ to $x$. This is what is returned from `pbeta()`. The other related functions -- `rbeta()`, `dbeta`, and `qbeta()` -- are also useful. The first draws random observations from the specfied beta distribution. `dbeta()` gives the point estimate of the function at the value of the argument, and `qbeta()` is essentially the converse of `pbeta()` -- it tells you the value of the density function that is associated with a particular quantile.
+In general, we find the cumulative probability for a continuous random variable by calculating the area under the density function of interest from −$\infty$ to $x$. This is what is returned from `pbeta()`. The other related functions for the *Beta Distribution** -- `rbeta()`, `dbeta`, and `qbeta()` -- are also useful. `rbeta()` draws random observations from the specfied beta distribution. `dbeta()` gives the point estimate of the density function at the value of the argument, and `qbeta()` is essentially the converse of `pbeta()` -- it tells you the value of $x$ that is associated with a particular proportion, or quantile, of the cumulative distribution function.
 
 ``` {r eval =FALSE}
 dbeta()
@@ -238,17 +236,17 @@ qbeta (0.49,2,1) # yield 0.7
 dbeta (0.7) # yields 1.4
 ```
 
-Finally, the **survival function** of a random variable $X$ is defined as $S(x) = P(X > x)$ = 1 - $F(x)$
+Finally, we can define the **survival function** of a random variable $X$ as $S(x) = Pr(X > x)$ = 1 - $f(x)$
 
-## Mean and Variance of Discrete and Continuous Random Variables
+## Mean and Variance of Random Variables
 
-The mean (or expected) value for a random varible with a given probability mass function can be expressed as follows:
+The mean (or expected) value for a random varible with a given probability mass function can be expressed generally as follows:
 
 $\mu_X$ = Expectation of $X$ = $\sum_{i=1}^k x_i\times Pr(X=x_i)$
 
 $\sigma_X^2$ = Variance = $\sum_{i=1}^k (x_i - \mu_X)^2 \times Pr (X=x_i)$
 
-Applying these formulae to die rolls, we could calculate the expectation (i.e. mean) of a large set of die rolls...
+Applying these formulae to die rolls, we could calculate the expectation (i.e., mean) of a large set of die rolls...
 
 (1 x 1/6) + (2 x 1/6) + ... + (6 x 1/6) = 3.5
 
@@ -257,7 +255,7 @@ m <-sum(seq(1:6) * 1/6)
 m
 ```
 
-And the variance... 
+And the expected variance... 
 
 (1 - 3.5)^2 + (2 - 3.5)^2 + ... + (6 - 3.5)^2 = 
 ``` {r}
@@ -265,24 +263,24 @@ var <- sum((1/6)*(seq(1:6)-mean(seq(1:6)))^2)
 var
 ```
 
-Likewise, we can calculate the mean (or expected) value and variance for a random varible with a given probability density function as follows:
+Likewise, we can calculate the expected mean and variance for a random varible with a given probability density function as follows:
 
-$\mu_X$ = Expectation of $X$ = $\sum_{i=1}^k$ $x$ $f(x)$ $dx$
+$\mu_X$ = Expectation of $X$ = $\int_{-\infty}^{+\infty}$ $x$ $f(x)$ $dx$
 
 $\sigma_X^2$ = Variance in $X$ = $\int_{-\infty}^{+\infty} (x - \mu_X)^2$ $f(x)$ $dx$
 
-This would require a bit of calculus -- i.e., integration -- to demonstrate.
+To demonstrate these numerically would require a bit of calculus -- i.e., integration.
 
 
-## Common and Useful Probability Distributions
+## Useful Probability Distributions for Modeling Random Variables
 
 ### Probability Mass Functions
 
-#### Bernoulli Distribution
+#### The Bernoulli Distribution
 
-The Bernoulli distribution is the probability distribution of a **BINARY** random variable -- i.e., a variable that has only two possible outcomes, such as success or failure, heads or tails, true or false. If $p$ is the probability of one outcome, then $1-p$ has to be the probabilty of the alternative. For flipping a fair coin, for example, $p$ = 0.5 and $1-p$ also = 0.5.
+The **Bernoulli Distribution** is the probability distribution of a **BINARY** random variable -- i.e., a variable that has only two possible outcomes, such as success or failure, heads or tails, true or false. If $p$ is the probability of one outcome, then $1-p$ has to be the probabilty of the alternative. For flipping a fair coin, for example, $p$ = 0.5 and $1-p$ also = 0.5.
 
-Here, the probability mass function is:
+For the **BERNOULLI DISTRIBUTION**, the probability mass function is:
 
 $f(x) = p^x(1-p)^{1-x}$ where $x$ = {0 or 1}
 
@@ -298,7 +296,7 @@ $Var$ (spade) = $(13/52)$ $\times$ $(1-13/52)$ = (0.25) $\times$ (0.75) = 0.1875
 
 #### Binomial Distribution
 
-The Bernoulli distribution is a special case of the **BINOMIAL** distribution. The binomial distribution is used to model the probability of a number of "successes" *n* out of a set of "trials" *p*, i.e., for *counts* of a particular outcome.
+The Bernoulli distribution is a special case of the **Binomial Distribution**. The binomial distribution is typically used to model the probability of a number of "successes" *n* out of a set of "trials" *p*, i.e., for *counts* of a particular outcome.
 
 Again, the probability of success on each trial = $p$ and the probability of not success = $1-p$.
 
@@ -306,11 +304,11 @@ For the **BINOMIAL DISTRIBUTION**, the probability mass function is:
 
 $f(x) = \binom{n}{x} p^x(1-p)^{n-x}$ where $x$ = {0, 1, 2, ... , n}
 
-where $\binom{n}{x}$ = $\frac{n!}{x!(n-x)!}$
+and where $\binom{n}{x}$ = $\frac{n!}{x!(n-x)!}$
 
 This is read as "$n$ choose $x$", i.e., the probability of $x$ successes out of $n$ trials.
 
-For this distribution $\mu_X$ = $np$ and $\sigma_X^2$ = $np(1-p)$
+For this distribution, $\mu_X$ = $np$ and $\sigma_X^2$ = $np(1-p)$
 
 Where $n$ = 1, this simplifies to the Bernoulli distribution.
 
@@ -328,40 +326,44 @@ nsuccesses <- 3
 prob <- (factorial(nrolls)/(factorial(nsuccesses)*factorial(nrolls-nsuccesses)))*(p^nsuccesses)*(1-p)^(nrolls-nsuccesses)
 ```
 
-As for other distributions, ***R*** has a built in function you can use to solve for the mass function probability at a given value, i.e., $Pr (X = x)$. 
+As for other distributions, ***R*** has a built in function you can use to solve for the mass function probability at a given value, i.e., $Pr (X = x)$.
 
 ``` {r}
 dbinom(x=nsuccesses,size=nrolls,prob=p)
 ```
 
-We can also use the built in function `pbinom()` to return the value of the CUMULATIVE DISTRIBUTION FUNCTION, i.e., the probability of observing up to and including $X$ successes in $n$ trials.
+We can also use the built in function `pbinom()` to return the value of the **cumulative distribution function**, i.e., the probability of observing up to and including $X$ successes in $n$ trials.
 
 So, for example, the chances of observing exactly 0, 1, 2, 3, ... 6 rolls of "1" on 6 rolls of a die are...
 
 ``` {r}
 probset<-dbinom(x=0:6,size=6,prob=1/6)
 barplot(probset,names.arg=0:6,space=0,xlab="x",ylab="Pr(X = x)")
-sum(probset)
+sum(probset) # equals 1, as it should
 ```
 The chance of observing exactly 3 rolls of 1 is...
 ```
 dbinom(x=3,size=6,prob=1/6)
 ```
-And the chance of observing up to and including 3 rolls of 1 is...
+And the chance of observing up to and including 3 rolls of "1" is...
 ```{r}
-sum(dbinom(x=0:3,size=6,prob=1/6))
+sum(dbinom(x=0:3,size=6,prob=1/6)) # this sums the probabilities of 0, 1, 2, and 3 successes
 pbinom(q=3,size=6,prob=1/6) # note the name of the argument is q not x
 ```
 
 #### Poisson Distribution
 
-The Poisson distribution is used to model open ended counts of independently occuring events, for example the number of cars that pass a traffic light over a given interval of time or the number of times a monkey scratches itself during a given observation interval. The probability mass function is described by the parameter $\lambda$, where $\lambda$ can be interpreted as the mean number of occurrences in the interval. The probability mass function is:
+The **Poisson Distribution** is often used to model open ended counts of independently occuring events, for example the number of cars that pass a traffic light over a given interval of time or the number of times a monkey scratches itself during a given observation interval. The probability mass function for the Poisson Distribution is described by a single parameter, $\lambda$, where $\lambda$ can be interpreted as the mean number of occurrences in the interval. 
+
+The probability mass function for the **POISSON DISTRIBUTION** is:
 
 $f(x) = \frac{\lambda^xexp(-\lambda)}{x!}$ where $x$ = {0, 1, 2, ...}
 
-For this distribution $\mu_X$ = $\lambda$ and $\sigma_X^2$ = $\lambda$ (i.e., the mean and the variance are the same).
+For this distribution, $\mu_X$ = $\lambda$ and $\sigma_X^2$ = $\lambda$
 
-Here's how we can look at the probability mass functions for different values of lambda:
+Note that the mean and the variance are the same!
+
+Let's use ***R*** to look at the probability mass functions for different values of $\lambda$:
 
 ``` {r}
 x <- 0:10
@@ -378,7 +380,7 @@ probset<-dpois(x=x,lambda=l)
 barplot(probset,names.arg=x,space=0,xlab="x",ylab="Pr(X = x)")
 ```
 
-We can also use the built in function `ppois()` to return the value of the CUMULATIVE DISTRIBUTION FUNCTION, i.e., the probability of observing up to and including $X$ events occurring in the given interval.
+As we did for other distibutions, we can also use the built in function `ppois()` to return the value of the **cumulative distribution function**, i.e., the probability of observing up to and including $X$ events occurring in the given interval.
 
 ```{r}
 x <- 0:10
@@ -392,7 +394,11 @@ l <- 20
 barplot(ppois(q=x,lambda=l),ylim=0:1,space=0, names.arg=x,ylab="Pr(X<=x)",xlab="x")
 ```
 
-#### HOMEWORK 1:
+#### HOMEWORK:
+Create a new ***GitHub*** repository and ***R*** Project named "homework-week-4". In your repo, create an **R Markdown** file and answer the following problems. When you are done, "knit" your **R Markdown** file to `.html` and push your `.Rmd` and `.html` files up to ***GitHub*** for me to look at.
+
+Problem 1:
+
 Every Saturday, at the same time, a primatologist goes and sits in the forest in the morning and listens for gibbon calls, counting the number of calls they hear in a 2 hour window from 5am to 7am. Based on previous knowledge, she believes that the mean number calls she will hear in that time is exactly 15. Let X represent the appropriate Poisson random variable of the number of calls heard in each monitoring session.
 
 - What is the probability that she will hear more than 8 calls during any given session?
@@ -405,7 +411,9 @@ Every Saturday, at the same time, a primatologist goes and sits in the forest in
 
 #### Uniform Distribution
 
-The **UNIFORM** distribution is the simplest density function describing a continuous random variable where there is no fluctuation in probability across some interval. The probability density function is:
+The **Uniform Distribution** is the simplest density function describing a continuous random variable where there is no fluctuation in probability across some interval.
+
+The probability density function for the **UNIFORM DISTRIBUTION** is:
 
 $f(x) = \frac{1}{b-a}$ where $a$ $\leq$ $x$ $\leq$ $b$ and 0 for $x$ < $a$ and $x$ > $b$
 
@@ -422,7 +430,7 @@ y <- dunif(x,min=a, max=b) # dunif() evaluates the density at each x
 plot(x,y, type="l")
 quant <- seq(from=a, to=b, by = 0.1)
 punif(q=quant,min=a,max=b) # punif() is the cumulative probability density up to a given x
-plot(quant,punif(q=quant,min=a,max=b))
+plot(quant,punif(q=quant,min=a,max=b)) # the CDF increases linearly
 ```
 
 #### CHALLENGE:
@@ -430,9 +438,11 @@ Simulate a sample of 100000 random numbers from a uniform distribution in the in
 
 #### Normal Distribution
 
-The **NORMAL** or **GAUSSIAN** distribution is one of the commonly applied probability distributions for modeling continuous random variables. Two parameters, $\mu$ and $\sigma$, are used to describe a normal distribution.
+The **Normal or Gaussian Distribution** is perhaps the most familiar and most commonly applied probability distributions for modeling continuous random variables. Two parameters, $\mu$ and $\sigma$, are used to describe a normal distribution.
 
-We can get an idea of the shape of a normal distribution with different $\mu$ and $\sigma$ as follows (play with these). Remember the function, `dnorm()` gives the value of the density function at a given value of $X$. $X$ can range from -$\infty$ to +$\infty$... it doesn't make sense to talk about the probability of a given value of $X$ as these are density not mass functions.
+We can get an idea of the shape of a normal distribution with different $\mu$ and $\sigma$ as follows using the ***R**** code below. Type it in and then  play with values of mu and sigma.
+
+Remember the function, `dnorm()` gives the value of the density function at a given value of $x$. $x$ can range from -$\infty$ to +$\infty$. Remember, it does not make sense to talk about the "probability" of a given value of $x$ as these are density not mass functions, but we can talk about the probability of $x$ falling within a given interval.
 
 ``` {r}
 mu <- 6
@@ -442,11 +452,11 @@ fx <- dnorm(x,mean=mu,sd=sigma)
 plot(x,fx, type="l") # plots normal distribution with mean = 0 and SD = 1
 ```
 
-The `pnorm()` function, as for other distributions, returns the cumulative probability of observing a value less than or equal to $x$, i.e., $Pr$ ($X$ $\leq$ $x$) 
+The `pnorm()` function, as with the `p` function for other distributions, returns the cumulative probability of observing a value less than or equal to $x$, i.e., $Pr$ ($X$ $\leq$ $x$) 
 
 ``` {r}
-cdf<-pnorm(x,mean=mu,sd=sigma)
-plot(x,cdf, type="l") # plots CDF
+CDF<-pnorm(x,mean=mu,sd=sigma)
+plot(x,CDF, type="l") # plots the cumulative distribution function
 ```
 
 You can use `pnorm()` to calculate the probability of observation's value falling within a particular interval. For example, for a normal distribution with $\mu$=6 and $\sigma$=2, the probability of an random observation falling between 7 and 8 is...
@@ -456,7 +466,7 @@ prob<-pnorm(8,mean=mu,sd=sigma)-pnorm(7,mean=mu,sd=sigma)
 prob
 ```
 
-The probability that an observation falls within 2 standard deviations of the mean for this normal distribution is...
+Likewise, the probability that an observation falls within 2 standard deviations of the mean a particular normal distribution is...
 
 ``` {r}
 prob<-pnorm(mu + 2*sigma, mean=mu, sd=sigma) -
@@ -472,7 +482,16 @@ prob<-pnorm(mu + 1*sigma, mean=mu, sd=sigma) -
 	pnorm(mu - 1*sigma, mean=mu, sd=sigma)
 prob
 ```
+
+#### R Code for Plotting Normal Distributions
+
+Type this in and play with varying mu and sigma.
+
 ``` {r}
+mu <- 6
+sigma <- 2
+x <- seq(from=(mu - 4*sigma), to=(mu + 4*sigma), length.out = 1000)
+fx <- dnorm(x,mean=mu,sd=sigma)
 df <- as.data.frame(cbind(x,fx))
 plot(df$x,df$fx,type="l",main=paste("N(mu=",mu,", sigma=",sigma, ") distribution", sep=""), xlab="x",ylab="f(x)")
 abline(v=c(mu - 1*sigma, mu + 1 * sigma))
@@ -482,22 +501,42 @@ sd1 <- df[x>=(mu - 1*sigma) & x<=(mu + 1*sigma),]
 sd2 <- df[x>=(mu - 2*sigma) & x<=(mu + 2*sigma),]
 
 polygon(rbind(c(mu - 1*sigma,0),cbind(sd1$x,sd1$fx),c(mu + 1*sigma,0)),border=NA,col="gray")
+
 ```
 
-The `qnorm()` function will tell the number of standard deviations away from the mean that a give us what the probability 
+The `qnorm()` function will tell us the value of $x$ below which a given proportion of the cumulative probability function falls. As we saw earlier, we can use `qnorm()` to calculate confidence intervals.
+
+``` {r eval = FALSE}
+abline(v=c(qnorm(0.025,mean=mu,sd=sigma),qnorm(0.975,mean=mu,sd=sigma)))
+
+polygon(rbind(c(mu - 2*sigma,0),cbind(sd2$x,sd2$fx),c(mu + 2*sigma,0)),border=NA,col="gray")
+```
 
 #### CHALLENGE:
 
-- Create a vector containing **N** random numbers selected from a normal distribution with mean **m** and standard deviation **sd**. Use 10000 for **N**, 3.5 for **m**, and 4 for **sd**. HINT: such a function exists! `rnorm()`
+- Create a vector containing **N** random numbers selected from a normal distribution with mean **mu** and standard deviation **sigma**. Use 10000 for **N**, 3.5 for **mu**, and 4 for **sigma**. HINT: such a function exists! `rnorm()`
 - Calculate the mean, variance, and SE in your set of random numbers.
 - Plot a histogram of your random numbers
 
+```{r}
 N <- 10000
-m <- 3.5
-sd <- 4
-v <- rnorm(N,m,sd)
+mu <- 3.5
+sigma <- 4
+v <- rnorm(N,mu,sigma)
 mean(v)
 var(v)
 se <- sqrt(var(v)/N)
 se
 hist(v,breaks=seq(from=-15, to=20, by=0.5), probability = TRUE)
+```
+A quantile-quantile plot can be used to look at whether the 
+
+``` {r}
+qqnorm(v,main="Normal QQ plot random normal variables")
+qqline(v,col="gray")
+```
+
+#### HOMEWORK (Continued)
+Answer this question in the same `.Rmd` and `.html` file you started for Problem 1.
+
+Problem 2:

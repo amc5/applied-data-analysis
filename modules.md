@@ -27,3 +27,5 @@ Week 3
 ### Module 06 - [Exploratory Data Analysis](module-06/module-06.md)
 
 ### Module 07 - [Statistics Fundamentals - Central Tendency and Variance](module-07/module-07.md)
+
+### Module 08 - [Statistical Inference 1 - Probabilities and Distribsutions](module-08/module-08.md)
