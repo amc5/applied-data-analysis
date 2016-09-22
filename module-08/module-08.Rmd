@@ -1,7 +1,7 @@
 ---
 title: "Module 08"
-output:
-    github_document
+#output:
+#    github_document
 ---
 
 ```{r setup, include=FALSE}
@@ -24,41 +24,227 @@ knitr::opts_chunk$set(
 
 - **Population** = includes **all** of the elements from a set of data = ***N***
 - **Sample** = one or more observations from a population = ***n***
-- **Parameter** = a measurable characteristic of a population
-- **Statistic** = a measureable characteristic about a sample
+- **Parameter** = a measurable characteristic of a *population*
+- **Statistic** = a measureable characteristic about a *sample*
 
-When we do **inference** we are basically trying to draw conclusions about a *population* based on measurement from a noisy *sample* or, conversely, evaluate whether it is reasonable to assume that our samples is drawn from a particular population.
+When we do **statistical inference** we are basically trying to draw conclusions about a *population* based on measurements from a noisy *sample* or we are trying to evaluate whether it is reasonable to assume that our sample is drawn from a particular population.
 
 This process of trying to draw conclusions is complicated by the fact that...
-- Our sample is biased, non-random, or non-representative in some way
-- There may be unknown or unobserved variables that impact how the sample is related to the population
-- The assumptions we make about the population that our sample is drawn from might not be correct
 
-- **PROBABILITY** = a population-level variable that describes the magnitude of the chance associated with a particular observation or event; summarizes the possible outcomes of an experiment. E.g., rolling a (fair) die, there are 6 possible outcomes, each has a probability of occurring of 1 in 6. This is referred to as a *frequentist* or *classical* way of thinking about outcomes... the relative frequency with which an event occurs over numerous identical, objective trials.
+- our sample may be biased, non-random, or non-representative in some way
+- there may be unknown or unobserved variables that impact how the sample is related to the population
+- the assumptions we make about the population that our sample is drawn from might not be correct
 
-**Rules of Probability**
+## PROBABILITY
 
-Pr (something happening) = 1
-Pr (nothing happens) = 0
-Pr (a particular event happens) >= 0 and <= 1
+The term **PROBABILITY** is applied to a population level variables that describe the magnitude of chance associated with a particular observation or event. Probabilities summarize the relative frequencies of possible outcomes of an experiment.
 
-**Union of two events** = probability that event A **or** event B occurs
+Example: if we roll a (fair) die, there are 6 possible outcomes, each has a probability of occurring of 1 in 6. This is referred to as a *frequentist* or *classical* way of thinking about the probability of different outcomes... the relative frequency with which an event occurs over numerous identical, objective trials.
 
-Pr (A ∪ B) = Pr(A) + Pr(B) - Pr (A ∩ B)
+Simulating die rolling with the `sample()` function... let's play with changing the number of rolls.
 
-If A and B are mutually exclusive, then this simplifies toPr(A) + Pr(B)
+``` {r eval = FALSE}
+library(manipulate)
+outcomes <- c(1,2,3,4,5,6)
+manipulate(
+	hist(sample(outcomes, n, replace = TRUE),
+			 breaks=c(0.5,1.5,2.5,3.5,4.5,5.5,6.5),
+			 probability = TRUE,
+			 main = paste("Histogram of Outcomes of ", n, " Die Rolls", sep=""),
+			 xlab = "roll",
+			 ylab = "probability"),
+	n=slider(0, 10000, initial=100, step=100)
+)
 
-**Intersection of two events** = probability that both A **and** B occur simultaneously
-Pr (A ∩ B)  = Pr (A|B) × Pr (B) or Pr (B|A) × Pr (A)
+#### CHALLENGE 1:
+Write a function to simulate die rolling where you pass the number of rolls as an argument. Then, use your function to simulate rolling two dice 1000 times and take the sum of the rolls. Plot a histogram of those results.
 
-If Pr (A ∩ B) = 0, then events are mutually exclusive (e.g., you cannot have a die roll be 1 and 2)
+``` {r}
+roll <- function(x) {sample(1:6, x, replace = TRUE)}
+two_dice <- roll(2000)+roll(2000)
+hist(two_dice,breaks=c(1.5:12.5), probability = TRUE, main="Rolling Two Dice", xlab = "sum of rolls", ylab = "probability")
+```
 
-If these 2 events are independent, then Pr (A ∩ B) = Pr (A) × Pr (B) 
+**RULES OF PROBABILITY**
 
-**Conditional Probability** = probability that one event occurs after taking into account the occurrence of another event, i.e., a second event is conditioned on the occurrence of a first event
+1. $Pr$ (+) = Probability that something occurs = 1
+2. $Pr$ ($\emptyset$) = Probability that nothing occurs = 0
+3. $Pr$ (A) = Probability that a particular event, A, occurs
 
-e.g., the probability of a die coming up as "1" given that it had come up as odd
+	$Pr$ (A) $\geq$ 0 and $Pr$ (A) $\leq$ 1
 
-Pr (A|B) = Pr (A ∩ B) / Pr (B)
+4. $Pr$ (A $\cup$ B) = Probability that particular event A *or* event B occurs = **UNION**
 
-If A and B are independent, then Pr (A | B) = (Pr (A) × Pr (B)) / Pr (B) = Pr (A)
+	$Pr$ (A $\cup$ B) = $Pr$(A) + $Pr$(B) - $Pr$ (A $\cap$ B)
+
+	If A and B are mutually exclusive, then this simplifies to $Pr$ (A) + $Pr$ (B)
+
+5. $Pr$ (A $\cap$ B) = Probability that both A *and* B occur simultaneously = **INTERSECTION**.
+
+	$Pr$ (A $\cap$ B)  = $Pr$ (A|B) × $Pr$ (B) = $Pr$ (B|A) × $Pr$ (A)
+
+	Where the pipe operator ("|") can be read as "given".
+	
+	If the 2 events are *independent* (i.e., the probability of one does not depend on the probability of the other), then $Pr$ (A $\cap$ B) simplifies to $Pr$ (A) × $Pr$ (B). E.g., the probability that a roll is "odd" and less than 4 = 1/2 * 1/2
+
+	If $Pr$ (A $\cap$ B) = 0, then we say the events are *mutually exclusive* (e.g., you cannot have a die roll be 1 *and* 2)
+
+6. $Pr$ ($\bar A$) = Probabilty of the complement of A (i.e., *not* A) = 1 - $Pr$ (A)
+
+
+**CONDITIONAL PROBABILITY** - probability that one event occurs after taking into account the occurrence of another event. I.e., a second event is *conditioned* on the occurrence of a first event
+
+e.g., the probability of a die coming up as a "1" given that we know the die came up as "odd""
+
+
+	$Pr$ (A|B) = $Pr$ (A $\cap$ B) / $Pr$ (B)
+
+	If A and B are *independent*, then $Pr$ (A|B) = ($Pr$ (A) × $Pr$ (B)) / $Pr$ (B) = $Pr$ (A)
+	If A and B are *dependent* then $Pr$ (A|B) ≠ $Pr$ (A)
+
+**RANDOM VARIABLE** -- a variable whose outcomes are assumed to arise by chance or according to some random or stochastic mechanism; the chances of observing a specific value or a value within a specific interval for this random variable has associated with it a probability.
+
+Random variables come in two varieties:
+
+*Discrete random variables* - random variables that can assume only a countable number of discrete possibilities (e.g., counts of occurrences in a particular category); we can assign probabilities to the occurence of each value
+
+  * $Pr(X = k)$
+
+#### CHALLENGE:
+You have a deck of 52 cards, Ace to 10 + 3 face cards in each suit. You draw a card at random.
+
+- What is the probability that you draw a face card?
+- What is the probability that you draw a King?
+- What is the probability that you draw a spade?
+- What is the probability that you draw a space given that you draw a face card?
+- What is the probability that you draw a King given that you draw a face card?
+
+
+*Continuous random variables* - random variables that can assume any real number value within a given range (e.g., measurements). We cannot assign probabilities to the occurrence of each value, but we can assign probabilites to intervals of values.
+
+  * $Pr(X \in A)$
+
+With these basics in mind, we can define a few more terms:
+
+**PROBABILITY FUNCTION** - a mathematical function that describes the chance associated with a random variable having a particular value or falling within a given range of values.
+
+As for kinds of variable, we can distinguish two types of probability functions:
+
+*Probability Mass Functions (PMF)* - associated with discrete random variables; describe the probability that a random variable takes a particular value
+
+To be a valid *PMF*, a function, $f$, must satisfy the following:
+
+  1. There are $k$ distinct outcomes $x_1, x_2,...,x_k$
+  2. $Pr(X=x_i)$ $\geq$ 0 and $\leq$ 1 for all $x_i$
+  3. $\sum_{i=1}^k Pr(X=x_i)$ = 1
+
+Example:
+``` {r}
+outcomes <- c("heads","tails")
+prob <- c(1/2,1/2)
+barplot(prob,ylim=c(0,0.6),names.arg=outcomes,space=0.1,
+           xlab="x",ylab="Pr(X = x)")
+cumprob <- cumsum(prob)
+barplot(cumprob,names.arg=outcomes,space=0.1,main = "Cumulative Probability", xlab="x",ylab="Pr(X <= x)")
+
+outcomes <- c(1,2,3,4,5,6)
+prob <- c(1/6,1/6,1/6,1/6,1/6,1/6)
+barplot(prob,ylim=c(0,0.5),names.arg=outcomes,space=0.1,
+           xlab="x",ylab="Pr(X = x)")
+
+cumprob <- cumsum(prob)
+
+barplot(cumprob,names.arg=outcomes,space=0.1,main = "Cumulative Probability",xlab="x",ylab="Pr(X <= x)")
+```
+
+*Probability Density Function (PDF)* - associated with continuous random variables; describes the probability that a random variable falls within a given range of values
+
+To be a valid *PDF*, a function $f$ must satisfy
+
+1. $f(x) \geq 0$ for all $-\infty\leq x \leq+\infty$
+2. $\int_{-\infty}^{+\infty} f(x)dx$ = 1. That is, the total area under $f(x)$ = 1
+
+Example:
+The beta distribution refers to a family of continuous probability distributions defined over the interval [0, 1], parametrized by two positive shape parameters, denoted by α and β, that appear as exponents of the random variable and control the shape of the distribution.
+
+$f(x;\alpha,\beta)=Kx^{\alpha-1}(1-x)^{\beta-1}$
+
+Let's set K = 2, α = 2, and β = 1 and restrict the domain to [0, 1]. This will give us a triangular function that we can graph as follows:
+
+``` {r eval = FALSE}
+library(ggplot2)
+a <- 2
+b <- 1
+K <- 2
+x <- seq(from= 0, to=1, by = 0.025)
+y <- K*x^(a-1)*(1-x)^(b-1)
+lowerx <- seq(from=-0.25, to=0, by= 0.025)
+upperx <- seq(from=1, to=1.25, by= 0.025)
+lowery <- rep(0,11)
+uppery <- rep(0,11)
+x<-c(lowerx,x,upperx)
+y<-c(lowery,y,uppery)
+d<-as.data.frame(cbind(x,y))
+p <- ggplot(data = d, aes(x=x, y=y), xlab = "x", ylab = "y") + geom_line()
+p
+```
+Is this a *PDF*? Why or why not? Yes... the total area under the function is 1.
+
+We can explore this interactively with the code below:
+``` {r eval = FALSE}
+manipulate({
+	ggplot(data = d, aes(x=x, y=y), xlab = "x", ylab = "y") +
+		geom_line() +
+		geom_polygon(data=data.frame(xvals=c(0,n,n,0),yvals=c(0,K*n^(a-1)*(1-n)^(b-1),0,0)), aes(x=xvals,y=yvals)) +
+		ggtitle(paste("Area Under Function = ", 0.5 * n * K*n^(a-1)*(1-n)^(b-1),sep=" "))
+		},
+  #define variable that will be changed in plot
+    n=slider(0, 1, initial=0.5, step=0.01)
+)
+```
+
+The shaded area here represents the **cumulative probability distribution**.
+
+The **cumulative distribution function** (CDF) of a random variable is defined as the probability of observing a random variable $X$ taking the value of $x$ or less. 
+$$f(x) = Pr (X \leq x)$$
+
+- This definition applies regardless of whether $X$ is discrete or continuous.
+
+``` {r eval = FALSE}
+x <- seq(from=0, to=1, by=0.005)
+prob <- 0.5 * x * K*x^(a-1)*(1-x)^(b-1)
+barplot(prob,names.arg=x,space=0,main = "Cumulative Probability", xlab="x",ylab="Pr(X <= x)")
+```
+
+The built in ***R*** function for the beta distribution, `pbeta()`, can give us this directly, if we specify the values of α = 2 and β = 1.
+
+``` {r}
+pbeta(0.75, 2, 1)
+pbeta(0.5, 2, 1)
+```
+
+You find a cumulative probability for a continuous random variable by calculating the area under the density function of interest from −∞ to $x$. This is what is returned from `pbeta()` [the other related functions, `rbeta()`, `dbeta`, and `qbeta()`] are also useful. The first, draws random observations from that distribution, the 
+
+Finally, the **survival function** of a random variable $X$ is defined as
+$S(x) = P(X > x)$ = 1 - $F(x)$
+
+
+
+
+For continuous random variables, the PDF is equivalent to the derivative of the CDF.
+
+``` {p}
+
+pbeta(0.5,2,1)
+
+```
+
+## Mean of a Discret Random Variable
+
+We can calculate the mean (or expected) value of for a random varible with a given probability mass function as follows:
+
+$\mu X$ = Expectation of $X$ = $\sum_{i=1}^k x_i\times Pr(X=x_i)$
+ 
+i=1
+=
+xi Pr(X = xi )
