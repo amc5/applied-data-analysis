@@ -59,7 +59,7 @@ manipulate(
 )
 ```
 
-#### CHALLENGE:
+#### CHALLENGE 1:
 Write a function to simulate rolling a die where you pass the number of rolls as an argument. Then, use your function to simulate rolling two dice 1000 times and take the sum of the rolls. Plot a histogram of those results.
 
 ``` {r}
@@ -107,7 +107,7 @@ hist(two_dice,breaks=c(1.5:12.5), probability = TRUE, main="Rolling Two Dice", x
 	
 	If event $A$ and $B$ are *dependent*, then  *Pr* $(A$ $\vert$ $B)$ ≠ *Pr* $(A)$
 
-#### CHALLENGE:
+#### CHALLENGE 2:
 You have a deck of 52 cards, Ace to 10 + 3 face cards in each suit. You draw a card at random.
 
 - What is the probability that you draw a *face card*?
@@ -306,7 +306,7 @@ $f(x)$ = $p^x(1-p)^{1-x}$ where $x$ = {0 or 1}
 
 For this distribution, $\mu_X$ = $p$ and $\sigma_X^2$ = $p(1-p)$
 
-#### CHALLENGE:
+#### CHALLENGE 3:
 
 Using the Bernoulli distribution, calculate the expectation for drawing a *spade* from a deck of cards? What is the variance in this expectation across a large number of draws?
 
@@ -332,7 +332,7 @@ For this distribution, $\mu_X$ = *np* and $\sigma_X^2$ = *np*(1-*p*). Recall, $\
 
 Where $n$ = 1, this simplifies to the Bernoulli distribution.
 
-#### CHALLENGE:
+#### CHALLENGE 4:
 
 What is the chance of getting a "1" on each of six consecutive rolls of a die? What about of getting exactly three "1"s? What is the expected number of "1"s to occur in six consecutive rolls?
 
@@ -420,10 +420,8 @@ l <- 20
 barplot(ppois(q=x,lambda=l),ylim=0:1,space=0, names.arg=x,xlab="x",ylab="Pr(X ≤ x)",main="Cumulative Probability")
 ```
 
-#### HOMEWORK:
+#### HOMEWORK PROBLEM 1:
 Create a new ***GitHub*** repository and a new ***R*** Project named "homework-week-4". In your repo, create an **R Markdown** file and answer the following problems. When you are done, "knit" your **R Markdown** file to `.html` and push your `.Rmd` and `.html` files up to ***GitHub*** for me to look at.
-
-Problem 1:
 
 Every Saturday, at the same time, a primatologist goes and sits in the forest in the morning and listens for titi monkey calls, counting the number of calls they hear in a 2 hour window from 5am to 7am. Based on previous knowledge, she believes that the mean number calls she will hear in that time is exactly 15. Let $X$ represent the appropriate Poisson random variable of the number of calls heard in each monitoring session.
 
@@ -463,7 +461,7 @@ plot(x,fx,type="l",xlab="x",ylab="f(x)",main="Probability Density Function")
 plot(x,punif(q=x,min=a,max=b),type="l",xlab="x",ylab="Pr(X ≤ x)",main="Cumulative Probability") # the CDF increases linearly over the given interval
 ```
 
-#### CHALLENGE:
+#### CHALLENGE 5:
 Simulate a sample of 10000 random numbers from a uniform distribution in the interval between $a$ = 6 and $b$ = 8. Calculate the mean and variance of this simulated sample and compare it to the expectation for these parameters, i.e., $\mu_X$ = $\frac{b-a}{2}$ and $\sigma_X^2$ = $\frac{(b-a)^2}{12}$.
 
 #### Normal Distribution
@@ -539,9 +537,9 @@ manipulate(
 )
 ```
 
-#### CHALLENGE:
+#### CHALLENGE 6:
 
-- Create a vector containing **N** random numbers selected from a normal distribution with mean $\mu$ and standard deviation $\sigma$. Use 1000 for **N**, 3.5 for $\mu$, and 4 for $\sigma$. **HINT:** such a function exists! `rnorm()`.
+- Create a vector containing **N** random numbers selected from a normal distribution with mean $\mu$ and standard deviation $\sigma$. Use 1000 for **N**, 3.5 for $\mu$, and 4 for $\sigma$. **HINT:** Such a function exists! `rnorm()`.
 - Calculate the mean, variance, and standard error of the mean in your set of random numbers.
 - Plot a histogram of your random numbers.
 
@@ -564,7 +562,7 @@ qqnorm(v,main="Normal QQ plot random normal variables")
 qqline(v,col="gray")
 ```
 
-#### HOMEWORK (Continued)
+#### HOMEWORK PROBLEM 2:
 Answer this question in the same `.Rmd` and `.html` file you started for Problem 1.
 
 Problem 2:
