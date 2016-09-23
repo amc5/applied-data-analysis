@@ -17,6 +17,9 @@ knitr::opts_chunk$set(
 ```
 # Statistical Inference - Probabilities and Distributions
 
+## Preliminaries
+- Install this packages in ***R***: {manipulate}
+
 ## Objectives
 > The objective of this module is to begin our discussion of *statistical inference* from a frequentist/classical statistics approach. Doing so means that we need to cover basics of probability and distributions.
 
@@ -219,13 +222,7 @@ We can show this interactively using the code below:
 ```{r eval = FALSE}
 library(manipulate)
 manipulate(
-	ggplot(data = d, aes(x=x, y=fx)) +
-		xlab("x") + ylab("f(x)") +
-		geom_line() +
-		geom_polygon(data=data.frame(xvals=c(0,n,n,0),fxvals=c(0,K*n^(a-1)*(1-n)^(b-1),0,0)), aes(x=xvals,y=fxvals)) +
-		ggtitle(paste("Area Under Function = ", 0.5 * n * K*n^(a-1)*(1-n)^(b-1),sep=" ")),
-  #define variable that will be changed in plot
-    n=slider(0, 1, initial=0.5, step=0.01)
+  ggplot(data = d, aes(x=x, y=fx)) + xlab("x") + ylab("f(x)") + geom_line() + geom_polygon(data=data.frame(xvals=c(0,n,n,0),fxvals=c(0,K*n^(a-1)*(1-n)^(b-1),0,0)), aes(x=xvals,y=fxvals)) + ggtitle(paste("Area Under Function = ", 0.5 * n * K*n^(a-1)*(1-n)^(b-1),sep=" ")), n=slider(0, 1, initial=0.5, step=0.01)
 )
 ```
 
@@ -322,9 +319,11 @@ Again, the probability of *success* on each trial = $p$ and the probability of *
 
 For the **BINOMIAL DISTRIBUTION**, the probability mass function is:
 
-$f(x)$ = $\binom{n}{k}$ $p^k(1-p)^{n-k}$ where $x$ = {0, 1, 2, ... , n}
+<img src="img/binom-1.svg" width="220px"/>
 
-and where $\binom{n}{k}$ = $\frac{n!}{k!(n-k)!}$
+where $x$ = {0, 1, 2, ... , n} and where
+
+<img src="img/binom-2.svg" width="150px"/>
 
 This is read as "$n$ choose $k$", i.e., the probability of $k$ successes out of $n$ trials.
 
@@ -383,7 +382,9 @@ The **Poisson Distribution** is often used to model open ended counts of indepen
 
 The probability mass function for the **POISSON DISTRIBUTION** is:
 
-$f(x)$ = $\frac{\lambda^xexp(-\lambda)}{x!}$ where $x$ = {0, 1, 2, ...}
+<img src="img/poisson.svg" width="175px"/>
+
+where $x$ = {0, 1, 2, ...}
 
 For this distribution, $\mu_X$ = $\lambda$ and $\sigma_X^2$ = $\lambda$
 
@@ -440,12 +441,19 @@ The **Uniform Distribution** is the simplest probability density function descri
 
 The probability density function for the **UNIFORM DISTRIBUTION** is:
 
-$f(x)$ = $\frac{1}{b-a}$ where $a$ $\leq$ $x$ $\leq$ $b$ and 0 for $x$ < $a$ and $x$ > $b$
+<img src="img/uni-1.svg" width="110px"/>
+
+where $a$ $\leq$ $x$ $\leq$ $b$ and 0 for $x$ < $a$ and $x$ > $b$
+
 
 #### CHALLENGE:
 What would you predict the expectation (mean) should be for a uniform distribution?
 
-For this distribution $\mu_X$ = $\frac{b-a}{2}$ and $\sigma_X^2$ = $\frac{(b-a)^2}{12}$
+For this distribution:
+
+<img src="img/uni-2.svg" width="100px"/>
+
+<img src="img/uni-3.svg" width="115px"/>
 
 Let's plot a uniform distribution across a given range, from $a$ = 4 to $b$ = 8...
 ``` {r}
@@ -456,13 +464,15 @@ fx <- dunif(x,min=a, max=b) # dunif() evaluates the density at each x
 plot(x,fx,type="l",xlab="x",ylab="f(x)",main="Probability Density Function")
 ```
 
+Note that for the uniform distribution, the *cumulative density function* increases linearly over the given interval.
+
 ``` {r}
-# punif() is the cumulative probability density up to a given x
-plot(x,punif(q=x,min=a,max=b),type="l",xlab="x",ylab="Pr(X ≤ x)",main="Cumulative Probability") # the CDF increases linearly over the given interval
+plot(x,punif(q=x,min=a,max=b),type="l",xlab="x",ylab="Pr(X ≤ x)",main="Cumulative Probability") # punif() is the cumulative probability density up to a given x
 ```
 
+
 #### CHALLENGE 5:
-Simulate a sample of 10000 random numbers from a uniform distribution in the interval between $a$ = 6 and $b$ = 8. Calculate the mean and variance of this simulated sample and compare it to the expectation for these parameters, i.e., $\mu_X$ = $\frac{b-a}{2}$ and $\sigma_X^2$ = $\frac{(b-a)^2}{12}$.
+Simulate a sample of 10000 random numbers from a uniform distribution in the interval between $a$ = 6 and $b$ = 8. Calculate the mean and variance of this simulated sample and compare it to the expectation for these parameters.
 
 #### Normal Distribution
 
@@ -525,15 +535,7 @@ Is this true for different values of $\mu$ and $\sigma$ as well?
 The `qnorm()` function will tell us the value of $x$ below which a given proportion of the cumulative probability function falls. As we saw earlier, we can use `qnorm()` to calculate confidence intervals.
 
 ``` {r eval=FALSE}
-manipulate(
-	plot(seq(from=(mu - 6*sigma), to=(mu + 6*sigma), length.out = 1000),
-			 dnorm(seq(from=(mu - 6*sigma), to=(mu + 6*sigma), length.out = 1000),mean=mu,sd=sigma),
-			 type="l",xlim=c(-20,20), xlab="x",ylab="f(x)",
-			 main="Probability Density Function") +
-		abline(h=0) + abline(v=c(qnorm((1-CI)/2,mean=mu,sd=sigma),qnorm(1-(1-CI)/2,mean=mu,sd=sigma))),
-	mu=slider(-10, 10, initial=0, step=0.25),
-	sigma=slider(0.25, 10, initial=1, step=0.25),
-	CI=slider(0.50,0.99,initial=0.90, step=0.01)
+manipulate(plot(seq(from=(mu - 6*sigma), to=(mu + 6*sigma), length.out = 1000), dnorm(seq(from=(mu - 6*sigma), to=(mu + 6*sigma), length.out = 1000), mean=mu,sd=sigma), type="l",xlim=c(-20,20), xlab="x",ylab="f(x)", main="Probability Density Function") + abline(h=0) + abline(v=c(qnorm((1-CI)/2,mean=mu,sd=sigma),qnorm(1-(1-CI)/2,mean=mu,sd=sigma))), mu=slider(-10, 10, initial=0, step=0.25), sigma=slider(0.25, 10, initial=1, step=0.25), CI=slider(0.50,0.99,initial=0.90, step=0.01)
 )
 ```
 

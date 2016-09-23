@@ -4,6 +4,11 @@ Module 08
 Statistical Inference - Probabilities and Distributions
 =======================================================
 
+Preliminaries
+-------------
+
+-   Install this packages in ***R***: {manipulate}
+
 Objectives
 ----------
 
@@ -44,7 +49,7 @@ We will use the {manipulate} package and the `sample()` function to explore the 
 +     10000, initial = 100, step = 100))
 ```
 
-#### CHALLENGE:
+#### CHALLENGE 1:
 
 Write a function to simulate rolling a die where you pass the number of rolls as an argument. Then, use your function to simulate rolling two dice 1000 times and take the sum of the rolls. Plot a histogram of those results.
 
@@ -98,7 +103,7 @@ Write a function to simulate rolling a die where you pass the number of rolls as
 
     If event *A* and *B* are *dependent*, then *Pr* (*A* | *B*) ≠ *Pr* (*A*)
 
-#### CHALLENGE:
+#### CHALLENGE 2:
 
 You have a deck of 52 cards, Ace to 10 + 3 face cards in each suit. You draw a card at random.
 
@@ -233,15 +238,11 @@ We can show this interactively using the code below:
 
 ``` r
 > library(manipulate)
-> manipulate(
->   ggplot(data = d, aes(x=x, y=fx)) +
->       xlab("x") + ylab("f(x)") +
->       geom_line() +
->       geom_polygon(data=data.frame(xvals=c(0,n,n,0),fxvals=c(0,K*n^(a-1)*(1-n)^(b-1),0,0)), aes(x=xvals,y=fxvals)) +
->       ggtitle(paste("Area Under Function = ", 0.5 * n * K*n^(a-1)*(1-n)^(b-1),sep=" ")),
->   #define variable that will be changed in plot
->     n=slider(0, 1, initial=0.5, step=0.01)
-> )
+> manipulate(ggplot(data = d, aes(x = x, y = fx)) + xlab("x") + ylab("f(x)") + 
++     geom_line() + geom_polygon(data = data.frame(xvals = c(0, n, n, 0), fxvals = c(0, 
++     K * n^(a - 1) * (1 - n)^(b - 1), 0, 0)), aes(x = xvals, y = fxvals)) + ggtitle(paste("Area Under Function = ", 
++     0.5 * n * K * n^(a - 1) * (1 - n)^(b - 1), sep = " ")), n = slider(0, 1, 
++     initial = 0.5, step = 0.01))
 ```
 
 The shaded area here represents the **cumulative probability** integrated across *f*(*x*) from −inf to *x*.
@@ -345,7 +346,7 @@ For the **BERNOULLI DISTRIBUTION**, the probability mass function is:
 
 For this distribution, *μ*<sub>*X*</sub> = *p* and *σ*<sub>*X*</sub><sup>2</sup> = *p*(1 − *p*)
 
-#### CHALLENGE:
+#### CHALLENGE 3:
 
 Using the Bernoulli distribution, calculate the expectation for drawing a *spade* from a deck of cards? What is the variance in this expectation across a large number of draws?
 
@@ -361,9 +362,11 @@ Again, the probability of *success* on each trial = *p* and the probability of *
 
 For the **BINOMIAL DISTRIBUTION**, the probability mass function is:
 
-*f*(*x*) = $\\binom{n}{k}$ *p*<sup>*k*</sup>(1 − *p*)<sup>*n* − *k*</sup> where *x* = {0, 1, 2, ... , n}
+<img src="img/binom-1.svg" width="220px"/>
 
-and where $\\binom{n}{k}$ = $\\frac{n!}{k!(n-k)!}$
+where *x* = {0, 1, 2, ... , n} and where
+
+<img src="img/binom-2.svg" width="150px"/>
 
 This is read as "*n* choose *k*", i.e., the probability of *k* successes out of *n* trials.
 
@@ -371,7 +374,7 @@ For this distribution, *μ*<sub>*X*</sub> = *np* and *σ*<sub>*X*</sub><sup>2</s
 
 Where *n* = 1, this simplifies to the Bernoulli distribution.
 
-#### CHALLENGE:
+#### CHALLENGE 4:
 
 What is the chance of getting a "1" on each of six consecutive rolls of a die? What about of getting exactly three "1"s? What is the expected number of "1"s to occur in six consecutive rolls?
 
@@ -459,7 +462,9 @@ The **Poisson Distribution** is often used to model open ended counts of indepen
 
 The probability mass function for the **POISSON DISTRIBUTION** is:
 
-*f*(*x*) = $\\frac{\\lambda^xexp(-\\lambda)}{x!}$ where *x* = {0, 1, 2, ...}
+<img src="img/poisson.svg" width="175px"/>
+
+where *x* = {0, 1, 2, ...}
 
 For this distribution, *μ*<sub>*X*</sub> = *λ* and *σ*<sub>*X*</sub><sup>2</sup> = *λ*
 
@@ -523,11 +528,9 @@ As we did for other distributions, we can also use the built in `probability` fu
 
 ![](img/unnamed-chunk-19-3.png)
 
-#### HOMEWORK:
+#### HOMEWORK PROBLEM 1:
 
 Create a new ***GitHub*** repository and a new ***R*** Project named "homework-week-4". In your repo, create an **R Markdown** file and answer the following problems. When you are done, "knit" your **R Markdown** file to `.html` and push your `.Rmd` and `.html` files up to ***GitHub*** for me to look at.
-
-Problem 1:
 
 Every Saturday, at the same time, a primatologist goes and sits in the forest in the morning and listens for titi monkey calls, counting the number of calls they hear in a 2 hour window from 5am to 7am. Based on previous knowledge, she believes that the mean number calls she will hear in that time is exactly 15. Let *X* represent the appropriate Poisson random variable of the number of calls heard in each monitoring session.
 
@@ -546,13 +549,19 @@ The **Uniform Distribution** is the simplest probability density function descri
 
 The probability density function for the **UNIFORM DISTRIBUTION** is:
 
-*f*(*x*) = $\\frac{1}{b-a}$ where *a* ≤ *x* ≤ *b* and 0 for *x* &lt; *a* and *x* &gt; *b*
+<img src="img/uni-1.svg" width="110px"/>
+
+where *a* ≤ *x* ≤ *b* and 0 for *x* &lt; *a* and *x* &gt; *b*
 
 #### CHALLENGE:
 
 What would you predict the expectation (mean) should be for a uniform distribution?
 
-For this distribution *μ*<sub>*X*</sub> = $\\frac{b-a}{2}$ and *σ*<sub>*X*</sub><sup>2</sup> = $\\frac{(b-a)^2}{12}$
+For this distribution:
+
+<img src="img/uni-2.svg" width="100px"/>
+
+<img src="img/uni-3.svg" width="115px"/>
 
 Let's plot a uniform distribution across a given range, from *a* = 4 to *b* = 8...
 
@@ -566,17 +575,18 @@ Let's plot a uniform distribution across a given range, from *a* = 4 to *b* = 8.
 
 ![](img/unnamed-chunk-20-1.png)
 
+Note that for the uniform distribution, the *cumulative density function* increases linearly over the given interval.
+
 ``` r
-> # punif() is the cumulative probability density up to a given x
 > plot(x, punif(q = x, min = a, max = b), type = "l", xlab = "x", ylab = "Pr(X ≤ x)", 
-+     main = "Cumulative Probability")  # the CDF increases linearly over the given interval
++     main = "Cumulative Probability")  # punif() is the cumulative probability density up to a given x
 ```
 
 ![](img/unnamed-chunk-21-1.png)
 
-#### CHALLENGE:
+#### CHALLENGE 5:
 
-Simulate a sample of 10000 random numbers from a uniform distribution in the interval between *a* = 6 and *b* = 8. Calculate the mean and variance of this simulated sample and compare it to the expectation for these parameters, i.e., *μ*<sub>*X*</sub> = $\\frac{b-a}{2}$ and *σ*<sub>*X*</sub><sup>2</sup> = $\\frac{(b-a)^2}{12}$.
+Simulate a sample of 10000 random numbers from a uniform distribution in the interval between *a* = 6 and *b* = 8. Calculate the mean and variance of this simulated sample and compare it to the expectation for these parameters.
 
 #### Normal Distribution
 
@@ -655,9 +665,9 @@ The `qnorm()` function will tell us the value of *x* below which a given proport
 +         initial = 1, step = 0.25), CI = slider(0.5, 0.99, initial = 0.9, step = 0.01))
 ```
 
-#### CHALLENGE:
+#### CHALLENGE 6:
 
--   Create a vector containing **N** random numbers selected from a normal distribution with mean *μ* and standard deviation *σ*. Use 1000 for **N**, 3.5 for *μ*, and 4 for *σ*. **HINT:** such a function exists! `rnorm()`.
+-   Create a vector containing **N** random numbers selected from a normal distribution with mean *μ* and standard deviation *σ*. Use 1000 for **N**, 3.5 for *μ*, and 4 for *σ*. **HINT:** Such a function exists! `rnorm()`.
 -   Calculate the mean, variance, and standard error of the mean in your set of random numbers.
 -   Plot a histogram of your random numbers.
 
@@ -669,20 +679,20 @@ The `qnorm()` function will tell us the value of *x* below which a given proport
 > mean(v)
 ```
 
-    ## [1] 3.661033
+    ## [1] 3.567516
 
 ``` r
 > var(v)
 ```
 
-    ## [1] 16.43401
+    ## [1] 16.71475
 
 ``` r
 > se <- sqrt(var(v)/N)
 > se
 ```
 
-    ## [1] 0.1281952
+    ## [1] 0.1292855
 
 ``` r
 > hist(v, breaks = seq(from = -15, to = 20, by = 0.5), probability = TRUE)
@@ -699,7 +709,7 @@ A quantile-quantile plot can be used to look at whether the
 
 ![](img/unnamed-chunk-29-1.png)
 
-#### HOMEWORK (Continued)
+#### HOMEWORK PROBLEM 2:
 
 Answer this question in the same `.Rmd` and `.html` file you started for Problem 1.
 
