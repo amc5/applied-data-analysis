@@ -679,20 +679,20 @@ The `qnorm()` function will tell us the value of *x* below which a given proport
 > mean(v)
 ```
 
-    ## [1] 3.567516
+    ## [1] 3.55456
 
 ``` r
 > var(v)
 ```
 
-    ## [1] 16.71475
+    ## [1] 16.19427
 
 ``` r
 > se <- sqrt(var(v)/N)
 > se
 ```
 
-    ## [1] 0.1292855
+    ## [1] 0.1272567
 
 ``` r
 > hist(v, breaks = seq(from = -15, to = 20, by = 0.5), probability = TRUE)
