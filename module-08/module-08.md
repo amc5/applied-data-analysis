@@ -32,7 +32,7 @@ This process of trying to draw conclusions is complicated by the fact that...
 
 ### Probability
 
-The term **probability** is applied to population level variables that describe the magnitude of chance associated with particular observations or event. Probabilities summarize the relative frequencies of possible outcomes.
+The term **probability** is applied to **population level** variables that describe the magnitude of chance associated with particular observations or event. Probabilities summarize the relative frequencies of possible outcomes. Probabilities are properties of **distributions**. Probabilities vary between zero and one. Outcomes that are impossible have *Pr = 0*, those that are certain have *Pr = 1*.
 
 Example: if we roll a (fair) die, there are 6 possible outcomes, each has a probability of occurring of 1 in 6. This is referred to as a *frequentist* or *classical* way of thinking about the probability of different outcomes... the relative frequency with which an event occurs over numerous identical, objective trials.
 
@@ -194,12 +194,12 @@ To be a valid *PMF*, a function *f*(*x*) must satisfy the following:
 
 ![](img/unnamed-chunk-4-2.png)
 
-1.  *Probability Density Functions (PDFs)* are associated with continuous random variables. These functions describe the probability that a random variable falls within a given range of outcome values.
+1.  *Probability Density Functions (PDFs)* are associated with continuous random variables. These functions describe the probability that a random variable falls within a given range of outcome values. The probability associated with that range equals the area under the density function for that range.
 
 To be a valid *PDF*, a function *f*(*x*) must satisfy the following:
 
-1.  *f*(*x*) ≥ 0 for all −∞ ≤ *x* ≤ +∞
-2.  ∫<sub>−∞</sub><sup>+∞</sup> *f*(*x*) d*x* = 1. That is, the total area under *f*(*x*) = 1
+1.  *f*(*x*) ≥ 0 for all −∞ ≤ *x* ≤ +∞. That is, the function *f*(*x*) is non-negative everywhere.
+2.  ∫<sub>−∞</sub><sup>+∞</sup> *f*(*x*) d*x* = 1. That is, the total area under the function *f*(*x*) = 1
 
 #### An Example
 
@@ -247,9 +247,9 @@ We can show this interactively using the code below:
 
 The shaded area here represents the **cumulative probability** integrated across *f*(*x*) from −inf to *x*.
 
-The **cumulative distribution function**, or **CDF**, of a random variable is defined as the probability of observing a random variable *X* taking the value of *x* or less, i.e., *f*(*x*) = *Pr* (*X* ≤ *x*)
+The **cumulative distribution function**, or **CDF**, of a random variable is defined as the probability of observing a random variable *X* taking the value of *x* or less, i.e., *F*(*x*) = *Pr* (*X* ≤ *x*).
 
--   This definition applies regardless of whether *X* is discrete or continuous.
+-   This definition applies regardless of whether *X* is discrete or continuous. Note here we are using *F*(*x*) for the cumulative distribution function rather than *f*(*x*), which we use for the probability density function. For a continuous variable, the *PDF* is simply the first derivative of the *CDF*, i.e., $f(x) = *d* *F*(*x*)
 
 ``` r
 > x <- seq(from = 0, to = 1, by = 0.005)
@@ -290,7 +290,9 @@ Note the relationship between the `p` and `q` functions:
 
     ## [1] 0.7
 
-Finally, we can define the **survival function** for a random variable *X* as *S*(*x*) = *Pr* (*X* &gt; *x*) = 1 - *Pr* (*X* ≤ *x*) = 1 - *f*(*x*)
+We can define the **survival function** for a random variable *X* as *S*(*x*) = *Pr* (*X* &gt; *x*) = 1 - *Pr* (*X* ≤ *x*) = 1 - *f*(*x*)
+
+Finally, we can define the "qth"" *quantile* of a *cumulative distibution function* as the value of *x* at which the CDF has the value "q", i.e., *F*(*x*<sub>*q*</sub>)=*q*.
 
 Expected Mean and Variance of Random Variables
 ----------------------------------------------
@@ -679,20 +681,20 @@ The `qnorm()` function will tell us the value of *x* below which a given proport
 > mean(v)
 ```
 
-    ## [1] 3.55456
+    ## [1] 3.440905
 
 ``` r
 > var(v)
 ```
 
-    ## [1] 16.19427
+    ## [1] 17.08494
 
 ``` r
 > se <- sqrt(var(v)/N)
 > se
 ```
 
-    ## [1] 0.1272567
+    ## [1] 0.1307094
 
 ``` r
 > hist(v, breaks = seq(from = -15, to = 20, by = 0.5), probability = TRUE)
@@ -700,7 +702,7 @@ The `qnorm()` function will tell us the value of *x* below which a given proport
 
 ![](img/unnamed-chunk-28-1.png)
 
-A quantile-quantile plot can be used to look at whether the
+A quantile-quantile plot can be used to look at whether your data seem to follow a normal distribution. In this case, they SHOULD since you have simulated from such a distribution. Simply apply the two ***R*** functions `qqnorm()` and `qqline()` with the vector you want to examine as an argument.
 
 ``` r
 > qqnorm(v, main = "Normal QQ plot random normal variables")
@@ -709,8 +711,35 @@ A quantile-quantile plot can be used to look at whether the
 
 ![](img/unnamed-chunk-29-1.png)
 
+What happens if you simulate fewer observations? Or if you simulate from a *different* distribution?
+
+``` r
+> v <- runif(N, 1, 10)
+```
+
 #### HOMEWORK PROBLEM 2:
 
 Answer this question in the same `.Rmd` and `.html` file you started for Problem 1.
 
 Problem 2:
+
+Review of Common Distibutions
+-----------------------------
+
+### Discrete Random Variables
+
+| Name      | Notation              | PMF *f*(*x*) = *P*(*X* = *x*)                           | *μ* = *E*(*X*) | *σ*<sup>2</sup> = *Var* (*X*) |                   |
+|:----------|:----------------------|:--------------------------------------------------------|:---------------|:------------------------------|:------------------|
+| Bernoulli | *X* ~ *BERN*(*p*)     | *f*(*x*) = *p*<sup>*x*</sup>(1 − *p*)<sup>1 − *x*</sup> | *p*            | *p(1-p)*                      | x = {0,1}         |
+| Binomial  | *X* ~ *BIN*(*n*, *p*) | <img src="img/binom-1.svg" width="220px"/>              | *np*           | *np(1-p)*                     | x = {0,1,..., k}  |
+| Poisson   | *X* ~ *POIS*(*λ*)     | <img src="img/poisson.svg" width="175px"/>              | *λ*            | *λ*                           | x = {0,1,..., +∞} |
+
+### Continuous Random Variables
+
+| Name        | Notation                        | PDF *f*<sub>*X*</sub>(*x*)                                      | *μ* = *E*(*X*)                           | *σ*<sup>2</sup> = *Var* (*X*)            |     |
+|:------------|:--------------------------------|-----------------------------------------------------------------|:-----------------------------------------|:-----------------------------------------|:----|
+| Beta        | *X* ~ *BETA*(*α*, *β*)          | *f*(*x*) = *K* *x*<sup>*α* − 1</sup>(1 − *x*)<sup>*β* − 1</sup> |                                          |                                          |     |
+| Uniform     | *X* ~ *U*(*a*, *b*)             | <img src="img/uni-1.svg" width="110px"/>                        | <img src="img/uni-2.svg" width="100px"/> | <img src="img/uni-3.svg" width="115px"/> |     |
+| Normal      | *X* ~ *N*(*μ*, *σ*<sup>2</sup>) |                                                                 |                                          |                                          |     |
+| Exponential |                                 |
+| Student's t |                                 |
