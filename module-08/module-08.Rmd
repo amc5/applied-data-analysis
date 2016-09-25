@@ -557,12 +557,18 @@ se
 hist(v,breaks=seq(from=-15, to=20, by=0.5), probability = TRUE)
 ```
 
-A quantile-quantile plot can be used to look at whether the 
+A quantile-quantile plot can be used to look at whether your data seem to follow a normal distribution. In this case, they SHOULD since you have simulated from such a distribution.
 
 ``` {r}
 qqnorm(v,main="Normal QQ plot random normal variables")
 qqline(v,col="gray")
 ```
+
+What happens if you simulate fewer observations? Or if you simulate from a *different* distribution?
+
+``` {r}
+v <- runif(N, 1,10)
+
 
 #### HOMEWORK PROBLEM 2:
 Answer this question in the same `.Rmd` and `.html` file you started for Problem 1.
