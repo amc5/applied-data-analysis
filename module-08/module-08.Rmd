@@ -542,7 +542,7 @@ Regardless of the specific values of $\mu$ and $\sigma$, about 95% of the normal
 p <- pnorm(mu + 1*sigma, mean=mu, sd=sigma) - pnorm(mu - 1*sigma, mean=mu, sd=sigma)
 p
 ```
-Another one of the main functions in ***R*** for probability distrobutions, the `qnorm()` function, will tell us the value of $x$ below which a given proportion of the cumulative probability function falls. As we saw earlier, too, we can use `qnorm()` to calculate confidence intervals. The code below 
+Another one of the main functions in ***R*** for probability distributions, the `qnorm()` function, will tell us the value of $x$ below which a given proportion of the cumulative probability function falls. As we saw earlier, too, we can use `qnorm()` to calculate confidence intervals. The code below 
 
 ``` {r eval=FALSE}
 manipulate(plot(seq(from=(mu - 4*sigma), to=(mu + 4*sigma), length.out = 1000), dnorm(seq(from=(mu - 4*sigma), to=(mu + 4*sigma), length.out = 1000), mean=mu,sd=sigma), type="l",xlim=c(mu - 4*sigma,mu+4*sigma), xlab="x",ylab="f(x)", main="Normal Probability Density Function") + abline(v=mu, col="blue") + abline(h=0) + polygon(x=c(qnorm((1-CI)/2,mean=mu,sd=sigma),qnorm((1-CI)/2,mean=mu,sd=sigma), qnorm(1-(1-CI)/2,mean=mu,sd=sigma),qnorm(1-(1-CI)/2,mean=mu,sd=sigma)),y=c(0,1,1,0),border="red"), mu=slider(-10, 10, initial=0, step=0.25), sigma=slider(0.25, 10, initial=1, step=0.25), CI=slider(0.50,0.99,initial=0.90, step=0.01)

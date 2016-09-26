@@ -667,7 +667,7 @@ Regardless of the specific values of *μ* and *σ*, about 95% of the normal dist
 
     ## [1] 0.6826895
 
-Another one of the main functions in ***R*** for probability distrobutions, the `qnorm()` function, will tell us the value of *x* below which a given proportion of the cumulative probability function falls. As we saw earlier, too, we can use `qnorm()` to calculate confidence intervals. The code below
+Another one of the main functions in ***R*** for probability distributions, the `qnorm()` function, will tell us the value of *x* below which a given proportion of the cumulative probability function falls. As we saw earlier, too, we can use `qnorm()` to calculate confidence intervals. The code below
 
 ``` r
 > manipulate(plot(seq(from = (mu - 4 * sigma), to = (mu + 4 * sigma), length.out = 1000), 
@@ -696,19 +696,19 @@ Another one of the main functions in ***R*** for probability distrobutions, the 
 > mean(v)
 ```
 
-    ## [1] 3.564561
+    ## [1] 3.345676
 
 ``` r
 > var(v)
 ```
 
-    ## [1] 17.08212
+    ## [1] 15.31923
 
 ``` r
 > sd(v)
 ```
 
-    ## [1] 4.133052
+    ## [1] 3.913978
 
 ``` r
 > hist(v, breaks = seq(from = -15, to = 20, by = 0.5), probability = TRUE)
@@ -786,13 +786,13 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(x)  # really close to 5
 ```
 
-    ## [1] 5.013472
+    ## [1] 5.102677
 
 ``` r
 > sd(x)  # really close to 8
 ```
 
-    ## [1] 7.925951
+    ## [1] 8.061475
 
 ``` r
 > z <- (x - mean(x))/sd(x)  # standardized!
@@ -805,7 +805,7 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(z)  # really close to zero
 ```
 
-    ## [1] 2.63635e-17
+    ## [1] -2.98192e-17
 
 ``` r
 > sd(z)  # really close to 1
@@ -921,21 +921,21 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > m
 ```
 
-    ## [1] 3.098219
+    ## [1] 2.791175
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 4.394872
+    ## [1] 3.739272
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.8023902
+    ## [1] 0.6826945
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -944,7 +944,7 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > ci
 ```
 
-    ## [1] 1.525563 4.670874
+    ## [1] 1.453118 4.129231
 
 ``` r
 > pop_se <- sigma/sqrt(length(s))
