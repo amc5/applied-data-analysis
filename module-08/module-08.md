@@ -696,19 +696,19 @@ Another one of the main functions in ***R*** for probability distrobutions, the 
 > mean(v)
 ```
 
-    ## [1] 3.628906
+    ## [1] 3.34882
 
 ``` r
 > var(v)
 ```
 
-    ## [1] 14.80766
+    ## [1] 15.26851
 
 ``` r
 > sd(v)
 ```
 
-    ## [1] 3.848072
+    ## [1] 3.907494
 
 ``` r
 > hist(v, breaks = seq(from = -15, to = 20, by = 0.5), probability = TRUE)
@@ -786,13 +786,13 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(x)  # really close to 5
 ```
 
-    ## [1] 5.021395
+    ## [1] 4.918464
 
 ``` r
 > sd(x)  # really close to 8
 ```
 
-    ## [1] 7.98682
+    ## [1] 8.020914
 
 ``` r
 > z <- (x - mean(x))/sd(x)  # standardized!
@@ -805,7 +805,7 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(z)  # really close to zero
 ```
 
-    ## [1] 2.302412e-17
+    ## [1] 5.151004e-17
 
 ``` r
 > sd(z)  # really close to 1
@@ -921,30 +921,30 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > m
 ```
 
-    ## [1] 4.520549
+    ## [1] 2.819434
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 4.651986
+    ## [1] 2.999068
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.8493326
+    ## [1] 0.5475525
 
 ``` r
-> lower <- m - qnorm(0.975) * sem
-> upper <- m + qnorm(0.975) * sem
+> lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
+> upper <- m + qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
 > ci <- c(lower, upper)
 > ci
 ```
 
-    ## [1] 2.855887 6.185210
+    ## [1] 1.746251 3.892617
 
 ``` r
 > pop_se <- sigma/sqrt(length(s))
@@ -955,6 +955,20 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 
 #### HOMEWORK PROBLEM 2:
 
-Answer this question in the same `.Rmd` and `.html` file you started for Problem 1.
+Use the same `.Rmd` and `.html` files you started for Problem 1 to do the following:
 
-Problem 2:
+Load in the dataset "zombies.csv" from my ***GitHub*** repo at <https://github.com/difiore/ADA2016>. This data includes the first and last name and gender of the entire population of 1000 people who have survived the zombie apocalypse and are now ekeing out an existence somewhere on the East Coast, along with several other variables (height, weight, age, number of years of education, number of zombies they have killed, and college major [see here for info on major](http://www.thebestschools.org/magazine/best-majors-surviving-zombie-apocalypse/)
+
+f &lt;- file.choose() d &lt;- read.csv(f, sep=",", header=TRUE)
+
+\[1\] Calculate the *population* mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education). NOTE: You will not want to use the built in `var()` and `sd()` commands as these are for *samples*.
+
+\[2\] Use ggplot and make boxplots of each of these variable by gender.
+
+\[3\] Use ggplot and make a scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
+
+\[4\] Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not, can you determine what common distribution they are drawn from?
+
+\[5\] Now use the `sample()` function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution.
+
+\[6\] Now drawn 99 more random samples of 30 zombies out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution for each variable? How do the standard deviations compare to the standard errors estimated in \[5\]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?

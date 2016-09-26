@@ -5,15 +5,15 @@ Modules
 
 #### [Resources](resources.html)
 
-Week 1
-------
+Week 01
+-------
 
 ### Module 01 - [First Steps with ***R*** and ***RStudio***](module-01/module-01.md)
 
 ### Module 02 - [Basics of Version Control](module-02/module-02.md)
 
-Week 2
-------
+Week 02
+-------
 
 ### Module 03 - [Reproducible Research using RMarkdown](module-03/module-03.md)
 
@@ -21,11 +21,21 @@ Week 2
 
 ### Module 05 - [Getting Data into ***R***](module-05/module-05.md)
 
-Week 3
-------
+Week 03
+-------
 
 ### Module 06 - [Exploratory Data Analysis](module-06/module-06.md)
 
 ### Module 07 - [Statistics Fundamentals - Central Tendency and Variance](module-07/module-07.md)
 
-### Module 08 - [Statistical Inference 1 - Probabilities and Distribsutions](module-08/module-08.md)
+Week 04
+-------
+
+### Module 08 - [Statistical Inference - Probabilities and Distributions](module-08/module-08.md)
+
+Week 05 - NO MEETING
+--------------------
+
+### Week 06
+
+### Module 09 - [Statistical Inference - Hypothesis Testing](module-0/module-09.md)
