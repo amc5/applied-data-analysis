@@ -696,19 +696,19 @@ Another one of the main functions in ***R*** for probability distrobutions, the 
 > mean(v)
 ```
 
-    ## [1] 3.34882
+    ## [1] 3.564561
 
 ``` r
 > var(v)
 ```
 
-    ## [1] 15.26851
+    ## [1] 17.08212
 
 ``` r
 > sd(v)
 ```
 
-    ## [1] 3.907494
+    ## [1] 4.133052
 
 ``` r
 > hist(v, breaks = seq(from = -15, to = 20, by = 0.5), probability = TRUE)
@@ -786,13 +786,13 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(x)  # really close to 5
 ```
 
-    ## [1] 4.918464
+    ## [1] 5.013472
 
 ``` r
 > sd(x)  # really close to 8
 ```
 
-    ## [1] 8.020914
+    ## [1] 7.925951
 
 ``` r
 > z <- (x - mean(x))/sd(x)  # standardized!
@@ -805,7 +805,7 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(z)  # really close to zero
 ```
 
-    ## [1] 5.151004e-17
+    ## [1] 2.63635e-17
 
 ``` r
 > sd(z)  # really close to 1
@@ -921,21 +921,21 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > m
 ```
 
-    ## [1] 2.819434
+    ## [1] 3.098219
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 2.999068
+    ## [1] 4.394872
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.5475525
+    ## [1] 0.8023902
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -944,7 +944,7 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > ci
 ```
 
-    ## [1] 1.746251 3.892617
+    ## [1] 1.525563 4.670874
 
 ``` r
 > pop_se <- sigma/sqrt(length(s))
@@ -955,7 +955,7 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 
 #### HOMEWORK PROBLEM 2:
 
-Use the same `.Rmd` and `.html` files you started for Problem 1 to do the following:
+Using different `.Rmd` file than you used for Problem 1 pushing both the Markdown and knitted `.html` file to the same "homework-week-4" repository, do the following:
 
 Load in the dataset "zombies.csv" from my ***GitHub*** repo at <https://github.com/difiore/ADA2016>. This data includes the first and last name and gender of the entire population of 1000 people who have survived the zombie apocalypse and are now ekeing out an existence somewhere on the East Coast, along with several other variables (height, weight, age, number of years of education, number of zombies they have killed, and college major [see here for info on major](http://www.thebestschools.org/magazine/best-majors-surviving-zombie-apocalypse/)
 
