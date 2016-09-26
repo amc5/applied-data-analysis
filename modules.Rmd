@@ -31,6 +31,7 @@ knitr::opts_chunk$set(
 ### Module 07 - [Statistics Fundamentals - Central Tendency and Variance](module-07/module-07.md)
 ## Week 04
 ### Module 08 - [Statistical Inference - Probabilities and Distributions](module-08/module-08.md)
-## Week 05 - NO MEETING
+## Week 05
+### NO MEETING
 ###Week 06
 ### Module 09 - [Statistical Inference - Hypothesis Testing](module-0/module-09.md)

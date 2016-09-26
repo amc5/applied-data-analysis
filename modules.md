@@ -33,8 +33,10 @@ Week 04
 
 ### Module 08 - [Statistical Inference - Probabilities and Distributions](module-08/module-08.md)
 
-Week 05 - NO MEETING
---------------------
+Week 05
+-------
+
+### NO MEETING
 
 ### Week 06
 
