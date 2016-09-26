@@ -20,18 +20,18 @@ knitr::opts_chunk$set(
 #### [Resources](resources.html)
 
 ## Week 01
-### Module 01 - [First Steps with ***R*** and ***RStudio***](../module-01/module-01.html)
-### Module 02 - [Basics of Version Control](../module-02/module-02.html)
+### Module 01 - [First Steps with ***R*** and ***RStudio***](../applied-data-analysis/module-01/module-01.html)
+### Module 02 - [Basics of Version Control](../applied-data-analysis/module-02/module-02.html)
 ## Week 02
-### Module 03 - [Reproducible Research using RMarkdown](../module-03/module-03.html)
-### Module 04 - [Working with Other Data Structures](../module-04/module-04.html)
-### Module 05 - [Getting Data into ***R***](../module-05/module-05.html)
+### Module 03 - [Reproducible Research using RMarkdown](../applied-data-analysis/module-03/module-03.html)
+### Module 04 - [Working with Other Data Structures](../applied-data-analysis/module-04/module-04.html)
+### Module 05 - [Getting Data into ***R***](../applied-data-analysis/module-05/module-05.html)
 ## Week 03
-### Module 06 - [Exploratory Data Analysis](../module-06/module-06.html)
-### Module 07 - [Statistics Fundamentals - Central Tendency and Variance](../module-07/module-07.html)
+### Module 06 - [Exploratory Data Analysis](../applied-data-analysis/module-06/module-06.html)
+### Module 07 - [Statistics Fundamentals - Central Tendency and Variance](../applied-data-analysis/module-07/module-07.html)
 ## Week 04
-### Module 08 - [Statistical Inference - Probabilities and Distributions](../module-08/module-08.html)
+### Module 08 - [Statistical Inference - Probabilities and Distributions](../applied-data-analysis/module-08/module-08.html)
 ## Week 05
 ### NO MEETING
 ##Week 06
-### Module 09 - [Statistical Inference - Hypothesis Testing](../module-09/module-09.html)
+### Module 09 - [Statistical Inference - Hypothesis Testing](../applied-data-analysis/module-09/module-09.html)
