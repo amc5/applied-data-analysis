@@ -477,23 +477,33 @@ Simulate a sample of 10000 random numbers from a uniform distribution in the int
 
 #### Normal Distribution
 
-The **Normal** or **Gaussian Distribution** is perhaps the most familiar and most commonly applied probability density functions for modeling continuous random variables. Two parameters, $\mu$ and $\sigma$, are used to describe a normal distribution.
+The **Normal** or **Gaussian Distribution** is perhaps the most familiar and most commonly applied probability density functions for modeling continuous random variables. Why is the normal so important? Many traits are normally distributed, and the additive combination of many random factors is also commonly normally distributed.
 
-We can get an idea of the shape of a normal distribution with different $\mu$ and $\sigma$ using the ***R*** code below. Type it in and then play with values of $\mu$, $\sigma$, and *nsigma* (which shades in the proportion of the distribution falling within that number of standard deviations of the mean). Also, look carefully at the code to try to figure out what each bit is doing.
+Two parameters, $\mu$ and $\sigma$, are used to describe a normal distribution.
 
-The function, `dnorm()` gives the value of the normal density function at a given value of $x$. $x$ can range from -$\infty$ to +$\infty$. Recall, it does not make sense to talk about the "probability" associated with a given value of $x$ as this isa density not a mass functions, but we can talk about the probability of $x$ falling within a given interval.
+We can get an idea of the shape of a normal distribution with different $\mu$ and $\sigma$ using the simple ***R*** code below. Try playing with $\mu$ and $\sigma$.
+
+``` {r}
+mu <- 4
+sigma <- 1.5
+curve(dnorm(x,mu,sigma), mu - 4*sigma, mu + 4*sigma, main="Normal Curve", xlab="x", ylab="f(x)")
+```
+
+The function, `dnorm()` gives the point value of the normal density function at a given value of $x$. $x$ can range from -$\infty$ to +$\infty$. Recall, it does not make sense to talk about the "probability" associated with a given value of $x$ as this isa density not a mass functions, but we can talk about the probability of $x$ falling within a given interval.
+
+The code below lets you play interactively with $\mu$, $\sigma$, and *nsigma* (which shades in the proportion of the distribution falling within that number of standard deviations of the mean). Also, look carefully at the code to try to figure out what each bit is doing.
 
 ``` {r eval = FALSE}
 manipulate(
-	plot(seq(from=(mu - 6*sigma), to=(mu + 6*sigma), length.out = 1000),
-			 dnorm(seq(from=(mu - 6*sigma), to=(mu + 6*sigma), length.out = 1000),mean=mu,sd=sigma),
-			 type="l",xlim=c(-20,20), xlab="x",ylab="f(x)",
-			 main="Probability Density Function") +
-		polygon(rbind(c(mu - nsigma*sigma,0),cbind(seq(from=(mu - nsigma*sigma),to=(mu + nsigma*sigma),length.out=1000),dnorm(seq(from=(mu - nsigma*sigma), to=(mu + nsigma*sigma), length.out = 1000),mean=mu,sd=sigma)),c(mu + nsigma*sigma,0)),border=NA,col="gray") +
-		abline(h=0) + abline(v=c(mu - nsigma*sigma, mu + nsigma * sigma)),
+	plot(seq(from=(mu - 4*sigma), to=(mu + 4*sigma), length.out = 1000),
+			 dnorm(seq(from=(mu - 4*sigma), to=(mu + 4*sigma), length.out = 1000),mean=mu,sd=sigma),
+			 type="l",xlim=c(mu - 4*sigma, mu + 4*sigma), xlab="x",ylab="f(x)",
+			 main="Normal Probability Density Function") +
+		polygon(rbind(c(mu - nsigma*sigma,0),cbind(seq(from=(mu - nsigma*sigma),to=(mu + nsigma*sigma),length.out=1000),dnorm(seq(from=(mu - nsigma*sigma), to=(mu + nsigma*sigma), length.out = 1000),mean=mu,sd=sigma)),c(mu + nsigma*sigma,0)),border=NA,col="salmon") +
+		abline(v=mu, col = "blue") + abline(h=0) + abline(v=c(mu - nsigma*sigma, mu + nsigma * sigma),col="salmon"),
 	mu=slider(-10, 10, initial=0, step=0.25),
-	sigma=slider(0.25, 10, initial=1, step=0.25),
-	nsigma=slider(0,4,initial=0,step=0.5)
+	sigma=slider(0.25, 4, initial=1, step=0.25),
+	nsigma=slider(0,4,initial=0,step=0.25)
 )
 ```
 
@@ -510,14 +520,14 @@ manipulate(
 	) # plots the cumulative distribution function
 ```
 
-You can also use `pnorm()` to calculate the probability of an observation's value falling within a particular interval. For example, for a normal distribution with $\mu$ = 6 and $\sigma$ = 2, the probability of an random observation falling between 7 and 8 is...
+You can also use `pnorm()` to calculate the probability of an observation drawn from the population falling within a particular interval. For example, for a normally distributed population variable with $\mu$ = 6 and $\sigma$ = 2, the probability of a random observation falling between 7 and 8 is...
 
 ``` {r}
 p <- pnorm(8,mean=6,sd=2)-pnorm(7,mean=6,sd=2)
 p
 ```
 
-Likewise, the you can use `pnorm()` to calculate, for example, the probability that an observation falls within 2 standard deviations of the mean a particular normal distribution is...
+Likewise, you can use `pnorm()` to calculate the probability of an observation falling, for example within 2 standard deviations of the mean of a particular normal distribution.
 
 ``` {r}
 mu <- 0
@@ -525,61 +535,179 @@ sigma <- 1
 p <- pnorm(mu + 2*sigma, mean=mu, sd=sigma) - pnorm(mu - 2*sigma, mean=mu, sd=sigma)
 p
 ```
-So... about 95% of the normal distribution falls within 2 standard deviations of the mean. And about 68% of the distribution falls within 1 standard deviation.
+Regardless of the specific values of $\mu$ and $\sigma$, about 95% of the normal distribution falls within 2 standard deviations of the mean and about 68% of the distribution falls within 1 standard deviation.
 
 ``` {r}
 p <- pnorm(mu + 1*sigma, mean=mu, sd=sigma) - pnorm(mu - 1*sigma, mean=mu, sd=sigma)
 p
 ```
-Is this true for different values of $\mu$ and $\sigma$ as well?
-
-The `qnorm()` function will tell us the value of $x$ below which a given proportion of the cumulative probability function falls. As we saw earlier, we can use `qnorm()` to calculate confidence intervals.
+Another one of the main functions in ***R*** for probability distrobutions, the `qnorm()` function, will tell us the value of $x$ below which a given proportion of the cumulative probability function falls. As we saw earlier, too, we can use `qnorm()` to calculate confidence intervals. The code below 
 
 ``` {r eval=FALSE}
-manipulate(plot(seq(from=(mu - 6*sigma), to=(mu + 6*sigma), length.out = 1000), dnorm(seq(from=(mu - 6*sigma), to=(mu + 6*sigma), length.out = 1000), mean=mu,sd=sigma), type="l",xlim=c(-20,20), xlab="x",ylab="f(x)", main="Probability Density Function") + abline(h=0) + abline(v=c(qnorm((1-CI)/2,mean=mu,sd=sigma),qnorm(1-(1-CI)/2,mean=mu,sd=sigma))), mu=slider(-10, 10, initial=0, step=0.25), sigma=slider(0.25, 10, initial=1, step=0.25), CI=slider(0.50,0.99,initial=0.90, step=0.01)
+manipulate(plot(seq(from=(mu - 4*sigma), to=(mu + 4*sigma), length.out = 1000), dnorm(seq(from=(mu - 4*sigma), to=(mu + 4*sigma), length.out = 1000), mean=mu,sd=sigma), type="l",xlim=c(mu - 4*sigma,mu+4*sigma), xlab="x",ylab="f(x)", main="Normal Probability Density Function") + abline(v=mu, col="blue") + abline(h=0) + polygon(x=c(qnorm((1-CI)/2,mean=mu,sd=sigma),qnorm((1-CI)/2,mean=mu,sd=sigma), qnorm(1-(1-CI)/2,mean=mu,sd=sigma),qnorm(1-(1-CI)/2,mean=mu,sd=sigma)),y=c(0,1,1,0),border="red"), mu=slider(-10, 10, initial=0, step=0.25), sigma=slider(0.25, 10, initial=1, step=0.25), CI=slider(0.50,0.99,initial=0.90, step=0.01)
 )
 ```
 
 #### CHALLENGE 6:
 
-- Create a vector containing **N** random numbers selected from a normal distribution with mean $\mu$ and standard deviation $\sigma$. Use 1000 for **N**, 3.5 for $\mu$, and 4 for $\sigma$. **HINT:** Such a function exists! `rnorm()`.
-- Calculate the mean, variance, and standard error of the mean in your set of random numbers.
+- Create a vector, *v*, containing **n** random numbers selected from a normal distribution with mean $\mu$ and standard deviation $\sigma$. Use 1000 for **n**, 3.5 for $\mu$, and 4 for $\sigma$. **HINT:** Such a function exists! `rnorm()`.
+- Calculate the mean, variance, and standard deviation for your sample of random numbers.
 - Plot a histogram of your random numbers.
 
 ```{r}
-N <- 1000
+n <- 1000
 mu <- 3.5
 sigma <- 4
-v <- rnorm(N,mu,sigma)
+v <- rnorm(n,mu,sigma)
 mean(v)
 var(v)
-se <- sqrt(var(v)/N)
-se
+sd(v)
 hist(v,breaks=seq(from=-15, to=20, by=0.5), probability = TRUE)
 ```
 
-A quantile-quantile or "Q-Q" plot can be used to look at whether your data seem to follow a normal distribution. A Q–Q plot is a graphical method for comparing two probability distributions. Thus, to examine a set of data for normality graphically, you can plot the quantiles for the actual data (y values) versus the theoretical quantiles (x values) pulled from a normal distribution. If the two distributions being compared are similar, the points in the plot will approximately lie on the line y = x
+A quantile-quantile or "Q-Q" plot can be used to look at whether a set of data seem to follow a normal distribution. A Q–Q plot is a graphical method for generally comparing two probability distributions. To examine a set of data for normality graphically, you plot the quantiles for your actual data (as the y values) versus the theoretical quantiles (as the x values) pulled from a normal distribution. If the two distributions being compared are similar, the points in the plot will approximately lie on the line y = x.
 
-In this case, they **should** since you have simulated from such a distribution. Simply apply the two ***R*** functions `qqnorm()` and `qqline()` using the vector of data you want to examine as an argument.
+In this case, this **should** be apparent since you have simulated a vector of data from a distribution normal distribution.
+
+To quickly do a Q-Q plot, call the two ***R*** functions `qqnorm()` and `qqline()` using the vector of data you want to examine as an argument.
 
 ``` {r}
 qqnorm(v,main="Normal QQ plot random normal variables")
 qqline(v,col="gray")
 ```
 
-This is the same as doing...
+This is the same as doing the following:
+
+Step 1: Generate a sequence of probability points in the interval from 0 to 1 equivalent in length to vector v
+
+``` {r}
+p <- ppoints(length(v))
+head(p)
+tail(p)
+```
+
+Step 2: Calculate the theoretical quantiles for this set of probabilities based on a the distribution you want to compare to (in this case, the normal distribution)
 
 ``` {r} 
-theor_quant <- qnorm(ppoints(length(v))) # calculates quantiles from as many probability points drawn from a normal distribution
-obs_quant <- quantile(v,ppoints(v)) # calculates the observed quantiles from the vector v
-plot(theor_quant,obs_quant)
+theoretical_q <- qnorm(ppoints(length(v)))
+```
+
+Step 3: Calculate the quantiles for your set of observed data for the same number of points
+
+``` {r}
+observed_q <- quantile(v,ppoints(v))
+```
+Step 4: Plot these quantiles against one another
+
+``` {r}
+plot(theoretical_q,observed_q, main="Normal QQ plot random normal variables", xlab="Theoretical Quantiles", ylab="Sample Quantiles")
 ```
 
 #### CHALLENGE 7:
-What happens if you simulate fewer observations? Or if you simulate from a *different* distribution?
+What happens if you simulate fewer observations in your vectors? Or if you simulate observations from a *different* distribution?
+
+#### The "Standard Normal"" Distribution
+
+Any normal distribution with mean $\mu$ and standard deviation $\sigma$ can be converted into what is called the **standard normal** distribution, where the mean is zero and the standard deviation is 1. This is done by subtracting the mean from all observations and dividing all observations by the standard deviation. The resultant values are referred to a *Z* scores, and they reflect the number of standard deviations an observation is from the mean.
 
 ``` {r}
-v <- runif(N, 1,10)
+x <- rnorm(10000, mean=5, sd = 8) # simulate from a normal distribution with mean 5 and SD 8
+hist(x)
+mean(x) # really close to 5
+sd(x) # really close to 8
+z <- (x - mean(x))/sd(x) # standardized!
+hist(z)
+mean(z) # really close to zero
+sd(z) # really close to 1
+```
+
+## Sample Distributions and Population Distributions
+
+It is important to recognize that, above, we were dealing with probability distributions of discrete and continuous random variables as they relate to *populations*. But, as we have talked about before, we almost never measure entire populations; instead, we measure *samples* from populations and we characterize our samples using various *statistics*. The theoretical probability distributions described above (and others) are *models* for how we connect observed sample data to populations, taking into account various assumptions, and this is what allows us to do many types of inferential statistics. The most fundamental assumption we make is that the observations we make are *independent* from one another and are *identically distributed*, an assumption often abbreviated as **iid**. Obvious cases of violation of this assumption are rife in the scientific literature, and we should always be cautious about making this assumption!
+
+The important thing for us to know is that we can get unbiased estimates of population level parameters on the basis of sample statistics.
+
+Let's imagine a population of 1 million zombies whose age at zombification is characterized by a normal distribution with a mean of 25 years and a standard deviation of 5 years. Below, we set up our population:
+
+``` {r}
+set.seed(1)
+x <- rnorm(1000000, 25, 5)
+hist(x, probability = TRUE)
+mu <- mean(x)
+sigma <- sqrt(sum((x - mean(x))^2)/length(x))
+```
+Note: We don't use the `sd()` function as this would divide by `length(x)-1`. Check that out using `sd(x)`
+
+Suppose we now sample the zombie population by trapping sets of zombies and determining the mean age in each set. We sample without replacement from the original population for each set. Let's do that 100 times with samples of size 5 and store these in a list.
+
+``` {r}
+k <- 1000 # number of samples
+n <- 5 # size of each sample
+s <- NULL # dummy variable to hold each sample
+for (i in 1:k){
+	s[[i]] <- sample(x,size=n, replace=FALSE)
+}
+head(s)
+```
+
+For each of these samples, we can then calculate a mean, which is a statistic describing each sample. That statistic itself is a random variable with a mean and distribution. This is the *sampling distribution*. How does the sampling distribution compare to the population distribution? The mean of the two is pretty close to the same! The sample mean is an unbiased estimator for the population mean.
+
+``` {r}
+m <- NULL
+for (i in 1:k){
+	m[i] <- mean(s[[i]])
+}
+mean(m) # this is the mean of the sampling distribution = average sample mean; this should be the same as the population mean
+```
+
+#### The Standard Error 
+
+The standard deviation of the *sampling distribution*, i.e., of all possible means of samples of size *n* from a population, is referred to as the *standard error*. If the population standard deviation (sigma) is known, then the standard error can be calculated as population standard deviation / sqrt(sample size) = $\sigma$/$n$
+
+``` {r}
+sigma/sqrt(n)
+```
+
+If the population standard deviation isn't known, however, the standard error can be estimated from the standard deviation of a given sample (or, presumably, as the average standard deviation across samples). Recall the *standard error of the mean* for a sample is:
+
+	sample standard deviation/sqrt(sample size) = $s$/$n$
+
+So, the standard error of the mean for an individual sample can used as an estimator of the *standard error*, i.e., the standard deviation of the sampling distribution.
+
+Despite their similarities, the standard error of the mean and the standard deviation tell us different things about a sample. The *standard error of the mean* is an estimate of how far a given sample mean is likely to be from the population mean. The *standard deviation* of the sample is a measure of the degree to which individuals within the sample differ from the sample mean.
+
+Where does all this get us?
+
+In Module 7, we calculated confidence intervals for one of our estimates of a population parameter (the population mean, our *estimand*), based on a sample statistic (the sample mean, our *estimator*). Let's revist that process...
+
+A general way to define a confidence interval is as:
+
+	statistic being considered ± critical value $\times standard error,
+
+where the statistic is the sample statistic under scrutiny (e.g., the mean), the critical value is a value from the standardized version of the sampling distribution that corresponds to the 100 * (1 - $\alpha$ level), e.g., 1-0.05 = 0.95 for the 95% CI, and the standard error is the standard deviation of the sampling distribution (which is often estimated from a sample itself).
+
+#### CHALLENGE 8:
+
+For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and `replace=FALSE` to select a sample.
+
+- Calculate the mean, standard deviation, and standard error of the mean (SEM) based on your sample.
+- Using the SEM, calculate the 95% confidence interval around your estimate of the mean.
+- How does the SEM estimated from your sample compare to the estimate of the standard error you would make based on the knowledge of the population standard deviation, $\sigma$ = 4?
+
+``` {r}
+s <- sample(v,size=30,replace=FALSE)
+m <- mean(s)
+m
+sd <- sd(s)
+sd
+sem <- sd(s)/sqrt(length(s))
+sem
+lower <- m - qnorm(1-0.05/2)*sem # (1-alpha)/2 each in upper and lower trail of distribution
+upper <- m + qnorm(1-0.05/2)*sem # (1-alpha)/2 each in upper and lower trail of distribution
+ci <- c(lower, upper)
+ci
+pop_se <- sigma/sqrt(length(s))
+pop_se
 ```
 
 #### HOMEWORK PROBLEM 2:
@@ -587,24 +715,18 @@ Answer this question in the same `.Rmd` and `.html` file you started for Problem
 
 Problem 2:
 
+Load in the dataset "MOCK_DATA.csv"
 
+f <- file.choose()
+d <- read.csv(f, sep=",", header=TRUE)
+summary(d)
+attach(d)
+hist(s)
+hist(height)
+qqnorm(s)
+qqnorm(zombies_killed)
+mean(zombies_killed)
+var(zombies_killed)
 
-## Review of Common Distibutions
-
-### Discrete Random Variables
-
-| Name           | Notation                | PMF $f(x)$ = $P(X=x)$                      | $\mu$ = $E(X)$     | $\sigma^2$ = *Var* $(X)$       |                          |
-|:-------------- |:----------------------- |:------------------------------------------ |:------------------ |:------------------------------ |:-----------------------  |
-| Bernoulli      | $X$ ~ *BERN*$(p)$       | $f(x)$ = $p^x(1-p)^{1-x}$                  | *p*                | *p(1-p)*                       | x = {0,1}                |
-| Binomial       | $X$ ~ *BIN*$(n, p)$     | <img src="img/binom-1.svg" width="220px"/> | *np*               | *np(1-p)*                      | x = {0,1,..., k}         |
-| Poisson        | $X$ ~ *POIS*$(\lambda)$ | <img src="img/poisson.svg" width="175px"/> | $\lambda$          | $\lambda$                      | x = {0,1,..., +$\infty$} |
-
-### Continuous Random Variables
-
-| Name         | Notation                      | PDF $f_X(x)$                                 | $\mu$ = $E(X)$     | $\sigma^2$ = *Var* $(X)$ |
-|:------------ |:----------------------------- | -------------------------------------------- |:------------------ |:------------------- |:---------------------- |
-| Beta         | $X$ ~ *BETA*$(\alpha,\beta)$  | $f(x)$ = $K$ $x^{\alpha-1}(1-x)^{\beta-1}$   |                    |                     |                        |
-| Uniform      | $X$ ~ *U*$(a,b)$              | <img src="img/uni-1.svg" width="110px"/>     | <img src="img/uni-2.svg" width="100px"/> | <img src="img/uni-3.svg" width="115px"/> |                        |
-| Normal      | $X$ ~ *N*$(\mu,\sigma^2)$      |                                              |                    |                     |                        |
-| Exponential |
-| Student's t | 
+s <- sample(weight,size=100,replace=FALSE)
+str(d)
