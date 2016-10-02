@@ -25,38 +25,319 @@ body {
 
 <body>
 
-<h1 id="modules">Modules</h1>
+<h1 id="working-course-outline">Working Course Outline</h1>
 <h4 id="course-overview"><a href="course-overview.html">Course Overview</a></h4>
-<h4 id="course-outline"><a href="outline.html">Course Outline</a></h4>
+<h4 id="modules"><a href="modules.html">Modules</a></h4>
 <h4 id="resources"><a href="resources.html">Resources</a></h4>
 <h2 id="week-00-2016-08-25">Week 00 (2016-08-25)</h2>
 <h3 id="no-class-meeting">No class meeting</h3>
+<blockquote>
+<p>Several of us will be attending the annual meetings of the International Primatological Society, so class will meet for the first time next week.</p>
+</blockquote>
 <h2 id="week-01-2016-09-01">Week 01 (2016-09-01)</h2>
-<h3 id="module-01---first-steps-with-r-and-rstudio">Module 01 - <a href="../applied-data-analysis/module-01/module-01.html">First Steps with <strong><em>R</em></strong> and <strong><em>RStudio</em></strong></a></h3>
-<h3 id="module-02---basics-of-version-control">Module 02 - <a href="../applied-data-analysis/module-02/module-02.html">Basics of Version Control</a></h3>
+<h3 id="an-introduction-to-r">An Introduction to <strong><em>R</em></strong></h3>
+<h4 id="topics">Topics</h4>
+<ul>
+<li>History of <strong><em>R</em></strong>
+<ul>
+<li>Relation to other languages and statistics software</li>
+</ul></li>
+<li>Installing <strong><em>R</em></strong> and <strong><em>RStudio</em></strong></li>
+<li>Setting up your workspace
+<ul>
+<li>Panels: <em>Source</em>, <em>Console</em>, <em>Environment/History</em>, Other Views</li>
+<li>Setting the working directory</li>
+<li>Setting up <strong><em>R</em></strong> projects</li>
+<li>Saving workspaces</li>
+</ul></li>
+<li><strong><em>R</em></strong> Basics
+<ul>
+<li>Using <strong><em>R</em></strong> interactively</li>
+<li>Variables and assignment</li>
+<li>Packages</li>
+<li><strong><em>R</em></strong> objects
+<ul>
+<li>Object types - Vectors and functions</li>
+<li>Classes and attributes of objects</li>
+<li>Scripting</li>
+</ul></li>
+</ul></li>
+<li>Setting up <strong><em>GitHub</em></strong>
+<ul>
+<li>Interfacing between <strong><em>R</em></strong> and <strong><em>GitHub</em></strong></li>
+</ul></li>
+</ul>
+<h4 id="required-readings">Required Readings</h4>
+<p><em>The Book of R</em> - Chapter 1 - Getting Started - Chapter 2 - Numerics, Arithmetic, Assignment, and Vectors</p>
+<p><em>Statistics: An Introduction Using R</em></p>
+<ul>
+<li>Chapter 1 - Fundamentals</li>
+</ul>
+<h4 id="useful-but-optional-readings">Useful But Optional Readings</h4>
+<p><em>R Programming for Data Science</em></p>
+<ul>
+<li>Chapter 3 - History and Overview of R</li>
+<li>Chapter 5 - R Nuts and Bolts</li>
+</ul>
+<p><em>Statistics: An Introduction Using R</em></p>
+<ul>
+<li>Appendix: Essentials of the R Language</li>
+</ul>
 <h2 id="week-02-2016-09-08">Week 02 (2016-09-08)</h2>
-<h3 id="module-03---reproducible-research-using-rmarkdown">Module 03 - <a href="../applied-data-analysis/module-03/module-03.html">Reproducible Research using RMarkdown</a></h3>
-<h3 id="module-04---working-with-other-data-structures">Module 04 - <a href="../applied-data-analysis/module-04/module-04.html">Working with Other Data Structures</a></h3>
-<h3 id="module-05---getting-data-into-r">Module 05 - <a href="../applied-data-analysis/module-05/module-05.html">Getting Data into <strong><em>R</em></strong></a></h3>
+<h3 id="data-science-preliminaries">Data Science Preliminaries</h3>
+<h4 id="topics-1">Topics</h4>
+<ul>
+<li>Good programming practices
+<ul>
+<li>Version control</li>
+<li>The Tao of text</li>
+<li>Reproducible research using <strong>Rmarkdown</strong> and {knitr}</li>
+</ul></li>
+<li>Working with data
+<ul>
+<li>More object types - arrays, matrices, lists, and data frames</li>
+<li>Subsetting and filtering data structures</li>
+<li>Factors</li>
+<li>Class coercion and conversion</li>
+<li>Special data values - <code>NA</code>, <code>NaN</code>, <code>Inf</code></li>
+</ul></li>
+<li>Getting data in and out of <strong><em>R</em></strong>
+<ul>
+<li>From csv files - {readr}</li>
+<li>From Excel - {readxl}, {XLConnect} and others</li>
+<li>From Dropbox - {rdrop2}</li>
+<li>From other repositories - {curl}</li>
+<li>From databases - {RMySQL}, {RSQLite}, {RPostgreSQL} and others</li>
+</ul></li>
+<li>Summarizing data and exploratory data analysis
+<ul>
+<li>Basic descriptive statistics</li>
+<li>Simple plotting (boxplots, histograms, scatterplots) - {ggplot2} and others</li>
+</ul></li>
+</ul>
+<h4 id="required-readings-1">Required Readings</h4>
+<p><em>The Book of R</em></p>
+<ul>
+<li>Chapter 3 - Matrices and Arrays</li>
+<li>Chapter 5 - Lists and Data Frames</li>
+</ul>
+<p><em>R Programming for Data Science</em></p>
+<ul>
+<li>Chapter 6 - Getting Data In and Out of R</li>
+<li>Chapter 7 - Using the {readr} Package</li>
+</ul>
+<h4 id="useful-but-optional-readings-1">Useful But Optional Readings</h4>
+<p><em>The Book of R</em></p>
+<ul>
+<li>Chapter 4 - Non-Numeric Values</li>
+<li>Chapter 6 - Special Values, Classes, and Coercion</li>
+<li>Chapter 8 - Reading and Writing Files</li>
+</ul>
+<p><em>R Programming for Data Science</em></p>
+<ul>
+<li>Chapter 9 - Interfaces to the Outside World</li>
+</ul>
 <h2 id="week-03-2016-09-15">Week 03 (2016-09-15)</h2>
-<h3 id="module-06---exploratory-data-analysis">Module 06 - <a href="../applied-data-analysis/module-06/module-06.html">Exploratory Data Analysis</a></h3>
-<h3 id="module-07---statistics-fundamentals---central-tendency-and-variance">Module 07 - <a href="../applied-data-analysis/module-07/module-07.html">Statistics Fundamentals - Central Tendency and Variance</a></h3>
+<h3 id="statistics-and-programming-fundamentals">Statistics and Programming Fundamentals</h3>
+<h4 id="topics-2">Topics</h4>
+<ul>
+<li>Populations and samples</li>
+<li>More on summarizing data
+<ul>
+<li>Percentiles, quantiles, confidence intervals</li>
+<li>Basic visualization techniques for exploratory data analysis
+<ul>
+<li>Box plots</li>
+<li>Histograms</li>
+</ul></li>
+</ul></li>
+<li>Beginning <strong><em>R</em></strong> programming
+<ul>
+<li>Functions</li>
+<li>Loops</li>
+<li>Conditional statements and flow control</li>
+</ul></li>
+</ul>
+<h4 id="required-readings-2">Required Readings</h4>
+<p><em>The Book of R</em></p>
+<ul>
+<li>Chapter 9 - Calling Functions</li>
+<li>Chapter 10 - Conditions and Loops</li>
+<li>Chapter 11 - Writing Functions</li>
+</ul>
+<p><em>Statistics: An Introduction Using R</em></p>
+<ul>
+<li>Chapter 3 - Central Tendency</li>
+<li>Chapter 4 - Variance</li>
+</ul>
+<h4 id="useful-but-optional-readings-2">Useful but Optional Readings</h4>
+<p><em>The Book of R</em></p>
+<ul>
+<li>Chapter 13 - Elementary Statistics</li>
+<li>Chapter 14 - Basic Data Visualization</li>
+</ul>
 <h2 id="week-04-2016-09-22">Week 04 (2016-09-22)</h2>
-<h3 id="module-08---probabilities-and-distributions">Module 08 - <a href="../applied-data-analysis/module-08/module-08.html">Probabilities and Distributions</a></h3>
+<h3 id="probability-and-distributions">Probability and Distributions</h3>
+<h4 id="topics-3">Topics</h4>
+<ul>
+<li>Probability and conditional probability</li>
+<li>Random variables - dicrete and continuous</li>
+<li>Probability mass functions, probability density functions</li>
+<li>Cumulative probability function</li>
+<li>Useful distributions and their properties
+<ul>
+<li>density (<code>d</code>), cumulative probability (<code>p</code>), quantile (<code>q</code>), and random (<code>r</code>) functions</li>
+<li>Discrete
+<ul>
+<li>Bernoulli</li>
+<li>Poisson</li>
+<li>Binomial</li>
+</ul></li>
+<li>Continuous
+<ul>
+<li>Beta</li>
+<li>Uniform</li>
+<li>Normal</li>
+</ul></li>
+</ul></li>
+<li>Q-Q Plots</li>
+<li>Standard errors and confidence intervals</li>
+</ul>
+<h4 id="required-readings-3">Required Readings</h4>
+<p><em>The Book of R</em></p>
+<ul>
+<li>Chapter 15 - Probability</li>
+<li>Chapter 16 - Common Probability Distributions</li>
+</ul>
+<h4 id="useful-but-optional-readings-3">Useful but Optional Readings</h4>
+<p><em>R Programming for Data Science</em></p>
+<ul>
+<li>Chapter 22 - Simulation</li>
+</ul>
 <h2 id="week-05-2016-09-29">Week 05 (2016-09-29)</h2>
 <h3 id="no-class-meeting-1">No class meeting</h3>
+<blockquote>
+<p>Tony will be out of town attending an NSF workshop in Puerto Rico so we will not meet this week</p>
+</blockquote>
 <h2 id="week-06-2016-10-06">Week 06 (2016-10-06)</h2>
-<h3 id="module-09---statistical-inference-and-basic-hypothesis-testing">Module 09 - <a href="../applied-data-analysis/module-09/module-09.html">Statistical Inference and Basic Hypothesis Testing</a></h3>
+<h3 id="statistical-inference-and-basic-hypothesis-testing">Statistical Inference and Basic Hypothesis Testing</h3>
+<h4 id="topics-4">Topics</h4>
+<ul>
+<li>Significance and the problem with <strong><em>p</em></strong> values</li>
+<li>Statistical power, effect sizes</li>
+<li>Classic hypothesis testing
+<ul>
+<li>Parametric and nonparametric one- and two-sample tests</li>
+</ul></li>
+</ul>
+<h4 id="required-readings-4">Required Readings</h4>
+<p><em>The Book of R</em></p>
+<ul>
+<li>Chapter 17 - Sampling Distributions and Confidence</li>
+<li>Chapter 18 - Hypothesis Testing</li>
+</ul>
+<h4 id="useful-but-optional-readings-4">Useful but Optional Readings</h4>
+<p><em>Statistics: An Introduction Using R</em></p>
+<ul>
+<li>Chapter 5 - Single Samples</li>
+<li>Chapter 6 - Two Samples</li>
+</ul>
+<blockquote>
+<p>IMPORTANT! Today is the deadline for choosing a paper from primary literature to replicate analyses.</p>
+</blockquote>
 <h2 id="week-07-2016-10-13">Week 07 (2016-10-13)</h2>
+<h3 id="simple-regression-and-analysis-of-variance">Simple Regression and Analysis of Variance</h3>
+<h4 id="topics-5">Topics</h4>
+<ul>
+<li>Correlation and covariation</li>
+<li>Introduction to linear modeling
+<ul>
+<li>Simple linear regression</li>
+<li>Multivariate regression</li>
+</ul></li>
+<li>ANOVA</li>
+</ul>
+<h4 id="required-readings-5">Required Readings</h4>
+<p><em>The Book of R</em></p>
+<ul>
+<li>Chapter 19 - Analysis of Variance</li>
+<li>Chapter 20 - Simple Linear Regression</li>
+</ul>
+<h4 id="useful-but-optional-readings-5">Useful but Optional Readings</h4>
+<p><em>Statistics: An Introduction Using R</em></p>
+<ul>
+<li>Chapter 7 - Regression</li>
+<li>Chapter 8 - Analysis of Variance</li>
+</ul>
 <h2 id="week-08-2016-10-20">Week 08 (2016-10-20)</h2>
+<h3 id="multiple-regression-and-generalized-linear-modeling">Multiple Regression and Generalized Linear Modeling</h3>
+<h4 id="topics-6">Topics</h4>
+<ul>
+<li>GLMM</li>
+<li>Model simplification and selection</li>
+<li>Dealing with other response variables types - counts, proportions, binary responses</li>
+</ul>
+<h4 id="required-readings-6">Required Readings</h4>
+<p><em>The Book of R</em></p>
+<ul>
+<li>Chapter 21 - Multiple Linear Regression</li>
+</ul>
+<p><em>Statistics: An Introduction Using R</em></p>
+<ul>
+<li>Chapter 12 - Other Response Variables</li>
+<li>Chapter 15 - Binary Response Variable</li>
+</ul>
+<blockquote>
+<p>IMPORTANT! Deadline for choosing topic for group statistical methods presentation and vignette</p>
+</blockquote>
 <h2 id="week-09-2016-10-27">Week 09 (2016-10-27)</h2>
+<h3 id="categorical-data-analysis">Categorical Data Analysis</h3>
 <h2 id="week-10-2016-11-03">Week 10 (2016-11-03)</h2>
+<h3 id="working-with-geospatial-data">Working with Geospatial Data</h3>
+<h4 id="topics-7">Topics</h4>
+<ul>
+<li>Connecting to spatial databases</li>
+<li>Coordinate system transformations</li>
+<li>Raster and vector data</li>
+</ul>
 <h2 id="week-11-2016-11-10">Week 11 (2016-11-10)</h2>
+<h3 id="working-with-genetic-data">Working with Genetic Data</h3>
+<h4 id="topics-8">Topics</h4>
+<ul>
+<li>Manipulating and analyzing DNA sequence data
+<ul>
+<li>Data cleanup</li>
+<li>Phylogenetic analysis</li>
+</ul></li>
+<li>Manipulating and analyzing genotype data (SNPs, MSATS)
+<ul>
+<li>Population genetic analysis</li>
+</ul></li>
+</ul>
 <h2 id="week-12-2016-11-17">Week 12 (2016-11-17)</h2>
+<h3 id="scraping-data-from-the-web-using-apis-and-working-with-text">Scraping Data from the Web, Using APIs, and Working with Text</h3>
+<h4 id="topics-9">Topics</h4>
+<ul>
+<li>Scraping data from the web</li>
+<li>Extracting text from PDFs and documents</li>
+<li>Text mining basics
+<ul>
+<li>Building a corpus</li>
+<li>Building a document-term matrix</li>
+<li>Term frequency analysis</li>
+</ul></li>
+<li>Mining data from social media</li>
+<li>Regular expressions</li>
+</ul>
 <h2 id="week-13-2016-11-24">Week 13 (2016-11-24)</h2>
 <h3 id="no-class-meeting-2">No class meeting</h3>
+<blockquote>
+<p>Thanksgiving Break! Have fun and eat lots of good food.</p>
+</blockquote>
 <h2 id="week-14-2016-12-01">Week 14 (2016-12-01)</h2>
+<h3 id="group-presentations-and-vignettes">Group Presentations and Vignettes</h3>
 <h2 id="week-15-2016-12-08">Week 15 (2016-12-08)</h2>
+<h3 id="group-presentations-and-vignettes-1">Group Presentations and Vignettes</h3>
 
 </body>
 </html>

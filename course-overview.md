@@ -11,9 +11,11 @@ Applied Data Analysis
 <p align="center">
 <img src="img/math.png" style="width: 400px"/>
 </p>
-#### [Resources](resources.html)
+#### [Course Outline](outline.html)
 
 #### [Modules](modules.html)
+
+#### [Resources](resources.html)
 
 Overview
 --------

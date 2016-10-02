@@ -1,0 +1,330 @@
+---
+title: "Working Course Outline"
+output:
+    github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+	echo = TRUE,
+	warning = TRUE,
+	comment = "##",
+	prompt = TRUE,
+	tidy = TRUE,
+	tidy.opts = list(width.cutoff = 75),
+	fig.path = "img/"
+)
+```
+#### [Course Overview](course-overview.html)
+#### [Modules](modules.html)
+#### [Resources](resources.html)
+
+## Week 00 (2016-08-25)
+### No class meeting
+> Several of us will be attending the annual meetings of the International Primatological Society, so class will meet for the first time next week.
+
+## Week 01 (2016-09-01)
+### An Introduction to ***R***
+
+#### Topics
+
+- History of ***R***
+	- Relation to other languages and statistics software
+- Installing ***R*** and ***RStudio***
+- Setting up your workspace
+	- Panels: *Source*, *Console*, *Environment/History*, Other Views
+	- Setting the working directory
+	- Setting up ***R*** projects
+	- Saving workspaces
+- ***R*** Basics
+	- Using ***R*** interactively
+	- Variables and assignment
+	- Packages
+	- ***R*** objects
+		- Object types - Vectors and functions
+		- Classes and attributes of objects
+		- Scripting
+- Setting up ***GitHub***
+	- Interfacing between ***R*** and ***GitHub***
+
+
+#### Required Readings
+
+*The Book of R*
+	- Chapter 1 - Getting Started
+	- Chapter 2 - Numerics, Arithmetic, Assignment, and Vectors
+
+*Statistics: An Introduction Using R*
+
+- Chapter 1 - Fundamentals
+
+#### Useful But Optional Readings
+
+*R Programming for Data Science*
+
+- Chapter 3 - History and Overview of R
+- Chapter 5 - R Nuts and Bolts
+
+*Statistics: An Introduction Using R*
+
+- Appendix: Essentials of the R Language
+
+## Week 02 (2016-09-08)
+### Data Science Preliminaries
+
+#### Topics
+
+- Good programming practices
+	- Version control
+	- The Tao of text
+	- Reproducible research using **Rmarkdown** and {knitr}
+- Working with data
+	- More object types - arrays, matrices, lists, and data frames
+	- Subsetting and filtering data structures
+	- Factors
+	- Class coercion and conversion
+	- Special data values - `NA`, `NaN`, `Inf`
+- Getting data in and out of ***R***
+	- From csv files - {readr}
+	- From Excel - {readxl}, {XLConnect} and others
+	- From Dropbox - {rdrop2}
+	- From other repositories - {curl}
+	- From databases - {RMySQL}, {RSQLite}, {RPostgreSQL} and others
+- Summarizing data and exploratory data analysis
+	- Basic descriptive statistics
+	- Simple plotting (boxplots, histograms, scatterplots) - {ggplot2} and others
+
+#### Required Readings
+
+*The Book of R*
+
+- Chapter 3 - Matrices and Arrays
+- Chapter 5 - Lists and Data Frames
+	
+*R Programming for Data Science*
+
+- Chapter 6 - Getting Data In and Out of R
+- Chapter 7 - Using the {readr} Package
+	
+#### Useful But Optional Readings
+
+*The Book of R*
+
+- Chapter 4 - Non-Numeric Values
+- Chapter 6 - Special Values, Classes, and Coercion
+- Chapter 8 - Reading and Writing Files
+
+*R Programming for Data Science*
+
+- Chapter 9 - Interfaces to the Outside World
+
+## Week 03 (2016-09-15)
+### Statistics and Programming Fundamentals
+
+#### Topics
+
+- Populations and samples
+- More on summarizing data
+	- Percentiles, quantiles, confidence intervals
+	- Basic visualization techniques for exploratory data analysis
+		- Box plots
+		- Histograms
+- Beginning ***R*** programming
+	- Functions
+	- Loops
+	- Conditional statements and flow control
+
+#### Required Readings
+
+*The Book of R*
+
+- Chapter 9 - Calling Functions
+- Chapter 10 - Conditions and Loops
+- Chapter 11 - Writing Functions
+	
+*Statistics: An Introduction Using R*
+
+- Chapter 3 - Central Tendency
+- Chapter 4 - Variance
+
+#### Useful but Optional Readings
+
+*The Book of R*
+
+- Chapter 13 - Elementary Statistics
+- Chapter 14 - Basic Data Visualization
+
+[//]: # (Dalgard chapter 4)
+
+## Week 04 (2016-09-22)
+### Probability and Distributions
+
+#### Topics
+
+- Probability and conditional probability
+- Random variables - dicrete and continuous
+- Probability mass functions, probability density functions
+- Cumulative probability function
+- Useful distributions and their properties
+	- density (`d`), cumulative probability (`p`), quantile (`q`), and random (`r`) functions
+	- Discrete
+		- Bernoulli
+		- Poisson
+		- Binomial
+	- Continuous
+		- Beta
+		- Uniform
+		- Normal
+- Q-Q Plots
+- Standard errors and confidence intervals
+
+#### Required Readings
+
+*The Book of R*
+
+- Chapter 15 - Probability
+- Chapter 16 - Common Probability Distributions
+	
+#### Useful but Optional Readings
+
+*R Programming for Data Science*
+
+- Chapter 22 - Simulation
+	
+## Week 05 (2016-09-29)
+### No class meeting
+
+> Tony will be out of town attending an NSF workshop in Puerto Rico so we will not meet this week
+
+## Week 06 (2016-10-06)
+### Statistical Inference and Basic Hypothesis Testing
+
+#### Topics
+
+- Significance and the problem with ***p*** values
+- Statistical power, effect sizes
+- Classic hypothesis testing
+	- Parametric and nonparametric one- and two-sample tests
+
+#### Required Readings
+
+*The Book of R*
+
+- Chapter 17 - Sampling Distributions and Confidence
+- Chapter 18 - Hypothesis Testing
+
+#### Useful but Optional Readings
+
+*Statistics: An Introduction Using R*
+
+- Chapter 5 - Single Samples
+- Chapter 6 - Two Samples
+
+[//]: # (Dalgaard Chapter 3 and 5)
+[//]: # (Bolker Chap 5 (optional))
+[//]: # (Gotelli & Ellison Chapters 4-5)
+
+>IMPORTANT! Today is the deadline for choosing a paper from primary literature to replicate analyses.
+
+## Week 07 (2016-10-13)
+### Simple Regression and Analysis of Variance
+
+#### Topics
+
+- Correlation and covariation
+- Introduction to linear modeling
+	- Simple linear regression
+	- Multivariate regression
+- ANOVA
+
+#### Required Readings
+
+*The Book of R*
+
+- Chapter 19 - Analysis of Variance
+- Chapter 20 - Simple Linear Regression
+
+#### Useful but Optional Readings
+
+*Statistics: An Introduction Using R*
+
+- Chapter 7 - Regression
+- Chapter 8 - Analysis of Variance
+
+[//]: # (Gotelli & Ellison Chapter 9, 10)
+[//]: # (Dalgaard Chapter 6 and 7)
+
+## Week 08 (2016-10-20)
+### Multiple Regression and Generalized Linear Modeling
+
+#### Topics
+
+- GLMM
+- Model simplification and selection
+- Dealing with other response variables types - counts, proportions, binary responses
+
+#### Required Readings
+*The Book of R*
+
+- Chapter 21 - Multiple Linear Regression
+
+*Statistics: An Introduction Using R*
+
+- Chapter 12 - Other Response Variables
+- Chapter 15 - Binary Response Variable
+
+[//]: # (PCA, DFA)
+
+> IMPORTANT! Deadline for choosing topic for group statistical methods presentation and vignette
+
+## Week 09 (2016-10-27)
+### Categorical Data Analysis
+
+[//]: # (* Chapter 5 - Single Samples)
+
+## Week 10 (2016-11-03)
+### Working with Geospatial Data
+
+#### Topics
+
+- Connecting to spatial databases
+- Coordinate system transformations
+- Raster and vector data
+
+## Week 11 (2016-11-10)
+### Working with Genetic Data
+
+#### Topics
+
+- Manipulating and analyzing DNA sequence data
+	- Data cleanup
+	- Phylogenetic analysis
+- Manipulating and analyzing genotype data (SNPs, MSATS)
+	- Population genetic analysis
+
+## Week 12 (2016-11-17)
+### Scraping Data from the Web, Using APIs, and Working with Text
+
+#### Topics
+
+- Scraping data from the web
+- Extracting text from PDFs and documents 
+- Text mining basics
+	- Building a corpus
+	- Building a document-term matrix
+	- Term frequency analysis
+- Mining data from social media
+- Regular expressions
+
+## Week 13 (2016-11-24)
+### No class meeting
+> Thanksgiving Break! Have fun and eat lots of good food.
+
+## Week 14 (2016-12-01)
+### Group Presentations and Vignettes
+
+## Week 15 (2016-12-08)
+### Group Presentations and Vignettes
+
+
+[//]: **Week 05 - Reshaping, Graphing, and Plotting for Exploratory Data Analysis**

@@ -29,8 +29,9 @@ Office Hours: Fridays, 2-4pm, SAC Room 4.100H
 <img src="img/math.png" style="width: 400px"/>
 </p>
 
-#### [Resources](resources.html)
+#### [Course Outline](outline.html)
 #### [Modules](modules.html)
+#### [Resources](resources.html)
 
 ## Overview
 
