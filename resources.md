@@ -3,7 +3,7 @@ Useful Data Science Resources
 
 #### [Course Overview](course-overview.html)
 
-#### [Course Outine](outline.html)
+#### [Course Outline](outline.html)
 
 #### [Modules](modules.html)
 
