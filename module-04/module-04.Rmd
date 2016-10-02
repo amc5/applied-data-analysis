@@ -381,10 +381,12 @@ Finally, ***R*** has three special data values that it uses in a variety of situ
 
 #### CHALLENGE 5:
 
-- Store the following numbers as a 6 x 3 matrix: 3, 0, 1 ,23, 1, 2, 33, 1, 1, 42, 0, 1, 41, 0, 2
+- Store the following numbers as a 5 x 3 matrix: 3, 0, 1 ,23, 1, 2, 33, 1, 1, 42, 0, 1, 41, 0, 2. Be sure to fill the matrix ROWWISE.
 
 - Then, do the following:
 
 	- Coerce the matrix to a data frame.
 	- As a data frame, coerce the second column to be *logical-valued*
 	- As a data frame, coerce the third column to be *factor-valued*
+
+When you are done, use the `str()` command to show the data type for each variable in your dataframe.
