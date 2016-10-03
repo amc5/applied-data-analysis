@@ -67,7 +67,7 @@ Write a function to simulate rolling a die where you pass the number of rolls as
 
 ### Rules of Probability
 
-1.  *Pr* ( + ) = Probability that something occurs = 1
+1.  *Pr* (+) = Probability that something occurs = 1
 2.  *Pr* (∅) = Probability that nothing occurs = 0
 3.  *Pr* (*A*) = Probability that a particular event *A* occurs
 
@@ -696,19 +696,19 @@ Another one of the main functions in ***R*** for probability distributions, the 
 > mean(v)
 ```
 
-    ## [1] 3.511321
+    ## [1] 3.577953
 
 ``` r
 > var(v)
 ```
 
-    ## [1] 16.21269
+    ## [1] 16.75844
 
 ``` r
 > sd(v)
 ```
 
-    ## [1] 4.026499
+    ## [1] 4.093708
 
 ``` r
 > hist(v, breaks = seq(from = -15, to = 20, by = 0.5), probability = TRUE)
@@ -786,13 +786,13 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(x)  # really close to 5
 ```
 
-    ## [1] 4.989657
+    ## [1] 4.912249
 
 ``` r
 > sd(x)  # really close to 8
 ```
 
-    ## [1] 7.960099
+    ## [1] 8.010623
 
 ``` r
 > z <- (x - mean(x))/sd(x)  # standardized!
@@ -805,7 +805,7 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(z)  # really close to zero
 ```
 
-    ## [1] 4.72243e-17
+    ## [1] 5.389057e-17
 
 ``` r
 > sd(z)  # really close to 1
@@ -921,21 +921,21 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > m
 ```
 
-    ## [1] 3.828109
+    ## [1] 4.564982
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 2.618023
+    ## [1] 3.27104
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.4779834
+    ## [1] 0.5972075
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -944,7 +944,7 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > ci
 ```
 
-    ## [1] 2.891279 4.764940
+    ## [1] 3.394477 5.735487
 
 ``` r
 > pop_se <- sigma/sqrt(length(s))

@@ -74,7 +74,7 @@ hist(two_dice,breaks=c(1.5:12.5), probability = TRUE, main="Rolling Two Dice", x
 
 ### Rules of Probability
 
-1. *Pr* $(+)$ = Probability that something occurs = 1
+1. *Pr* (+) = Probability that something occurs = 1
 2. *Pr* $(\emptyset)$ = Probability that nothing occurs = 0
 3. *Pr* $(A)$ = Probability that a particular event $A$ occurs
 
