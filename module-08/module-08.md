@@ -696,19 +696,19 @@ Another one of the main functions in ***R*** for probability distributions, the 
 > mean(v)
 ```
 
-    ## [1] 3.587718
+    ## [1] 3.424931
 
 ``` r
 > var(v)
 ```
 
-    ## [1] 14.83404
+    ## [1] 13.55304
 
 ``` r
 > sd(v)
 ```
 
-    ## [1] 3.851499
+    ## [1] 3.681446
 
 ``` r
 > hist(v, breaks = seq(from = -15, to = 20, by = 0.5), probability = TRUE)
@@ -786,13 +786,13 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(x)  # really close to 5
 ```
 
-    ## [1] 5.016068
+    ## [1] 4.957795
 
 ``` r
 > sd(x)  # really close to 8
 ```
 
-    ## [1] 8.032362
+    ## [1] 7.988987
 
 ``` r
 > z <- (x - mean(x))/sd(x)  # standardized!
@@ -805,7 +805,7 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(z)  # really close to zero
 ```
 
-    ## [1] -4.440348e-17
+    ## [1] -5.210866e-17
 
 ``` r
 > sd(z)  # really close to 1
@@ -921,21 +921,21 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > m
 ```
 
-    ## [1] 3.23723
+    ## [1] 5.086057
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.92326
+    ## [1] 3.094247
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.7162861
+    ## [1] 0.5649297
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -944,7 +944,7 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > ci
 ```
 
-    ## [1] 1.833335 4.641125
+    ## [1] 3.978815 6.193299
 
 ``` r
 > pop_se <- sigma/sqrt(length(s))
