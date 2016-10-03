@@ -683,9 +683,9 @@ In Module 7, we calculated confidence intervals for one of our estimates of a po
 
 A general way to define a confidence interval is as:
 
-	statistic being considered ± critical value $\times standard error,
+	statistic being considered ± critical value $\times$ standard error,
 
-where the statistic is the sample statistic under scrutiny (e.g., the mean), the critical value is a value from the standardized version of the sampling distribution that corresponds to the 100 * (1 - $\alpha$ level), e.g., 1-0.05 = 0.95 for the 95% CI, and the standard error is the standard deviation of the sampling distribution (which is often estimated from a sample itself).
+where the statistic is the sample statistic under scrutiny (e.g., the mean), the critical value is a value from the standardized version of the sampling distribution that corresponds to the 100 * (1 - $\alpha$ level), e.g., 100 * (1-0.05) for the 95% CI, and the standard error is the standard deviation of the sampling distribution (which is often estimated from a sample itself).
 
 #### CHALLENGE 8:
 

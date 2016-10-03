@@ -696,19 +696,19 @@ Another one of the main functions in ***R*** for probability distributions, the 
 > mean(v)
 ```
 
-    ## [1] 3.424931
+    ## [1] 3.511321
 
 ``` r
 > var(v)
 ```
 
-    ## [1] 13.55304
+    ## [1] 16.21269
 
 ``` r
 > sd(v)
 ```
 
-    ## [1] 3.681446
+    ## [1] 4.026499
 
 ``` r
 > hist(v, breaks = seq(from = -15, to = 20, by = 0.5), probability = TRUE)
@@ -786,13 +786,13 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(x)  # really close to 5
 ```
 
-    ## [1] 4.957795
+    ## [1] 4.989657
 
 ``` r
 > sd(x)  # really close to 8
 ```
 
-    ## [1] 7.988987
+    ## [1] 7.960099
 
 ``` r
 > z <- (x - mean(x))/sd(x)  # standardized!
@@ -805,7 +805,7 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(z)  # really close to zero
 ```
 
-    ## [1] -5.210866e-17
+    ## [1] 4.72243e-17
 
 ``` r
 > sd(z)  # really close to 1
@@ -903,9 +903,9 @@ In Module 7, we calculated confidence intervals for one of our estimates of a po
 
 A general way to define a confidence interval is as:
 
-    statistic being considered ± critical value $\times standard error,
+    statistic being considered ± critical value $\times$ standard error,
 
-where the statistic is the sample statistic under scrutiny (e.g., the mean), the critical value is a value from the standardized version of the sampling distribution that corresponds to the 100 \* (1 - *α* level), e.g., 1-0.05 = 0.95 for the 95% CI, and the standard error is the standard deviation of the sampling distribution (which is often estimated from a sample itself).
+where the statistic is the sample statistic under scrutiny (e.g., the mean), the critical value is a value from the standardized version of the sampling distribution that corresponds to the 100 \* (1 - *α* level), e.g., 100 \* (1-0.05) for the 95% CI, and the standard error is the standard deviation of the sampling distribution (which is often estimated from a sample itself).
 
 #### CHALLENGE 8:
 
@@ -921,21 +921,21 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > m
 ```
 
-    ## [1] 5.086057
+    ## [1] 3.828109
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.094247
+    ## [1] 2.618023
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.5649297
+    ## [1] 0.4779834
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -944,7 +944,7 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > ci
 ```
 
-    ## [1] 3.978815 6.193299
+    ## [1] 2.891279 4.764940
 
 ``` r
 > pop_se <- sigma/sqrt(length(s))
