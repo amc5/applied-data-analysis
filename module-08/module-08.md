@@ -7,7 +7,7 @@ Probabilities and Distributions
 Preliminaries
 -------------
 
--   Install this packages in ***R***: {manipulate}
+-   Install this package in ***R***: {manipulate}
 
 Objectives
 ----------
@@ -696,19 +696,19 @@ Another one of the main functions in ***R*** for probability distributions, the 
 > mean(v)
 ```
 
-    ## [1] 3.577953
+    ## [1] 3.398938
 
 ``` r
 > var(v)
 ```
 
-    ## [1] 16.75844
+    ## [1] 16.50221
 
 ``` r
 > sd(v)
 ```
 
-    ## [1] 4.093708
+    ## [1] 4.062292
 
 ``` r
 > hist(v, breaks = seq(from = -15, to = 20, by = 0.5), probability = TRUE)
@@ -786,13 +786,13 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(x)  # really close to 5
 ```
 
-    ## [1] 4.912249
+    ## [1] 5.15196
 
 ``` r
 > sd(x)  # really close to 8
 ```
 
-    ## [1] 8.010623
+    ## [1] 7.902719
 
 ``` r
 > z <- (x - mean(x))/sd(x)  # standardized!
@@ -805,7 +805,7 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 > mean(z)  # really close to zero
 ```
 
-    ## [1] 5.389057e-17
+    ## [1] 7.620562e-18
 
 ``` r
 > sd(z)  # really close to 1
@@ -921,21 +921,21 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > m
 ```
 
-    ## [1] 4.564982
+    ## [1] 4.348763
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.27104
+    ## [1] 3.910807
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.5972075
+    ## [1] 0.7140124
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -944,7 +944,7 @@ For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and 
 > ci
 ```
 
-    ## [1] 3.394477 5.735487
+    ## [1] 2.949324 5.748202
 
 ``` r
 > pop_se <- sigma/sqrt(length(s))

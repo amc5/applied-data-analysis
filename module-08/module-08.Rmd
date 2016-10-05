@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 # Probabilities and Distributions
 
 ## Preliminaries
-- Install this packages in ***R***: {manipulate}
+- Install this package in ***R***: {manipulate}
 
 ## Objectives
 > The objective of this module is to begin our discussion of *statistical inference* from a frequentist/classical statistics approach. Doing so means that we need to cover basics of probability and distributions.
