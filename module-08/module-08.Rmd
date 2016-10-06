@@ -259,7 +259,7 @@ Finally, we can define the "qth"" *quantile* of a *cumulative distibution functi
 
 ## Expected Mean and Variance of Random Variables
 
-The mean value (or expectation) and the expected variance for a random varible with a given *probability mass function* can be expressed generally as follows:
+The mean value (or expectation) and the expected variance for a random variable with a given *probability mass function* can be expressed generally as follows:
 
 $\mu_X$ = Expectation for $X$ = $\sum$ $x_i$ $\times$ *Pr* $(X=x_i)$ for all $x$ from $x_i$ to $x_k$
 
@@ -326,7 +326,7 @@ where $x$ = {0, 1, 2, ... , n} and where
 
 <img src="img/binom-2.svg" width="150px"/>
 
-This is read as "$n$ choose $k$", i.e., the probability of $k$ successes out of $n$ trials.
+This is read as "$n$ choose $k$", i.e., the probability of $k$ successes out of $n$ trials. This is also called the "binomial coefficient".
 
 For this distribution, $\mu_X$ = *np* and $\sigma_X^2$ = *np*(1-*p*). Recall, $\mu_X$ = expected number of successes in $n$ trials
 
@@ -353,7 +353,7 @@ As for other distributions, ***R*** has a built in `density` function, the `dbin
 dbinom(x=k,size=n,prob=p)
 ```
 
-We can also use the built in function `pbinom()` to return the value of the **cumulative distribution function** for the binomial distribution, i.e., the probability of observing up to and including a given number of successes in $n$ trials.
+We can also use the built in function `pbinom()` to return the value of the **cumulative distribution function** for the binomial distribution, i.e., the probability of observing *up to and including* a given number of successes in $n$ trials.
 
 So, for example, the chances of observing exactly 0, 1, 2, 3, ... 6 rolls of "1" on 6 rolls of a die are...
 
@@ -375,6 +375,30 @@ pbinom(q=3,size=6,prob=1/6) # note the name of the argument is q not x
 ... which can also be calculated by summing the relevant individual outcome probabilities...
 ``` {r}
 sum(dbinom(x=0:3,size=6,prob=1/6)) # this sums the probabilities of 0, 1, 2, and 3 successes
+```
+
+The probability of observing **more than** 3 rolls of "1" is given as...
+
+``` {r}
+1 - pnbinom(q=3,size=6,prob=1/6)
+```
+
+or, alterntatively...
+
+``` {r}
+pnbinom(q=3,size=6,prob=1/6, lower.tail = FALSE)
+```
+
+The probability of observing 3 **or more** rolls of "1" is...
+
+``` {r}
+1 - pbinom(q=2,size=6,prob=1/6) # note here that the q argument is "2"
+```
+
+or, alternatively...
+
+``` {r}
+pbinom(q=2,size=6,prob=1/6, lower.tail = FALSE)
 ```
 
 #### Poisson Distribution
@@ -607,7 +631,7 @@ plot(theoretical_q,observed_q, main="Normal QQ plot random normal variables", xl
 #### CHALLENGE 7:
 What happens if you simulate fewer observations in your vectors? Or if you simulate observations from a *different* distribution?
 
-#### The "Standard Normal"" Distribution
+#### The "Standard Normal" Distribution
 
 Any normal distribution with mean $\mu$ and standard deviation $\sigma$ can be converted into what is called the **standard normal** distribution, where the mean is zero and the standard deviation is 1. This is done by subtracting the mean from all observations and dividing all observations by the standard deviation. The resultant values are referred to a *Z* scores, and they reflect the number of standard deviations an observation is from the mean.
 
@@ -624,7 +648,7 @@ sd(z) # really close to 1
 
 ## Sample Distributions and Population Distributions
 
-It is important to recognize that, above, we were dealing with probability distributions of discrete and continuous random variables as they relate to *populations*. But, as we have talked about before, we almost never measure entire populations; instead, we measure *samples* from populations and we characterize our samples using various *statistics*. The theoretical probability distributions described above (and others) are *models* for how we connect observed sample data to populations, taking into account various assumptions, and this is what allows us to do many types of inferential statistics. The most fundamental assumption we make is that the observations we make are *independent* from one another and are *identically distributed*, an assumption often abbreviated as **iid**. Obvious cases of violation of this assumption are rife in the scientific literature, and we should always be cautious about making this assumption!
+It is important to recognize that, above, we were dealing with probability distributions of discrete and continuous random variables as they relate to *populations*. But, as we have talked about before, we almost never measure entire populations; instead, we measure *samples* from populations and we characterize our samples using various *statistics*. The theoretical probability distributions described above (and others) are *models* for how we connect observed sample data to populations, taking into account various assumptions, and this is what allows us to do many types of inferential statistics. The most fundamental assumption is that the observations we make are *independent* from one another and are *identically distributed*, an assumption often abbreviated as **iid**. Obvious cases of violation of this assumption are rife in the scientific literature, and we should always be cautious about making this assumption!
 
 The important thing for us to know is that we can get unbiased estimates of population level parameters on the basis of sample statistics.
 
@@ -635,6 +659,7 @@ set.seed(1)
 x <- rnorm(1000000, 25, 5)
 hist(x, probability = TRUE)
 mu <- mean(x)
+mu
 sigma <- sqrt(sum((x - mean(x))^2)/length(x))
 ```
 Note: We don't use the `sd()` function as this would divide by `length(x)-1`. Check that out using `sd(x)`
@@ -658,24 +683,24 @@ m <- NULL
 for (i in 1:k){
 	m[i] <- mean(s[[i]])
 }
-mean(m) # this is the mean of the sampling distribution = average sample mean; this should be the same as the population mean
+mean(m) # this is the mean of the sampling distribution = average sample mean; this should be really close to the population mean
 ```
 
 #### The Standard Error 
 
-The standard deviation of the *sampling distribution*, i.e., of all possible means of samples of size *n* from a population, is referred to as the *standard error*. If the population standard deviation (sigma) is known, then the standard error can be calculated as population standard deviation / sqrt(sample size) = $\sigma$/$n$
+The *standard deviation of the sampling distribution*, i.e., of all possible means of samples of size *n* from a population, is referred to as the *standard error*. If the population standard deviation (sigma) is known, then the standard error can be calculated as **population standard deviation / sqrt(sample size)**
 
 ``` {r}
 sigma/sqrt(n)
 ```
 
-If the population standard deviation isn't known, however, the standard error can be estimated from the standard deviation of a given sample (or, presumably, as the average standard deviation across samples). Recall the *standard error of the mean* for a sample is:
+If the true population standard deviation isn't known, however, the standard error can be estimated from the standard deviation of a given sample (or, presumably, as the average standard deviation across samples). Recall that the *standard error of the mean* for a sample is:
 
-	sample standard deviation/sqrt(sample size) = $s$/$n$
+	**sample standard deviation/sqrt(sample size)**
 
 So, the standard error of the mean for an individual sample can used as an estimator of the *standard error*, i.e., the standard deviation of the sampling distribution.
 
-Despite their similarities, the standard error of the mean and the standard deviation tell us different things about a sample. The *standard error of the mean* is an estimate of how far a given sample mean is likely to be from the population mean. The *standard deviation* of the sample is a measure of the degree to which individuals within the sample differ from the sample mean.
+Despite their similarities, the standard error of the mean and the standard deviation tell us different things about a sample. The *standard error of the mean* is an estimate of how far a given sample mean is likely to be from the population mean. The *standard deviation* of a sample is a measure of the degree to which individuals within the sample differ from the sample mean.
 
 Where does all this get us?
 
@@ -683,9 +708,9 @@ In Module 7, we calculated confidence intervals for one of our estimates of a po
 
 A general way to define a confidence interval is as:
 
-	statistic being considered ± critical value $\times$ standard error,
+	the *statistic* being considered (e.g., the mean) ± some *critical value* $\times$ the *standard error* of the statistic,
 
-where the statistic is the sample statistic under scrutiny (e.g., the mean), the critical value is a value from the standardized version of the sampling distribution that corresponds to the 100 * (1 - $\alpha$ level), e.g., 100 * (1-0.05) for the 95% CI, and the standard error is the standard deviation of the sampling distribution (which is often estimated from a sample itself).
+where the statistic is the sample statistic under scrutiny, the critical value is a value derived from the standardized version of the sampling distribution (normal, Student's t, Chi Square, etc.) that corresponds to the 100 $\times$ (1 - $\alpha$ level), e.g., 100 $\times$ (1-0.05) for the 95% CI, and the *standard error* is the standard deviation of the sampling distribution (which, as noted above, is often estimated from the sample itself).
 
 #### CHALLENGE 8:
 
@@ -729,4 +754,4 @@ d <- read.csv(f, sep=",", header=TRUE)
 
 [5] Now use the `sample()` function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution.
 
-[6] Now drawn 99 more random samples of 30 zombies out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution for each variable? How do the standard deviations compare to the standard errors estimated in [5]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
+[6] Now draw 99 more random samples of 30 zombies out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution for each variable? How do the standard deviations compare to the standard errors estimated in [5]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
