@@ -297,7 +297,7 @@ Finally, we can define the "qth"" *quantile* of a *cumulative distibution functi
 Expected Mean and Variance of Random Variables
 ----------------------------------------------
 
-The mean value (or expectation) and the expected variance for a random varible with a given *probability mass function* can be expressed generally as follows:
+The mean value (or expectation) and the expected variance for a random variable with a given *probability mass function* can be expressed generally as follows:
 
 *μ*<sub>*X*</sub> = Expectation for *X* = ∑ *x*<sub>*i*</sub> × *Pr* (*X* = *x*<sub>*i*</sub>) for all *x* from *x*<sub>*i*</sub> to *x*<sub>*k*</sub>
 
@@ -370,7 +370,7 @@ where *x* = {0, 1, 2, ... , n} and where
 
 <img src="img/binom-2.svg" width="150px"/>
 
-This is read as "*n* choose *k*", i.e., the probability of *k* successes out of *n* trials.
+This is read as "*n* choose *k*", i.e., the probability of *k* successes out of *n* trials. This is also called the "binomial coefficient".
 
 For this distribution, *μ*<sub>*X*</sub> = *np* and *σ*<sub>*X*</sub><sup>2</sup> = *np*(1-*p*). Recall, *μ*<sub>*X*</sub> = expected number of successes in *n* trials
 
@@ -408,7 +408,7 @@ As for other distributions, ***R*** has a built in `density` function, the `dbin
 
     ## [1] 0.05358368
 
-We can also use the built in function `pbinom()` to return the value of the **cumulative distribution function** for the binomial distribution, i.e., the probability of observing up to and including a given number of successes in *n* trials.
+We can also use the built in function `pbinom()` to return the value of the **cumulative distribution function** for the binomial distribution, i.e., the probability of observing *up to and including* a given number of successes in *n* trials.
 
 So, for example, the chances of observing exactly 0, 1, 2, 3, ... 6 rolls of "1" on 6 rolls of a die are...
 
@@ -458,6 +458,38 @@ And the chance of observing up to and including 3 rolls of "1" is...
 
     ## [1] 0.991298
 
+The probability of observing **more than** 3 rolls of "1" is given as...
+
+``` r
+> 1 - pnbinom(q = 3, size = 6, prob = 1/6)
+```
+
+    ## [1] 0.9988642
+
+or, alterntatively...
+
+``` r
+> pnbinom(q = 3, size = 6, prob = 1/6, lower.tail = FALSE)
+```
+
+    ## [1] 0.9988642
+
+The probability of observing 3 **or more** rolls of "1" is...
+
+``` r
+> 1 - pbinom(q = 2, size = 6, prob = 1/6)  # note here that the q argument is '2'
+```
+
+    ## [1] 0.06228567
+
+or, alternatively...
+
+``` r
+> pbinom(q = 2, size = 6, prob = 1/6, lower.tail = FALSE)
+```
+
+    ## [1] 0.06228567
+
 #### Poisson Distribution
 
 The **Poisson Distribution** is often used to model open ended counts of independently occuring events, for example the number of cars that pass a traffic intersection over a given interval of time or the number of times a monkey scratches itself during a given observation interval. The *probability mass function* for the Poisson distribution is described by a single parameter, *λ*, where *λ* can be interpreted as the mean number of occurrences of the event in the given interval.
@@ -481,7 +513,7 @@ Let's use ***R*** to look at the probability mass functions for different values
 > barplot(probset, names.arg = x, space = 0, xlab = "x", ylab = "Pr(X = x)", main = "Probability Mass Function")
 ```
 
-![](img/unnamed-chunk-18-1.png)
+![](img/unnamed-chunk-22-1.png)
 
 ``` r
 > x <- 0:20
@@ -490,7 +522,7 @@ Let's use ***R*** to look at the probability mass functions for different values
 > barplot(probset, names.arg = x, space = 0, xlab = "x", ylab = "Pr(X = x)", main = "Probability Mass Function")
 ```
 
-![](img/unnamed-chunk-18-2.png)
+![](img/unnamed-chunk-22-2.png)
 
 ``` r
 > x <- 0:50
@@ -499,7 +531,7 @@ Let's use ***R*** to look at the probability mass functions for different values
 > barplot(probset, names.arg = x, space = 0, xlab = "x", ylab = "Pr(X = x)", main = "Probability Mass Function")
 ```
 
-![](img/unnamed-chunk-18-3.png)
+![](img/unnamed-chunk-22-3.png)
 
 As we did for other distributions, we can also use the built in `probability` function for the Poisson distribution, `ppois()`, to return the value of the **cumulative distribution function**, i.e., the probability of observing up to and including a specific number of events in the given interval.
 
@@ -510,7 +542,7 @@ As we did for other distributions, we can also use the built in `probability` fu
 +     ylab = "Pr(X ≤ x)", main = "Cumulative Probability")
 ```
 
-![](img/unnamed-chunk-19-1.png)
+![](img/unnamed-chunk-23-1.png)
 
 ``` r
 > x <- 0:20
@@ -519,7 +551,7 @@ As we did for other distributions, we can also use the built in `probability` fu
 +     ylab = "Pr(X ≤ x)", main = "Cumulative Probability")
 ```
 
-![](img/unnamed-chunk-19-2.png)
+![](img/unnamed-chunk-23-2.png)
 
 ``` r
 > x <- 0:50
@@ -528,9 +560,9 @@ As we did for other distributions, we can also use the built in `probability` fu
 +     ylab = "Pr(X ≤ x)", main = "Cumulative Probability")
 ```
 
-![](img/unnamed-chunk-19-3.png)
+![](img/unnamed-chunk-23-3.png)
 
-#### HOMEWORK PROBLEM 1:
+#### HOMEWORK PROBLEM:
 
 Create a new ***GitHub*** repository and a new ***R*** Project named "homework-week-4". In your repo, create an **R Markdown** file and answer the following problems. When you are done, "knit" your **R Markdown** file to `.html` and push your `.Rmd` and `.html` files up to ***GitHub*** for me to look at.
 
@@ -575,7 +607,7 @@ Let's plot a uniform distribution across a given range, from *a* = 4 to *b* = 8.
 > plot(x, fx, type = "l", xlab = "x", ylab = "f(x)", main = "Probability Density Function")
 ```
 
-![](img/unnamed-chunk-20-1.png)
+![](img/unnamed-chunk-24-1.png)
 
 Note that for the uniform distribution, the *cumulative density function* increases linearly over the given interval.
 
@@ -584,7 +616,7 @@ Note that for the uniform distribution, the *cumulative density function* increa
 +     main = "Cumulative Probability")  # punif() is the cumulative probability density up to a given x
 ```
 
-![](img/unnamed-chunk-21-1.png)
+![](img/unnamed-chunk-25-1.png)
 
 #### CHALLENGE 5:
 
@@ -605,7 +637,7 @@ We can get an idea of the shape of a normal distribution with different *μ* and
 +     xlab = "x", ylab = "f(x)")
 ```
 
-![](img/unnamed-chunk-22-1.png)
+![](img/unnamed-chunk-26-1.png)
 
 The function, `dnorm()` gives the point value of the normal density function at a given value of *x*. *x* can range from -∞ to +∞. Recall, it does not make sense to talk about the "probability" associated with a given value of *x* as this isa density not a mass functions, but we can talk about the probability of *x* falling within a given interval.
 
@@ -696,25 +728,25 @@ Another one of the main functions in ***R*** for probability distributions, the 
 > mean(v)
 ```
 
-    ## [1] 3.398938
+    ## [1] 3.390831
 
 ``` r
 > var(v)
 ```
 
-    ## [1] 16.50221
+    ## [1] 16.29417
 
 ``` r
 > sd(v)
 ```
 
-    ## [1] 4.062292
+    ## [1] 4.036604
 
 ``` r
 > hist(v, breaks = seq(from = -15, to = 20, by = 0.5), probability = TRUE)
 ```
 
-![](img/unnamed-chunk-29-1.png)
+![](img/unnamed-chunk-33-1.png)
 
 A quantile-quantile or "Q-Q" plot can be used to look at whether a set of data seem to follow a normal distribution. A Q–Q plot is a graphical method for generally comparing two probability distributions. To examine a set of data for normality graphically, you plot the quantiles for your actual data (as the y values) versus the theoretical quantiles (as the x values) pulled from a normal distribution. If the two distributions being compared are similar, the points in the plot will approximately lie on the line y = x.
 
@@ -727,7 +759,7 @@ To quickly do a Q-Q plot, call the two ***R*** functions `qqnorm()` and `qqline(
 > qqline(v, col = "gray")
 ```
 
-![](img/unnamed-chunk-30-1.png)
+![](img/unnamed-chunk-34-1.png)
 
 This is the same as doing the following:
 
@@ -765,47 +797,47 @@ Step 4: Plot these quantiles against one another
 +     xlab = "Theoretical Quantiles", ylab = "Sample Quantiles")
 ```
 
-![](img/unnamed-chunk-34-1.png)
+![](img/unnamed-chunk-38-1.png)
 
 #### CHALLENGE 7:
 
 What happens if you simulate fewer observations in your vectors? Or if you simulate observations from a *different* distribution?
 
-#### The "Standard Normal"" Distribution
+#### The "Standard Normal" Distribution
 
-Any normal distribution with mean *μ* and standard deviation *σ* can be converted into what is called the **standard normal** distribution, where the mean is zero and the standard deviation is 1. This is done by subtracting the mean from all observations and dividing all observations by the standard deviation. The resultant values are referred to a *Z* scores, and they reflect the number of standard deviations an observation is from the mean.
+Any normal distribution with mean *μ* and standard deviation *σ* can be converted into what is called the **standard normal** distribution, where the mean is zero and the standard deviation is 1. This is done by subtracting the mean from all observations and dividing these differences by the standard deviation. The resultant values are referred to a *Z* scores, and they reflect the number of standard deviations an observation is from the mean.
 
 ``` r
 > x <- rnorm(10000, mean = 5, sd = 8)  # simulate from a normal distribution with mean 5 and SD 8
 > hist(x)
 ```
 
-![](img/unnamed-chunk-35-1.png)
+![](img/unnamed-chunk-39-1.png)
 
 ``` r
 > mean(x)  # really close to 5
 ```
 
-    ## [1] 5.15196
+    ## [1] 4.982152
 
 ``` r
 > sd(x)  # really close to 8
 ```
 
-    ## [1] 7.902719
+    ## [1] 7.96752
 
 ``` r
 > z <- (x - mean(x))/sd(x)  # standardized!
 > hist(z)
 ```
 
-![](img/unnamed-chunk-35-2.png)
+![](img/unnamed-chunk-39-2.png)
 
 ``` r
 > mean(z)  # really close to zero
 ```
 
-    ## [1] 7.620562e-18
+    ## [1] -5.925707e-18
 
 ``` r
 > sd(z)  # really close to 1
@@ -816,7 +848,7 @@ Any normal distribution with mean *μ* and standard deviation *σ* can be conver
 Sample Distributions and Population Distributions
 -------------------------------------------------
 
-It is important to recognize that, above, we were dealing with probability distributions of discrete and continuous random variables as they relate to *populations*. But, as we have talked about before, we almost never measure entire populations; instead, we measure *samples* from populations and we characterize our samples using various *statistics*. The theoretical probability distributions described above (and others) are *models* for how we connect observed sample data to populations, taking into account various assumptions, and this is what allows us to do many types of inferential statistics. The most fundamental assumption we make is that the observations we make are *independent* from one another and are *identically distributed*, an assumption often abbreviated as **iid**. Obvious cases of violation of this assumption are rife in the scientific literature, and we should always be cautious about making this assumption!
+It is important to recognize that, above, we were dealing with probability distributions of discrete and continuous random variables as they relate to *populations*. But, as we have talked about before, we almost never measure entire populations; instead, we measure *samples* from populations and we characterize our samples using various *statistics*. The theoretical probability distributions described above (and others) are *models* for how we connect observed sample data to populations, taking into account various assumptions, and this is what allows us to do many types of inferential statistics. The most fundamental assumption is that the observations we make are *independent* from one another and are *identically distributed*, an assumption often abbreviated as **iid**. Obvious cases of violation of this assumption are rife in the scientific literature, and we should always be cautious about making this assumption!
 
 The important thing for us to know is that we can get unbiased estimates of population level parameters on the basis of sample statistics.
 
@@ -828,10 +860,16 @@ Let's imagine a population of 1 million zombies whose age at zombification is ch
 > hist(x, probability = TRUE)
 ```
 
-![](img/unnamed-chunk-36-1.png)
+![](img/unnamed-chunk-40-1.png)
 
 ``` r
 > mu <- mean(x)
+> mu
+```
+
+    ## [1] 25.00023
+
+``` r
 > sigma <- sqrt(sum((x - mean(x))^2)/length(x))
 ```
 
@@ -867,108 +905,66 @@ Suppose we now sample the zombie population by trapping sets of zombies and dete
     ## [[6]]
     ## [1] 30.24572 28.44619 25.22456 30.53983 19.21535
 
-For each of these samples, we can then calculate a mean, which is a statistic describing each sample. That statistic itself is a random variable with a mean and distribution. This is the *sampling distribution*. How does the sampling distribution compare to the population distribution? The mean of the two is pretty close to the same! The sample mean is an unbiased estimator for the population mean.
+For each of these samples, we can then calculate a mean age, which is a statistic describing each sample. That statistic itself is a random variable with a mean and distribution. This is the *sampling distribution*. How does the sampling distribution compare to the population distribution? The mean of the two is pretty close to the same! The sample mean - which is an average of the set of sample averages - is an unbiased estimator for the population mean.
 
 ``` r
 > m <- NULL
 > for (i in 1:k) {
 +     m[i] <- mean(s[[i]])
 + }
-> mean(m)  # this is the mean of the sampling distribution = average sample mean; this should be the same as the population mean
+> mean(m)  # almost equal to...
 ```
 
     ## [1] 24.95602
 
+``` r
+> mu
+```
+
+    ## [1] 25.00023
+
+Again, this is the mean of the sampling distribution, which is simply the average of the means of each sample. This value should be really close to the population mean.
+
 #### The Standard Error
 
-The standard deviation of the *sampling distribution*, i.e., of all possible means of samples of size *n* from a population, is referred to as the *standard error*. If the population standard deviation (sigma) is known, then the standard error can be calculated as population standard deviation / sqrt(sample size) = *σ*/*n*
+The *variance in the sampling distribution*, i.e., of all possible means of samples of size *n* from a population, is *σ*<sup>2</sup>/*n*. The square root of this variance is the *standard deviation of the sampling distribution*, also referred to as the **standard error**.
+
+Thus, if the population variance *σ*<sup>2</sup> (and thus the population standard deviation *σ*) is known, then the standard error can be calculated as ***σ* / (square root of the sample size)**, or...
 
 ``` r
-> sigma/sqrt(n)
+> pop_se <- sigma/sqrt(n)
+> pop_se  # SE estimated from population standard deviation
 ```
 
     ## [1] 2.236481
 
-If the population standard deviation isn't known, however, the standard error can be estimated from the standard deviation of a given sample (or, presumably, as the average standard deviation across samples). Recall the *standard error of the mean* for a sample is:
-
-    sample standard deviation/sqrt(sample size) = $s$/$n$
-
-So, the standard error of the mean for an individual sample can used as an estimator of the *standard error*, i.e., the standard deviation of the sampling distribution.
-
-Despite their similarities, the standard error of the mean and the standard deviation tell us different things about a sample. The *standard error of the mean* is an estimate of how far a given sample mean is likely to be from the population mean. The *standard deviation* of the sample is a measure of the degree to which individuals within the sample differ from the sample mean.
-
-Where does all this get us?
-
-In Module 7, we calculated confidence intervals for one of our estimates of a population parameter (the population mean, our *estimand*), based on a sample statistic (the sample mean, our *estimator*). Let's revist that process...
-
-A general way to define a confidence interval is as:
-
-    statistic being considered ± critical value $\times$ standard error,
-
-where the statistic is the sample statistic under scrutiny (e.g., the mean), the critical value is a value from the standardized version of the sampling distribution that corresponds to the 100 \* (1 - *α* level), e.g., 100 \* (1-0.05) for the 95% CI, and the standard error is the standard deviation of the sampling distribution (which is often estimated from a sample itself).
-
-#### CHALLENGE 8:
-
-For vector *v* from CHALLENGE 6, use the `sample()` function with `size=30` and `replace=FALSE` to select a sample.
-
--   Calculate the mean, standard deviation, and standard error of the mean (SEM) based on your sample.
--   Using the SEM, calculate the 95% confidence interval around your estimate of the mean.
--   How does the SEM estimated from your sample compare to the estimate of the standard error you would make based on the knowledge of the population standard deviation, *σ* = 4?
+If the true population standard deviation is not known, the standard error can still be estimated from the standard deviation of any given sample. Thus, analogous to the formula we used when the true population standard deviation was known, the *standard error* calculated from a sample is simply the **sample standard deviation / (square root of the sample size)**, or...
 
 ``` r
-> s <- sample(v, size = 30, replace = FALSE)
-> m <- mean(s)
-> m
+> stdev <- NULL
+> for (i in 1:k) {
++     stdev[i] <- sd(s[[i]])
++ }
+> sem <- stdev/sqrt(n)  # a vector of SEs estimated from each sample 
+> head(sem)
 ```
 
-    ## [1] 4.348763
+    ## [1] 2.021349 1.553640 2.861449 3.003152 2.302279 2.104241
 
 ``` r
-> sd <- sd(s)
-> sd
+> mean(sem)  # almost equal to...
 ```
 
-    ## [1] 3.910807
+    ## [1] 2.109384
 
 ``` r
-> sem <- sd(s)/sqrt(length(s))
-> sem
-```
-
-    ## [1] 0.7140124
-
-``` r
-> lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
-> upper <- m + qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
-> ci <- c(lower, upper)
-> ci
-```
-
-    ## [1] 2.949324 5.748202
-
-``` r
-> pop_se <- sigma/sqrt(length(s))
 > pop_se
 ```
 
-    ## [1] 0.9130396
+    ## [1] 2.236481
 
-#### HOMEWORK PROBLEM 2:
+Thus, the *standard error of the mean* calculated from an individual sample can be used as an estimator for the standard deviation of the sampling distribution. This is extremely useful, since it means that, if our sample is large enough, we don’t have to repeatedly sample from the population to get an estimate of the population distribution directly using our data.
 
-Using different `.Rmd` file than you used for Problem 1 pushing both the Markdown and knitted `.html` file to the same "homework-week-4" repository, do the following:
+Note that as our sample size increases, the standard error of the mean should decrease, as should the standard deviation in estimates of the population mean drawn from successive samples. This should be apparent intuitively... as each sample drawn from a population gets larger, the estimate of the mean value of those samples should vary less and less.
 
-Load in the dataset "zombies.csv" from my ***GitHub*** repo at <https://github.com/difiore/ADA2016>. This data includes the first and last name and gender of the entire population of 1000 people who have survived the zombie apocalypse and are now ekeing out an existence somewhere on the East Coast, along with several other variables (height, weight, age, number of years of education, number of zombies they have killed, and college major [see here for info on major](http://www.thebestschools.org/magazine/best-majors-surviving-zombie-apocalypse/)
-
-f &lt;- file.choose() d &lt;- read.csv(f, sep=",", header=TRUE)
-
-\[1\] Calculate the *population* mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education). NOTE: You will not want to use the built in `var()` and `sd()` commands as these are for *samples*.
-
-\[2\] Use ggplot and make boxplots of each of these variable by gender.
-
-\[3\] Use ggplot and make a scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
-
-\[4\] Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not, can you determine what common distribution they are drawn from?
-
-\[5\] Now use the `sample()` function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution.
-
-\[6\] Now drawn 99 more random samples of 30 zombies out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution for each variable? How do the standard deviations compare to the standard errors estimated in \[5\]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
+Despite their similarities, the standard error of the mean calculated for a given sample and the standard deviation of that given sample tell us different things. The *standard error of the mean* is an estimate of how far a given sample mean is likely to be from the population mean; it is a measure of uncertainty. The *standard deviation* of a sample is a measure of the degree to which individuals values within a sample differ from the sample mean.

@@ -18,228 +18,239 @@ knitr::opts_chunk$set(
 # Statistical Inference and Basic Hypothesis Testing
 
 ## Preliminaries
-- Install this packages in ***R***: {manipulate}
+- Install this package in ***R***: {curl}
 
 ## Objectives
-> The objective of this module is to begin our discussion of *statistical inference* from a frequentist/classical statistics approach. Doing so means that we need to cover basics of probability and distributions.
+> The objective of this module is to continue our discussion of *statistical inference* and introduce basic *hypothesis testing* from a frequentist/classical statistics approach.
+
+# Standard Errors and Confidence Intervals
+
+To recap some of what we have covered in the last two modules, standard errors are key to calculating confidence intervals and to basic inferential statistics.
+
+In Module 7, we calculated confidence intervals for one of our estimates of a population parameter (the population mean, our **estimand**), based on a sample statistic (the sample mean, our **estimator**). Let's revist that process...
+
+The general way to define a confidence interval based on data from a sample is as the value of the **statistic** being considered (e.g., the mean) ± some **critical value** $\times$ the **standard error** of the statistic.
+
+The **critical value** is derived from the standardized version of a sampling distribution (e.g., the normal distribution) that corresponds the quantile limits we are interested in. For example, for the 95% CI around the mean, the critical value corresponds the range of quantiles above and below which we expect to see only 5% of the distribution of statistic values. This is equivalent to the ± 1 - ($\alpha$/2), where $\alpha$ = 0.05, thuse corresponding to the ± 0.975 quantile.
+
+The **standard error** is the standard deviation of the sampling distribution, which, as noted above, is often estimated from the sample itself but can also be calculated directly from the population standard deviation, if that is known.
+
+#### CHALLENGE:
+
+As we did in Module 8, create a vector, *v*, containing **n** random numbers selected from a normal distribution with mean $\mu$ and standard deviation $\sigma$. Use 1000 for **n**, 3.5 for $\mu$, and 4 for $\sigma$.
+
+- Calculate the mean, standard deviation, and standard error of the mean (SEM) based on your sample.
+- Using the SEM, calculate the 95% confidence interval around your estimate of the mean, basing your estimate on quantiles derived from the normal distribution.
+- How does the SEM estimated from your sample compare to the estimate of the standard error you would make based on the knowledge of the population standard deviation, $\sigma$ = 4?
+
+``` {r}
+n <- 1000
+mu <- 3.5
+sigma <- 4
+v <- rnorm(n,mu,sigma)
+s <- sample(v,size=30,replace=FALSE)
+m <- mean(s)
+m
+sd <- sd(s)
+sd
+sem <- sd(s)/sqrt(length(s))
+sem
+lower <- m - qnorm(1-0.05/2)*sem # (1-alpha)/2 each in upper and lower trail of distribution
+upper <- m + qnorm(1-0.05/2)*sem # (1-alpha)/2 each in upper and lower trail of distribution
+ci <- c(lower, upper)
+ci
+pop_se <- sigma/sqrt(length(s))
+pop_se
+```
 
-## Review of Common Distributions
+#### HOMEWORK PROBLEM:
+Using a new `.Rmd` file than you used for Problem 1 pushing both the Markdown and knitted `.html` file to the same "homework-week-4" repository, do the following:
 
-Here are a couple of important things to remember...
+Load in the dataset "zombies.csv" from my ***GitHub*** repo at https://github.com/difiore/ADA2016. This data includes the first and last name and gender of the entire population of 1000 people who have survived the zombie apocalypse and are now ekeing out an existence somewhere on the East Coast, along with several other variables (height, weight, age, number of years of education, number of zombies they have killed, and college major [see here for info on important post-zombie apocalypse majors](http://www.thebestschools.org/magazine/best-majors-surviving-zombie-apocalypse/)
 
-### Discrete Random Variables
+``` {r}
+library(curl)
+f <- f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/zombies.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+```
 
-| Name           | Notation                | PMF $f(x)$ = $P(X=x)$                      | $\mu$ = $E(X)$     | $\sigma^2$ = *Var* $(X)$       |                          |
-|:-------------- |:----------------------- |:------------------------------------------ |:------------------ |:------------------------------ |:-----------------------  |
-| Bernoulli      | $X$ ~ *BERN*$(p)$       | $f(x)$ = $p^x(1-p)^{1-x}$                  | *p*                | *p(1-p)*                       | x = {0,1}                |
-| Binomial       | $X$ ~ *BIN*$(n, p)$     | <img src="img/binom-1.svg" width="220px"/> | *np*               | *np(1-p)*                      | x = {0,1,..., k}         |
-| Poisson        | $X$ ~ *POIS*$(\lambda)$ | <img src="img/poisson.svg" width="175px"/> | $\lambda$          | $\lambda$                      | x = {0,1,..., +$\infty$} |
+[1] Calculate the *population* mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education). NOTE: You will not want to use the built in `var()` and `sd()` commands as these are for *samples*.
 
-### Continuous Random Variables
+[2] Use {ggplot} and make boxplots of each of these variable by gender.
 
-| Name         | Notation                      | PDF $f_X(x)$                                 | $\mu$ = $E(X)$     | $\sigma^2$ = *Var* $(X)$ |
-|:------------ |:----------------------------- | -------------------------------------------- |:------------------ |:------------------- |:---------------------- |
-| Beta         | $X$ ~ *BETA*$(\alpha,\beta)$  | $f(x)$ = $K$ $x^{\alpha-1}(1-x)^{\beta-1}$   |                    |                     |                        |
-| Uniform      | $X$ ~ *U*$(a,b)$              | <img src="img/uni-1.svg" width="110px"/>     | <img src="img/uni-2.svg" width="100px"/> | <img src="img/uni-3.svg" width="115px"/> |                        |
-| Normal      | $X$ ~ *N*$(\mu,\sigma^2)$      |                                              |                    |                     |                        |
-| Exponential |
-| Student's t | 
+[3] Use {ggplot} and make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
 
+[4] Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not, can you determine what common distribution they are drawn from?
 
+[5] Now use the `sample()` function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution.
 
+[6] Now draw 99 more random samples of 30 zombies out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution for each variable? How do the standard deviations compare to the standard errors estimated in [5]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
 
+## The Central Limit Theorem
 
+Thus far, our construction of CIs has taken advantage of one of the most important theorems in statistics, the Central Limit Theorem. The key importance of the CLT for us is that it states that the distribution of averages (or sums or other summary statistics...) of **iid** random variables becomes normal as the sample size increases. It is this fact that allows us to have a good sense of the average event and of the distribution of average events in a population even though we only observe one set of events and do not know what actual population distribution is. The CLT says nothing about the probability distribution for events in the original population, and that is exactly where its usefulness lies... that distribution can be normal, skewed, all kinds of odd! But we can assume normality for the distribution of **sample mean** (or sum or mode...) no matter what kind of distribution we have in the initial population we have, as long as our sample size is large enough and our samples are independent. It is thus the CLT that allows us to make inferences about a population based on a sample.
 
+Just to explore this a bit, let's do some simulations. We are going to take lots of averages of samples from a particular non-normal distribution and then look at the distribution of those averages. Imagine we have some event that occurs in a population according to some probability mass function like the Poisson where we know $\lambda = 4 and the expectations of $\mu$ and $\sigma^2$ are thus both = 4.
 
-Testing for normality statistically...
+Now let's imagine taking samples of size 10 from this population. We will take 1000 random samples of this size, calculate the average of each sample, and plot a histogram of those averages... it will be close to normal and the standard deviation of the sampling distribution is roughly equal to the estimated standard error, the square root of $(\lambda/n)$.
 
+``` {r}
+lambda <- 14
+n <- 10
+pop_se <- sqrt(lambda/n) # the estimated SE
+pop_se
+x <- NULL
+for (i in 1:1000){
+x[i] <- mean(rpois(n = n, lambda = lambda))
+}
+hist(x, breaks=seq(from=lambda - 4* sqrt(lambda)/sqrt(n), to = lambda + 4 * sqrt(lambda)/sqrt(n), length.out = 20), probability = TRUE)
+sd <- sd(x) # st dev of the sampling distribution
+sd
+qqnorm(x)
+qqline(x)
+```
+We can do this for samples of size 100, too... the mean stays the same, the distribute is still normal, but the standard deviation of the sampling distribution is lower.
 
-The Shapiro-Wilk Test yields a test statistic W, by finding the largest deviation from the expected line in a qqplot. This is a powerful test for normality, but does not work well when there are many ties in the data. This test is not part of the base installation of R and requires the cwhmisc package.
+``` {r}
+n <- 100
+pop_se <- sqrt(lambda/n) # the estimated SE
+pop_se
+x <- NULL
+for (i in 1:1000){
+x[i] <- mean(rpois(n = n, lambda = lambda))
+}
+hist(x, breaks=seq(from=lambda - 4* sqrt(lambda)/sqrt(n), to = lambda + 4 * sqrt(lambda)/sqrt(n), length.out = 20), probability = TRUE)
+sd <- sd(x) # st dev of the sampling distribution
+sd
+qqnorm(x)
+qqline(x)
+```
 
-library(cwhmisc)
+We can normalize these distributions by subtracting off the expected population mean and dividing by the population standard error and then plotting the histogram along with a normal curve.
 
-shapiro.test(x)
+``` {r}
+curve(dnorm(x,0,1),-4,4, ylim=c(0,0.8))
+z <- (x-lambda)/pop_se
+hist(z, breaks=seq(from= - 4, to = 4, length.out = 20), probability = TRUE, add = TRUE)
+```
 
-Another powerful test for normality is the Anderson-Darling test. This test comparable in power to the SW test. It requires the nortest package.
+Pretty normal looking, right?
 
-library(nortest)
+Here's an example using `sum()` instead of `mean()`...
 
+``` {r}
+n <- 100
+x <- NULL
+for (i in 1:1000){
+x[i] <- sum(rpois(n = n, lambda = lambda))
+}
+hist(x, breaks=seq(min(x), max(x), length.out = 20), probability = TRUE)
+```
 
-Testing for fit to a distribution of your choice. A more general test is the Kolmogorov-Smirnov Test (KS test). For details, see Zar, Biostatistical Analysis
+Again, pretty normal looking!
 
-KS Test. If you test for a normal distribution, it assumes you are dealing with a standard normal distribution (mean 0, standard deviation 1).
+**Take Home Points:**
 
-ou can also use ks.test to compare 2 distributions to determine whether they come from the same distribution: warning though, if means or variances are different, the ks test will say they are different distributions.
+[1] The CLT states that, regardless of the underlying distribution, the distribution of averages based on a large number of independent, identically distributed variables...
 
-ks.test(x, rnorm(100, 10, 3))
+- will be approximately normal,
+- centered at the population mean,
+– with standard deviation equal to the standard error of the mean.
 
-The K-S Test can be applied for most distributions. Its main limitation is that real statisticians will tell you that you should not apply the K-S test using a distribution with parameters estimated directly from the data. That is, you shouldn’t estimate the mean and variance of a binomial distribution, and use that to generate the null distribution with which you compare your data. In practice, many biologists ignore this stricture, because the KS test is more powerful than the alternative, the chi squared test.
+Additionally, variables that are expected to be the sum of multiple independent processes (such as measurement errors) will also have distributions that are nearly normal.
 
-The KS test can be used for almost any distribution in R, you just need to replace “pnorm” with the distribution you want.
+[2] Taking the mean and adding and subtracting the relevant standard normal quantile $\times$ the standard error yields a confidence interval for the mean, which gets wider as the coverage increases and gets narrower with less variability or larger sample sizes.
 
+[3] As sample size increases, the standard error of the mean decreases and the distribution becomes more and more normal (i.e., has less skew and kurtosis, which are higher order moments of the distribution).
 
+Check out [this website](http://onlinestatbook.com/stat_sim/sampling_dist/index.html) for a nice interactive simulation demonstrating the Central Limit Theorem.
 
-Coefficient of Variation = ratio of the standard deviation to the mean
 
-v <- rnorm(100, mean=5, sd=2)
-CV <- sd(v)/mean(v)
+## Confidence Intervals for Sample Proportions
 
+So far, we've talked about CIs for sample means, but what about for other statistics, e.g., sample proportions. For example, if you have a sample of **n** trials where you record the success or failure of a binary event, you obtain an estimate of the proportion of successes, $x/n$. If you perform another **n** trials, the new estimate could vary in the same way that a repeated means of the same variable (e.g., zombie age) can vary from sample to sample. Taking a similar approach as above, we can generate confidence intervals for this variability in the proportion of successes across trails.
 
+In this case, the expectation of random binary variable $x$, which we will denote as $\pi$ (analogous to $\mu$) [$\pi$ for proportion versus $\mu$ for mean] in a population is simply the average number of successes across multiple trials.
 
-Roughly, the central limit theorem states that the distribution of the sum (or average) of a large number of independent, identically distributed variables will be approximately normal, regardless of the underlying distribution.
+The expected distribution of $x$ is approximately normal and equal to sqrt($\pi(1-\pi)/n)$.
 
+This is an okay assumption to make if both $n\times\pi$ and $n\times(1-\pi)$ are greater than roughly 5.
 
-The central limit theorem states that averages of random variables independently drawn from independent distributions converge in distribution to the normal, that is, become normally distributed when the number of random variables is sufficiently large. Also, variables that are expected to be the sum of many independent processes (such as measurement errors) often have distributions that are nearly normal.
+This is akin to calculating the standard error the same was as we did above, as the square root of (the expected variance in a binary variable / sample size). And, as above, if we do not have a population estimate for $\pi$, we can estimate this from our sample.
 
+#### CHALLENGE:
 
+Suppose a polling group in the United States is interested in the proportion of voting-age citizens in their state that already know they will vote for Hillary Clinton in the upcoming presidential election. The group obtains a yes or no answer from 1000 suitable randomly selected individuals. Of these individuals, 856 say they know how they’ll vote. How would we characterize the mean and variability associated with this proportion?
 
+``` {r}
+n <- 1000
+x <- 856
+pi <- x/n
+pi
+```
+Are $n\times\pi$ and $n\times(1-\pi)$ both > 5? Yes!
 
-Other Useful Distributions
+``` {r}
+n * (x/n)
+n * (1 - x/n)
+pop_se <- sqrt((x/n)*(1-x/n)/n)
+```
 
+What is the 95% CI around our estimate of the proportion of people who already know how they will vote?
 
-Negative Binomial (discrete)
+``` {r}
+curve(dnorm(x, mean=pi, sd=pop_se), pi - 4 * pop_se, pi + 4 * pop_se)
+upper <- pi + qnorm(0.975) * pop_se
+lower <- pi - qnorm(0.975) * pop_se
+ci <- c(lower, upper)
+polygon(cbind(c(ci[1], seq(from=ci[1], to=ci[2], length.out = 1000), ci[2]), c(0,dnorm(seq(from=ci[1], to=ci[2], length.out = 1000),mean=pi,sd=pop_se),0)), border="black",col="gray")
+abline(v=ci)
+abline(h=0)
+```
 
-Similar to the binomial and poisson, this distribution is derived from the number of failures rather than successes. The distribution maps the number of Bernoulli trials until a specified event occurs r times. The negative binomial differs from the poisson in that the variance may be different from the expected value.
+## Small Sample Confidence Intervals
 
-Examples include the number of heads before one gets 2 tails; number of individuals per patch; number of successful trapping events in a trap day. In ecology the negative binomial is useful for modeling processes where the variance is expected to be larger than the mean (overdispersed) and there need not be an upper limit. The negative binomial, like the binomial, is bounded at 0 (no negative values). The negative binomial arrises in situations similar to the poisson but where lambda is itself variable.
+Thus far, we have discussed creating a confidence interval based on the CLT and the normal distribution and our intervals took the form:
 
-The negative binomial is represented in one of two ways
+*mean* ± *Z* (the quantile from the standard normal curve) × *standard error of the mean*
 
-X ~ Nbinom(p,n)
+But, when the size of our sample is small (n < 30), instead of using the normal distribution to calculate our CIs, we typically use a different distribution to generate the relevant quantiles to multiply the standard error by... the **t distribution** (a.k.a., Gosset's t or Student's t distribution).
 
-Where p is the probability per trial and n is the number of successes awaited. Or:
+Note that this is the **typical** case that we will encounter, as we often do not have information about the population that a sample is drawn from.
 
-X ~ Nbinom(μ, k)
+The t distribution is thus a continuous probability distribution very similar in shape to the normal that we generally use when dealing with statistics (such as means and standard deviations) that are estimated from a sample. Any particular t distribution looks a lot like a normal distribution in that it is bell-shaped, symmetric, unimodal, and zero-centered.
 
-Where μ is the mean number of failures expected and k is the overdispersion parameter, which measures the amount of clustering or aggregation or heterogeneity.
+The choice of the appropriate t distribution to use in any particular statistical test is based on the number of **degrees of freedom (df)**, i.e., the number of individual components in the calculation of a given statistic (such as the standard deviation) that are “free to change”.
 
-For additional details see (Bolker, 2008)
+We can think of the t distribution as representing a family of curves that, as the number of degrees of freedom increases, approaches the normal or Gaussian curve. At low numbers of degrees of freedom, the tails of the distribution get fatter.
 
-Note that there are two conflicting meanings for overdispersion. In the statistical sense, a distribution such as the negative binomial may be called overdispersed when its variance is greater than the mean. As discussed above for the poisson distribution, statistical overdispersion occurs when events are clustered or aggregated.
+Confidence intervals based on the t distribution are of the form:
 
-In spatial statistics, overdispersed means that occurrences are less aggregated, more evenly distributed on the landscape than one would expect by chance.
+*mean* ± *t* (the quantile from the t distribution) × *standard error of the mean*
 
-The R functions for this distribution are: [p,d,q,r]nbinom(), which are included in the base package.
+The only change from those based on the normal distribution is that we’ve replaced the Z quantile of the standard normal with a t quantile.
 
-Geometric (discrete)
+Let's explore this a bit...
 
-The number of Bernoulli trials until a specified event occurs. The goemetric distribution is a special case of the negative binomial, with k or n=1.
+Recall that a standard normal distribution can be generated by normalizing our sample (subtracting the population mean from each observation and then dividing all of these differences by the population standard deviation)...
 
-Ecological examples include number of primates sampled until we get one that is parasitized; waiting time until a mutation occurs at a nucleotide; waiting time until a female accepts a mate; survival analysis of prey when a predator is present.
+(mean(x)-$\mu$)/$\sigma$
 
-R has the following functions for this distribution as part of the base package: [p,d,q,r]geom()
+If we subtract the population mean from each observation but then divide each difference, instead, by the standard error of the mean, (mean(x)-$\mu$)/SEM$, the result is not a normal distribution, but rather a t distribution! We are taking into account sample size by dividing by the standard error of the mean rather than the population standard deviation.
 
-Hypergeometric
-
-Like the binomial, but sampling from a small population without replacement, so each success changes the probability of success in the next trial. This is the basis for mark-recapture studies of population size.
-
-R has [d,p,q,r]hyper()
-
-There is also a generalized hypergeometric function [d,p,q,r]ghyper() in the SuppDists package.
-
-Multinomial (discrete)
-
-Like a binomial, but we are counting more than two possible outcomes. With c different possible outcomes or categories {c1, c2, …, cc}, we are counting the number of each result n1, n2, …., nc . The probability of each outcome is {π1, π2, … , πc} and formula. For n independent observations (trials) where formula the probability of there being n1 in c1 is formula
-
-R has two functions for the multinomial distribution rmultinom dmulitnom
-
-The multnomial is a multivariate distribution and hence there is no pmultinom or qmultinom because there are multiple ways to increase values in any category.
-
-The multinomial can be used to model species relative abundance.
-
-Example: Simulate a sample of 100 individuals taken from a community of 5 species with the following relative abundances, {0.6, 0.2, 0.1, 0.06, 0.04}
-
-tprobs <- c(0.6, 0.2, 0.1, 0.06, 0.04)
-sum(tprobs)  # must equal 1
-## [1] 1
-tdist <- rmultinom(1, 100, tprobs)
-print(tdist)
-##      [,1]
-## [1,]   59
-## [2,]   20
-## [3,]   15
-## [4,]    5
-## [5,]    1
-Uniform (continuous)
-
-Continuous distributions do not have point mass values for a given outcome, instead the density (area under the curve) must be calculated for a range of values. To illustrate, examine the curve for the uniform distribution over the range of 0 to 1.
-
-curve(dunif(x, 0, 1), 0, 1)
-plot of chunk uniform1
-
-The plot shows equal probability for every value between 0 and 1. What happens if you use a broader range of values, say from 0 to 10?
-
-curve(dunif(x, 0, 10), 0, 10)
-plot of chunk uniform10
-
-Gamma (continuous)
-
-The Gamma distribution is the distribution of waiting times until a certain number of events occur. It is the continuous version of the negative binomial. Examples include the number of days till a certain number of individuals in a population die. Gamma distributions are described by two variables: α = scale (the length of an event) and β = shape (number of events). The scale can alternately be given as a rate (1/scale). R base provides [d,p,q,r]gamma().
-
-Exponential Distribution (continuous)
-
-A special case of the Gamma distribution where shape = 1. Often used to describe the waiting time until an event occurs (so, this is the continuous analog to the Geometric). Used to describe radioactive decay, extinction times, durations of species in the fossil record, persistence of neutral mutations in a population.
-
-A key feature is that the exponential distribution is “memoryless”, that is the waiting time to the next event is totally independent of how long it has been since the last one. This is a classic statistical problem in gambling, where many people incorrectly think that a number which hasn’t been hit in roulette for a long time should come up sooner.
-
-R provides [d,p,q,r]exp()
-
-Example 1: If species longevity averages 2 Ma in primates (i.e. extinction rate is 0.5 per Ma), generate a random sample of 20 species duration periods in Ma.
-
-rexp(100, rate = 0.5)
-##   [1] 0.1670 1.2010 0.2761 1.2009 5.3202 1.4862 0.2420 1.1417 3.4528 2.3997
-##  [11] 0.3255 0.6811 0.1693 1.4625 1.3807 1.9729 2.8597 3.8163 0.9027 0.0666
-##  [21] 1.2326 0.5042 0.2857 1.8312 1.4769 0.1040 0.1665 1.7412 0.6210 1.1869
-##  [31] 4.0623 2.0510 0.4389 0.9389 0.7407 1.2196 3.3009 1.0369 2.1738 4.1663
-##  [41] 1.7728 4.0732 0.6512 0.5474 1.2495 2.6952 0.1115 0.6233 1.1816 1.5437
-##  [51] 6.0392 0.8166 5.9265 4.2570 2.6502 3.1559 5.4457 1.3616 8.7826 1.5311
-##  [61] 2.2538 4.9279 0.4289 2.5200 1.0100 1.3147 1.0356 0.3052 3.3199 1.2784
-##  [71] 2.0871 0.5249 2.5888 0.4483 1.5446 0.8165 0.7201 0.8123 0.3498 2.0232
-##  [81] 5.8709 2.8607 2.2707 1.3702 1.2338 0.0109 1.9479 1.2180 3.8666 0.6308
-##  [91] 0.7173 0.8966 0.6080 4.4530 7.9656 0.1614 0.2933 0.1730 0.7527 2.3539
-Example 2: Plot the probabilities of various species durations in Ma if the average extinction rate is 0.5 spp. Ma-1. The second figure shows the cumulative probabilities. 95% of all species will be extinct after ca 6 Ma. .
-
-plot(seq(0, 100, 0.1), dexp(seq(0, 100, 0.1), rate = 0.5), type = "l")
-plot of chunk exp_density
-
-qexp(0.95, 0.5)
-## [1] 5.991
-plot(seq(0, 100, 0.1), pexp(seq(0, 100, 0.1), rate = 0.1), type = "l")
-plot of chunk exponential2
-
-Chi Square
-
-The chi-square distribution has a single parameter ν called the degrees of freedom. The chi-square distribution is a special case of the Gamma where the shape is 2 and the scale is half the degrees of freedom (i.e. ν/2). This distribution arises often in statistical inference and is closely tied to the normal distribution. R has functions [d,p,q,r]chisq()
-
-Log Normal (continuous)
-
-Taking the log of a lognormal r.v. produces a normal r.v. The log normal arises as the product of many independent random variables, similar to the way the normal distribution results from the summation of many independent random variables.
-
-
-
-
-
-Last time, in looking at 
-
-
-
-
-OTHER USEFUL DISTRUBUTIONS
-
-#### The t Distribution
-
-The **t Distribution** (or Student’s t distribution) is another continuous probability distribution that is generally used when dealing with statistics (such as means) estimated from a sample (rather than population statistics). Any particular t distribution looks a lot like a standard normal distribution in that it is bell-shaped, symmetric, unimodal, and zero-centered. The choice of the appropriate t distribution to use in any particular statistical test is based on the number of degrees of freedom (df), i.e., the number of individual components in the calculation of a given statistic (such as the standard deviation) that are “free to change”. The t distribution represents a family of curves that, as the number of degrees of freedom increases, approaches a Gaussian or normal curve. At low numbers of degrees of freedom, the tails of the distribution get fatter. The code below plots a standard normal distribution and then t distributions with varying degrees of freedom, specified using the `df=` argument. As for other distributions, ***R*** implements `density`, cumulative `probability`, `quantile`, and `random` functions for the t distribution.
+The code below plots a standard normal distribution and then t distributions with varying degrees of freedom, specified using the `df=` argument. As for other distributions, ***R*** implements `density`, cumulative `probability`, `quantile`, and `random` functions for the t distribution.
 
 ``` {r}
 mu <- 0
 sigma <- 1
-curve(dnorm(x,mu,1), mu - 4*sigma, mu + 4*sigma, main="Normal Curve", xlab="x", ylab="f(x)", col = "red")
+curve(dnorm(x,mu,1), mu - 4*sigma, mu + 4*sigma, main="Normal = red\nStudent's t = blue", xlab="x", ylab="f(x)", col = "red", lwd = 3)
 for (i in c(1,2,3,4,5,10,20,100)) {
-curve(dt(x, df=i), mu - 4*sigma, mu + 4*sigma, main="t Curve", xlab="x", ylab="f(x)", add=TRUE, col = "blue")
+curve(dt(x, df=i), mu - 4*sigma, mu + 4*sigma, main="t Curve", xlab="x", ylab="f(x)", add=TRUE, col = "blue", lty=5)
 }
 ```
 
-The fatter tails of the t distibution lead naturally to more extreme quantile values given a specific probability than in the normal distribution. If you define a CI based on the quantile of the t distribution, they will be correspondingly wider than those based on the normal distribution for small values of df.
+The fatter tails of the t distibution lead naturally to more extreme quantile values given a specific probability than in the normal distribution. If we define a CI based on quantiles of the t distribution, they will be correspondingly slightly wider than those based on the normal distribution for small values of df.
 
 Last time, we estimated the 95% CI for a sample drawn from a normal distribution as follows:
 
@@ -247,8 +258,9 @@ Last time, we estimated the 95% CI for a sample drawn from a normal distribution
 n <- 100000
 mu <- 3.5
 sigma <- 4
+sample_size <- 30
 x <- rnorm(n,mu,sigma)
-s <- sample(x,size=30,replace=FALSE)
+s <- sample(x,size=sample_size,replace=FALSE)
 m <- mean(s)
 m
 sd <- sd(s)
@@ -261,7 +273,7 @@ ci <- c(lower, upper)
 ci
 ```
 
-Well, when the size of our sample is small, instead of using the normal distribution to calculate our CI, we typically use the t distribution. Examine the difference in the CIs calculated based on a sample of size 5 versus one of size 30 using the normal versus t distributions as the basis for estimating the confidence interval. For size 30, the difference is negligible... for size 5, the CI based on the t distribution is wider.
+Now, let's examine the difference in the CIs calculated based on a sample of size 30 versus one of size 5 using the normal versus t distributions as the basis for estimating the confidence interval. For size 30, the difference is negligible... for size 5, the CI based on the t distribution is wider.
 
 ``` {r}
 sample_size <- 30
@@ -299,22 +311,282 @@ ci_t <- c(lower, upper)
 ci_t
 ```
 
-#### The Chi Squared Distribution
+# Hypothesis Testing
 
-The **Chi Squared Distribution** models sums of squared normal variates and is thus often used in tests concerning sample variances of normally distributed data. Like the t distribution, it is dependent upon specification of a degrees of freedom using the `df=` argument.
+Classical, frequentist hypothesis testing involves formally stating a claim - the **null hypothesis** - which is then followed up by statistical evaluation of the null versus an alternative hypotheses. The null hypothesis is interpreted as a baseline hypothesis and is the claim is assumed to be true. The **alternative hypothesis** is the conjecture that we are testing.
 
-#### The F Distribution
+We need some kind of statistical evidence to reject the null hypothesis in favor of an alternative hypothesis. This evidence is, in classicical frequentist approaches, some measure of how unexpected it would be for the sample to have been drawn from a given distribution.
 
-The **F Distribution** is used to model *ratios* of two Chi Squared random variables and thus is useful in regression application and in testing whether variances from two samples are different. It is dependent upon the specification of a pair of degrees of freedom values supplied as the arguments `df1=` and `df2=`.
+**Ho = null hypothesis** = a sample shows no deviation from what is expected or neutral
+**Ha = alternative hypothesis** = a sample deviates more than expected by chance (either greater than, less than, or simply unequal with no directionality presumed) from what is expected or neutral
 
+Ha > Ho is an upper one-tailed test
+Ha < Ho is a lower one-tailed test
+Ha ≠ Ho is a two-tailed test
 
-sample mean
+There are four possible outcomes to our statistical decision:
 
-mean = ux
-standard error = sd / sqrt(n)
+| What is True | What We Decide | Result                             |
+| ------------ | -------------- | ---------------------------------- |
+| Ho           | Ho             | Correctly accept the null              |
+| Ho           | Ha             | Falsely reject the null (Type I error) |
+| Ha           | Ho             | Falsely accept (or, better, falsely fail to reject) the null (Type II error)  |
+| Ha           | Ha             | Correctly reject the null              |
 
-sample proportion
+In classical frequentist (a.k.a. parametric) inference, we perform hypothesis testing by trying to minimize our probability of Type I error... we aim for having a high bar for falsely rejecting the null (e.g., for incorrectly finding an innocent person guilty). When we set a high bar for falsely rejecting the null, we lower the bar for falsely failing to reject the null (e.g., for concluding that a guilty person is innocent).
 
-mean = proportion of successes
+To do our test, we typically calculate a **test statistic** based on our data which we compare to some appropriate standardized sampling distribution to yield a **p value**.
 
-error = sqrt(p*(1-p)/n)
+**p value** = the probability of our obtaining that test statistic or a more extreme on by chance, if the null hypothesis were true.
+
+We compare the p value associated with our test statistic to some significance level, $\alpha\, typically 0.05 or 0.01.
+
+**$\alpha** = the criteria we use to determine whether we reject or fail to reject the null.
+
+If p < $\alpha\, we decide that there is sufficient evidence for rejecting Ho.
+
+How do we calculate the p value?
+
+[1] Specify a test statistic (e.g., the mean)
+[2] Specify our null distribution
+[3] Calculate the tail probability, i.e., the probability of obtaining a statistic as or more extreme than was observed based on that distribution
+
+## One Sample Z and T Tests
+
+Let's do an example where we try to evaluate whether the mean of a single set of observations is significantly different than expected... i.e., this is a ONE-SAMPLE test.
+
+Suppose we have a vector describing the adult weights of vervet monkeys trapped in South Africa during the 2015 trapping season. We have the sense they are heavier than vervets we trapped in previous years, which averaged 4.9 kilograms. The mean is 5.324 kilograms. Is the mean significantly greater than our expectation?
+
+``` {r}
+f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/vervet-weights.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+mean(d$weight)
+```
+
+- What is our Ho?
+- What is our Ha?
+- What is the hypothesis we want to test? Is it two-tailed? Upper-tailed? Lower-tailed?
+- Calculate the mean, standard deviation, and SEM from our sample
+
+``` {r}
+mu <- 4.9
+x <- d$weight
+m <- mean(x)
+s <- sd(x)
+n <- length(x)
+sem <- s/sqrt(n)
+```
+
+Our test statistic takes a familiar form... it is effectively the standard normalized position of our sample mean (m) in a distribution centered around the expected population mean ($\mu$), where we use the standard error of the mean of our sample (sem) as an estimate of the population standard deviation.
+
+z = (mean of our sample - $\mu$)/(standard error of the mean)
+z = (m - $\mu$)/(sem)
+
+``` {r}
+z <- (m - mu)/sem
+z
+```
+
+In this case, z is a quantile... the estimated number of standard errors of the mean away from the population mean that our sample falls.
+
+If we then want to see if z is significant, we need to calculate the probability of seeing a deviation from the mean as high or higher than this by chance. To do this, we can use the `pnorm()` function. Because we have converted our sample mean to the standard normal scale, the `mean=` and `sd=` arguments of `pnorm()` are the defaults of 0 and 1, respectively.
+
+We want the probability of seeing a z statistic this large or larger by chance.
+
+``` {r}
+p <- 1 - pnorm(z)
+p
+p <- pnorm(z, lower.tail = FALSE)
+p
+```
+
+However, as noted above, our sample size from a population is typically limited. So, instead of using the normal distribution to determine the p value of our statistic, we should use the t distribution, which, as we've seen, has slightly fatter tails.
+
+``` {r}
+p <- 1 - pt(z, df = n-1)
+p
+p <- pt(z, df = n-1, lower.tail = FALSE)
+p
+```
+
+***R*** has built into it single function, `t.test()`, that lets us do all this in one line. We give it our data and the expected population mean, $\mu$, along with the kind of test we want to do.
+
+``` {r}
+t <- t.test(x=x, mu=mu, alternative = "greater")
+t
+```
+
+Note that we can also use the `t.test()` function to calculate t distribution based CIs for us easily!
+
+``` {r}
+lower <- m - qt(1-0.05/2, df=n-1)*sem
+upper <- m + qt(1-0.05/2, df=n-1)*sem
+ci <- c(lower, upper)
+ci # by hand
+t <- t.test(x=x, mu=mu, alternative = "two.sided")
+ci <- t$conf.int
+ci # using t test
+```
+
+#### CHALLENGE:
+
+Adult lowland woolly monkeys are reported to an average body weight of 7.2 kilograms. You are working with an isolated population of woolly monkeys from the Colombian Andes that you think may be a different species from lowland form, and you collect a sample of 15 weights of from adult individuals at that site. From your sample, you calculate a mean of 6.43 kilograms and a standard deviation of 0.98 kilograms. Perform a hypothesis test to test whether body weights in your population are different from the reported average for lowland woolly monkeys by setting up a "two-tailed" hypothesis, carrying out the analysis, and interpreting the p value (assume the significance level is $\alpha$ = 0.05). Your sample is < 30, so you should use the t distribution and do a t test. Do your calculations both by hand and using the `t.test()` function and confirm that they match.
+
+``` {r}
+f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/woolly-weights.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+x <- d$weight
+m <- mean(x)
+s <- sd(x)
+n <- length(x)
+sem <- s/sqrt(n)
+mu <- 7.2
+t <- (m - mu)/sem
+t
+alpha <- 0.05
+crit <- qt(1 - alpha/2, df = n-1) # identify critical values
+test <- t < -crit || t > crit # boolean test
+test <- abs(t) > crit
+t.test(x=x, mu=mu, alternative = "two.sided")
+```
+
+## Two Sample Tests - Comparing Means
+
+Sometimes we want to compare two groups of measurements to one another, which boils down to a hypothesis test for the difference between two means, $\mu1$ and $\mu2$. The null hypothesis is that the difference between the means is zero.
+
+Before getting to the appropriate test, there are a couple of things that we need to consider:
+
+[1] How, if at all, are the two samples related to one another? Sometimes we may have PAIRED samples (e.g., the same individuals before and after some treatment) and sometimes the samples are UNPAIRED or INDEPENDENT (e.g., weights for different samples of black-and-white colobus monkeys collected in the rainy versus dry seasons).
+
+[2] Are the variances in the two samples roughly equal or not? E.g., if we are comparing male and female heights, are the variances comparable?
+
+### Unequal Variances
+
+For the most generic case, where the two samples are independent and we cannot assume the variances of the two samples are equal, we can do what is called **Welch's t test** where our test statistic is:
+
+t = (mean(sample 2) - mean(sample 1) - $\mu$) / sqrt [ (variance in sample 2) / (sample 2 size) + (variance in sample 1) / (sample 1 size) ]
+
+Note that $\mu$ here is the expected difference between the means under the null hypothesis, which is zero.
+
+#### CHALLENGE:
+
+Let's do example. Load in a file of black-and-white colobus weights and examine the `str()` of the file. Then, create 2 vectors, x and y, for male and female weights. Plot these in boxplots side by side and then calculate the mean, sd, and sample size for both males and females.
+
+``` {r}
+f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/colobus-weights.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+x <- d$weight[d$sex == "male"]
+y <- d$weight[d$sex == "female"]
+par(mfrow = c(1, 2))
+boxplot(x, ylim=c(4.5,8), main="Weight (kg)",xlab="Males")
+boxplot(y,ylim=c(4.5,8), main="Weight (kg)",xlab="Females")
+m1 <- mean(x)
+m2 <- mean(y)
+mu <- 0 # you could leave this out... the default argument value is 0
+s1 <- sd(x)
+s2 <- sd(y)
+n1 <- length(x)
+n2 <- length(y)
+```
+
+Now calculate the t statistic and test the two-tailed hypothesis that the sample means differ.
+
+``` {r}
+t <- (m2 - m1 - mu) / sqrt(s2^2/n2 + s1^2/n1)
+t
+alpha <- 0.05
+crit <- qt(1 - alpha/2, df = n-1) # identify critical values
+crit
+test <- t < -crit || t > crit # boolean test
+test <- abs(t) > crit
+test
+```
+
+Note that for this test, the number of degrees of freedom is calculated as:
+
+``` {r}
+df <- (s2^2/n2 + s1^2/n1)^2 / ((s2^2/n2)^2/(n2-1) + (s1^2/n1)^2/(n1-1))
+df
+```
+
+Do the same using the `t.test()` function.
+
+``` {r}
+t <- t.test(x=x, y=y, mu=0, alternative="two.sided")
+t
+```
+
+### Equal Variances
+
+There's a simpler t statistic we can use if the variances of the two samples are more or less equal.
+
+t = (mean(sample 2) - mean(sample 1) - $\mu$) / sqrt [ (pooled variance of sample 1 and sample 2) $\times$ (1/n1 + 1/n2) ]
+
+``` {r}
+s <- sqrt((((n1-1)*s1^2)+((n2-1)*s2^2))/ (n1+n2-2))
+t <- (m2 - m1 - mu)/(sqrt(s^2*(1/n1 + 1/n2)))
+t
+df <- n1 + n2 - 2
+df
+```
+``` {r}
+t <- t.test(x=x, y=y, mu=0, var.equal = TRUE, alternative="two.sided")
+t
+```
+
+A crude test for equality of variances is to divide the larger by the smaller and if the result is < 2, you can go ahead and used the pooled variance version of the test (which has many fewer degrees of freedom).
+
+In our case, we cannot...
+
+``` {r}
+var(x)/var(y)
+```
+
+We can use the `var.test()` function to conduct an actual statistical test on the ratio of variances, which compares the ratio test statistic we just calculated to an **F distribution**. The F distribution is often used to model *ratios* of random variables and thus is useful in regression applications and, as here, for testing whether variances from two samples are different. It is dependent upon the specification of a pair of degrees of freedom values supplied as the arguments `df1=` and `df2=` (or inferred from the number of observations in each sample).
+
+Below, the results of `var.test()` are saved to a variable. Calling the variable provides a brief descriptive summary.
+
+``` {r}
+vt <- var.test(x, y)
+vt
+```
+
+### Paired Samples
+
+For a paired sample test, the null hypothesis is that the mean of individual paired differences between the two samples (e.g., before and after) is zero.
+
+Our test statistic is:
+
+t = (mean(difference) - $\mu$) / (standard error of difference)
+
+Again, note that $\mu$ here is the expected difference between the means under the null hypothesis, which is zero.
+
+#### CHALLENGE:
+
+Let's play with a sample... IQs of individuals taking a certain statistics course pre and post a lecture on significance testing. Load in the `iqs.csv` data file, look at it, plot a barchart of values before and after and construct a paired t test to evaluate the means before and after.
+
+``` {r}
+f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/iqs.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+x <- d$IQ.before-d$IQ.after
+m <- mean(x)
+mu <- 0 # can leave this out
+s <- sd(x)
+n <- length(x)
+sem <- s/sqrt(n)
+par(mfrow = c(1, 2))
+boxplot(d$IQ.before, ylim=c(115,145), main="IQ",xlab="Before")
+boxplot(d$IQ.after,ylim=c(115,145), main="IQ",xlab="After")
+t <- (m - mu)/sem
+t
+alpha <- 0.05
+crit <- qt(1 - alpha/2, df = n-1) # identify critical values
+crit
+test <- t < -crit || t > crit # boolean test
+test
+t.test(x,df=n-1,alternative = "two.sided")
+```
