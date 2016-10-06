@@ -45,21 +45,21 @@ As we did in Module 8, create a vector, *v*, containing **n** random numbers sel
 > m
 ```
 
-    ## [1] 4.273918
+    ## [1] 2.81692
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 4.106261
+    ## [1] 3.785812
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.7496973
+    ## [1] 0.6911915
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -68,7 +68,7 @@ As we did in Module 8, create a vector, *v*, containing **n** random numbers sel
 > ci
 ```
 
-    ## [1] 2.804538 5.743298
+    ## [1] 1.462209 4.171630
 
 ``` r
 > pop_se <- sigma/sqrt(length(s))
@@ -158,7 +158,7 @@ Now let's imagine taking samples of size 10 from this population. We will take 1
 > sd
 ```
 
-    ## [1] 1.157095
+    ## [1] 1.214119
 
 ``` r
 > qqnorm(x)
@@ -191,7 +191,7 @@ Now let's imagine taking samples of size 10 from this population. We will take 1
 > sd
 ```
 
-    ## [1] 0.3674432
+    ## [1] 0.3859288
 
 ``` r
 > qqnorm(x)
@@ -364,21 +364,21 @@ Last time, we estimated the 95% CI for a sample drawn from a normal distribution
 > m
 ```
 
-    ## [1] 2.861965
+    ## [1] 4.380291
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.628189
+    ## [1] 3.734951
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.6624136
+    ## [1] 0.6819056
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -387,7 +387,7 @@ Last time, we estimated the 95% CI for a sample drawn from a normal distribution
 > ci
 ```
 
-    ## [1] 1.563658 4.160272
+    ## [1] 3.043781 5.716801
 
 Now, let's examine the difference in the CIs calculated based on a sample of size 30 versus one of size 5 using the normal versus t distributions as the basis for estimating the confidence interval. For size 30, the difference is negligible... for size 5, the CI based on the t distribution is wider.
 
@@ -398,21 +398,21 @@ Now, let's examine the difference in the CIs calculated based on a sample of siz
 > m
 ```
 
-    ## [1] 2.367373
+    ## [1] 2.707421
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.977918
+    ## [1] 4.700817
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.7262651
+    ## [1] 0.8582478
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -421,7 +421,7 @@ Now, let's examine the difference in the CIs calculated based on a sample of siz
 > ci_norm
 ```
 
-    ## [1] 0.943919 3.790826
+    ## [1] 1.025286 4.389556
 
 ``` r
 > lower <- m - qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -430,7 +430,7 @@ Now, let's examine the difference in the CIs calculated based on a sample of siz
 > ci_t
 ```
 
-    ## [1] 0.8819936 3.8527516
+    ## [1] 0.9521069 4.4627348
 
 ``` r
 > sample_size <- 5
@@ -439,21 +439,21 @@ Now, let's examine the difference in the CIs calculated based on a sample of siz
 > m
 ```
 
-    ## [1] 4.646587
+    ## [1] 2.251042
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 5.643067
+    ## [1] 3.974043
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 2.523657
+    ## [1] 1.777246
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -462,7 +462,7 @@ Now, let's examine the difference in the CIs calculated based on a sample of siz
 > ci_norm
 ```
 
-    ## [1] -0.2996889  9.5928628
+    ## [1] -1.232297  5.734380
 
 ``` r
 > lower <- m - qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
@@ -471,12 +471,12 @@ Now, let's examine the difference in the CIs calculated based on a sample of siz
 > ci_t
 ```
 
-    ## [1] -2.360207 11.653381
+    ## [1] -2.683385  7.185468
 
 Hypothesis Testing
 ==================
 
-Classical, frequentist hypothesis testing involves formally stating a claim - the **null hypothesis** - which is then followed up by statistical evaluation of the null versus an alternative hypotheses. The null hypothesis is interpreted as a baseline hypothesis and is the claim is assumed to be true. The **alternative hypothesis** is the conjecture that we are testing.
+Classical, frequentist hypothesis testing (a.k.a. parametric statistics) involves formally stating a claim - the **null hypothesis** - which is then followed up by statistical evaluation of the null versus an alternative hypotheses. The null hypothesis is interpreted as a baseline hypothesis and is the claim is assumed to be true. The **alternative hypothesis** is the conjecture that we are testing.
 
 We need some kind of statistical evidence to reject the null hypothesis in favor of an alternative hypothesis. This evidence is, in classicical frequentist approaches, some measure of how unexpected it would be for the sample to have been drawn from a given distribution.
 
@@ -529,15 +529,21 @@ To do our test, we typically calculate a **test statistic** based on our data wh
 
 **p value** = the probability of our obtaining that test statistic or a more extreme on by chance, if the null hypothesis were true.
 
-We compare the p value associated with our test statistic to some significance level, $, typically 0.05 or 0.01.
+<img src="img/significant.png" width="250px; padding-top: 10px; padding-left: 20px; padding-right: 20px; padding-bottom: 10px" align="right"/>
 
-\*\*$\* = the criteria we use to determine whether we reject or fail to reject the null.
+We compare the p value associated with our test statistic to some significance level, *α*, typically 0.05 or 0.01.
 
-If p &lt; $, we decide that there is sufficient evidence for rejecting Ho.
+***α*** = the criteria we use to determine whether we reject or fail to reject the null.
+
+If p &lt; *α*, we decide that there is sufficient evidence for rejecting Ho.
 
 How do we calculate the p value?
 
-\[1\] Specify a test statistic (e.g., the mean) \[2\] Specify our null distribution \[3\] Calculate the tail probability, i.e., the probability of obtaining a statistic as or more extreme than was observed based on that distribution
+1.  Specify a test statistic (e.g., the mean)
+
+2.  Specify our null distribution
+
+3.  Calculate the tail probability, i.e., the probability of obtaining a statistic as or more extreme than was observed based on that distribution
 
 One Sample Z and T Tests
 ------------------------

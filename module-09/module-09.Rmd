@@ -313,7 +313,7 @@ ci_t
 
 # Hypothesis Testing
 
-Classical, frequentist hypothesis testing involves formally stating a claim - the **null hypothesis** - which is then followed up by statistical evaluation of the null versus an alternative hypotheses. The null hypothesis is interpreted as a baseline hypothesis and is the claim is assumed to be true. The **alternative hypothesis** is the conjecture that we are testing.
+Classical, frequentist hypothesis testing (a.k.a. parametric statistics) involves formally stating a claim - the **null hypothesis** - which is then followed up by statistical evaluation of the null versus an alternative hypotheses. The null hypothesis is interpreted as a baseline hypothesis and is the claim is assumed to be true. The **alternative hypothesis** is the conjecture that we are testing.
 
 We need some kind of statistical evidence to reject the null hypothesis in favor of an alternative hypothesis. This evidence is, in classicical frequentist approaches, some measure of how unexpected it would be for the sample to have been drawn from a given distribution.
 
@@ -339,17 +339,23 @@ To do our test, we typically calculate a **test statistic** based on our data wh
 
 **p value** = the probability of our obtaining that test statistic or a more extreme on by chance, if the null hypothesis were true.
 
-We compare the p value associated with our test statistic to some significance level, $\alpha\, typically 0.05 or 0.01.
+<img src="img/significant.png" width="250px; padding-top: 10px; padding-left: 20px; padding-right: 20px; padding-bottom: 10px" align="right"/>
 
-**$\alpha** = the criteria we use to determine whether we reject or fail to reject the null.
 
-If p < $\alpha\, we decide that there is sufficient evidence for rejecting Ho.
+We compare the p value associated with our test statistic to some significance level, $\alpha$, typically 0.05 or 0.01.
+
+**$\alpha$** = the criteria we use to determine whether we reject or fail to reject the null.
+
+If p < $\alpha$, we decide that there is sufficient evidence for rejecting Ho.
 
 How do we calculate the p value?
 
-[1] Specify a test statistic (e.g., the mean)
-[2] Specify our null distribution
-[3] Calculate the tail probability, i.e., the probability of obtaining a statistic as or more extreme than was observed based on that distribution
+  1. Specify a test statistic (e.g., the mean)
+
+  2. Specify our null distribution
+
+  3. Calculate the tail probability, i.e., the probability of obtaining a statistic as or more extreme than was observed based on that distribution
+
 
 ## One Sample Z and T Tests
 
