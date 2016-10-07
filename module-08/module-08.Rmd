@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 ## Objectives
 > The objective of this module is to begin our discussion of *statistical inference* from a frequentist/classical statistics approach. Doing so means that we need to cover basics of probability and distributions.
 
-## Important Terms and Concepts to Reiterate
+## Recap of Important Terms and Concepts
 
 - **Population** = includes **all** of the elements from a set of data = ***N***
 - **Sample** = one or more observations from a population = ***n***
@@ -38,13 +38,13 @@ This process of trying to draw conclusions is complicated by the fact that...
 - there may be unknown or unobserved variables that impact how the sample is related to the population
 - the assumptions we make about the population that our sample is drawn from might not be correct
 
-### Probability
+## Probability
 
 The term **probability** is applied to **population level** variables that describe the magnitude of chance associated with particular observations or event. Probabilities summarize the relative frequencies of possible outcomes. Probabilities are properties of **distributions**. Probabilities vary between zero and one. Outcomes that are impossible have *Pr = 0*, those that are certain have *Pr = 1*.
 
 Example: if we roll a (fair) die, there are 6 possible outcomes, each has a probability of occurring of 1 in 6. This is referred to as a *frequentist* or *classical* way of thinking about the probability of different outcomes... the relative frequency with which an event occurs over numerous identical, objective trials.
 
-#### Simulating Die Rolling
+#### Example: Rolling a Die
 
 We will use the {manipulate} package and the `sample()` function to explore the effects of sample size on estimates of the probability of different outcomes. The probability of each outcome (rolling a "1", "2",..., "6") is 1 in 6, but our estimate of the probability of each possible outcome will change with sample size.
 
@@ -62,7 +62,7 @@ manipulate(
 )
 ```
 
-#### CHALLENGE 1:
+#### CHALLENGE:
 Write a function to simulate rolling a die where you pass the number of rolls as an argument. Then, use your function to simulate rolling two dice 1000 times and take the sum of the rolls. Plot a histogram of those results.
 
 ``` {r}
@@ -110,7 +110,7 @@ hist(two_dice,breaks=c(1.5:12.5), probability = TRUE, main="Rolling Two Dice", x
 	
 	If event $A$ and $B$ are *dependent*, then  *Pr* $(A$ $\vert$ $B)$ ≠ *Pr* $(A)$
 
-#### CHALLENGE 2:
+#### CHALLENGE:
 You have a deck of 52 cards, Ace to 10 + 3 face cards in each suit. You draw a card at random.
 
 - What is the probability that you draw a *face card*?
@@ -138,7 +138,7 @@ You have a deck of 52 cards, Ace to 10 + 3 face cards in each suit. You draw a c
 
 	*Pr* $(A$ $\bigcup$ $B)$ = *Pr* $(A)$ + *Pr* $(B)$ - *Pr* $(A$ $\bigcap$ $B)$ = 13/52 + 40/52 - 10/52 = 43/52
 
-### Random Variables
+## Random Variables
 
 A **random variable** is a variable whose outcomes are assumed to arise by chance or according to some random or stochastic mechanism. The chances of observing a specific outcome or an outcome value within a specific interval has associated with it a **probability**.
 
@@ -257,7 +257,7 @@ We can define the **survival function** for a random variable $X$ as $S(x)$ = *P
 
 Finally, we can define the "qth"" *quantile* of a *cumulative distibution function* as the value of $x$ at which the CDF has the value "q", i.e., $F(x_q) = q$.
 
-## Expected Mean and Variance of Random Variables
+### Expected Mean and Variance of Random Variables
 
 The mean value (or expectation) and the expected variance for a random variable with a given *probability mass function* can be expressed generally as follows:
 
@@ -304,7 +304,7 @@ $f(x)$ = $p^x(1-p)^{1-x}$ where $x$ = {0 or 1}
 
 For this distribution, $\mu_X$ = $p$ and $\sigma_X^2$ = $p(1-p)$
 
-#### CHALLENGE 3:
+#### CHALLENGE:
 
 Using the Bernoulli distribution, calculate the expectation for drawing a *spade* from a deck of cards? What is the variance in this expectation across a large number of draws?
 
@@ -332,7 +332,7 @@ For this distribution, $\mu_X$ = *np* and $\sigma_X^2$ = *np*(1-*p*). Recall, $\
 
 Where $n$ = 1, this simplifies to the Bernoulli distribution.
 
-#### CHALLENGE 4:
+#### CHALLENGE:
 
 What is the chance of getting a "1" on each of six consecutive rolls of a die? What about of getting exactly three "1"s? What is the expected number of "1"s to occur in six consecutive rolls?
 
@@ -497,7 +497,7 @@ plot(x,punif(q=x,min=a,max=b),type="l",xlab="x",ylab="Pr(X ≤ x)",main="Cumulat
 ```
 
 
-#### CHALLENGE 5:
+#### CHALLENGE:
 Simulate a sample of 10000 random numbers from a uniform distribution in the interval between $a$ = 6 and $b$ = 8. Calculate the mean and variance of this simulated sample and compare it to the expectation for these parameters.
 
 #### Normal Distribution
@@ -573,7 +573,7 @@ manipulate(plot(seq(from=(mu - 4*sigma), to=(mu + 4*sigma), length.out = 1000), 
 )
 ```
 
-#### CHALLENGE 6:
+#### CHALLENGE:
 
 - Create a vector, *v*, containing **n** random numbers selected from a normal distribution with mean $\mu$ and standard deviation $\sigma$. Use 1000 for **n**, 3.5 for $\mu$, and 4 for $\sigma$. **HINT:** Such a function exists! `rnorm()`.
 - Calculate the mean, variance, and standard deviation for your sample of random numbers.
@@ -628,7 +628,7 @@ Step 4: Plot these quantiles against one another
 plot(theoretical_q,observed_q, main="Normal QQ plot random normal variables", xlab="Theoretical Quantiles", ylab="Sample Quantiles")
 ```
 
-#### CHALLENGE 7:
+#### CHALLENGE:
 What happens if you simulate fewer observations in your vectors? Or if you simulate observations from a *different* distribution?
 
 #### The "Standard Normal" Distribution
@@ -646,7 +646,7 @@ mean(z) # really close to zero
 sd(z) # really close to 1
 ```
 
-## Sample Distributions and Population Distributions
+## Sample Distributions versus Population Distributions
 
 It is important to recognize that, above, we were dealing with probability distributions of discrete and continuous random variables as they relate to *populations*. But, as we have talked about before, we almost never measure entire populations; instead, we measure *samples* from populations and we characterize our samples using various *statistics*. The theoretical probability distributions described above (and others) are *models* for how we connect observed sample data to populations, taking into account various assumptions, and this is what allows us to do many types of inferential statistics. The most fundamental assumption is that the observations we make are *independent* from one another and are *identically distributed*, an assumption often abbreviated as **iid**. Obvious cases of violation of this assumption are rife in the scientific literature, and we should always be cautious about making this assumption!
 
@@ -693,9 +693,11 @@ Again, this is the mean of the sampling distribution, which is simply the averag
 
 The *variance in the sampling distribution*, i.e., of all possible means of samples of size *n* from a population, is $\sigma^2$/$n$. The square root of this variance is the *standard deviation of the sampling distribution*, also referred to as the **standard error**.
 
-Thus, if the population variance $\sigma^2$ (and thus the population standard deviation $\sigma$) is known, then the standard error can be calculated as **$\sigma$ / (square root of the sample size)**, or...
+Thus, if the population variance $\sigma^2$ (and thus the population standard deviation $\sigma$) is known, then the standard error can be calculated as **square root of ($\sigma^2/n$)** or, equivalently, **$\sigma$ / (square root of the sample size)**.
 
 ``` {r}
+pop_se <- sqrt(sigma^2/n)
+pop_se # SE estimated from population standard deviation
 pop_se <- sigma/sqrt(n)
 pop_se # SE estimated from population standard deviation
 ```
@@ -709,12 +711,36 @@ for (i in 1:k){
 }
 sem <- stdev/sqrt(n) # a vector of SEs estimated from each sample 
 head(sem)
-mean(sem) # almost equal to...
+mean(sem) # which is almost equal to...
 pop_se
 ```
 
-Thus, the *standard error of the mean* calculated from an individual sample can be used as an estimator for the standard deviation of the sampling distribution. This is extremely useful, since it means that, if our sample is large enough, we don’t have to repeatedly sample from the population to get an estimate of the population distribution directly using our data.
+Thus, the *standard error of the mean* calculated from an individual sample can be used as an estimator for the **standard deviation of the sampling distribution**. This is extremely useful, since it means that, if our sample is large enough, we don’t have to repeatedly sample from the population to get an estimate of the sampling distribution directly using our data.
 
 Note that as our sample size increases, the standard error of the mean should decrease, as should the standard deviation in estimates of the population mean drawn from successive samples. This should be apparent intuitively... as each sample drawn from a population gets larger, the estimate of the mean value of those samples should vary less and less.
 
 Despite their similarities, the standard error of the mean calculated for a given sample and the standard deviation of that given sample tell us different things. The *standard error of the mean* is an estimate of how far a given sample mean is likely to be from the population mean; it is a measure of uncertainty. The *standard deviation* of a sample is a measure of the degree to which individuals values within a sample differ from the sample mean.
+
+#### HOMEWORK PROBLEM:
+Using a new `.Rmd` file than you used for Problem 1 pushing both the Markdown and knitted `.html` file to the same "homework-week-4" repository, do the following:
+
+Load in the dataset "zombies.csv" from my ***GitHub*** repo at https://github.com/difiore/ADA2016. This data includes the first and last name and gender of the entire population of 1000 people who have survived the zombie apocalypse and are now ekeing out an existence somewhere on the East Coast, along with several other variables (height, weight, age, number of years of education, number of zombies they have killed, and college major [see here for info on important post-zombie apocalypse majors](http://www.thebestschools.org/magazine/best-majors-surviving-zombie-apocalypse/)
+
+``` {r}
+library(curl)
+f <- f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/zombies.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+```
+
+[1] Calculate the *population* mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education). NOTE: You will not want to use the built in `var()` and `sd()` commands as these are for *samples*.
+
+[2] Use {ggplot} and make boxplots of each of these variable by gender.
+
+[3] Use {ggplot} and make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
+
+[4] Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not, can you determine what common distribution they are drawn from?
+
+[5] Now use the `sample()` function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution.
+
+[6] Now draw 99 more random samples of 30 zombies out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution for each variable? How do the standard deviations compare to the standard errors estimated in [5]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
