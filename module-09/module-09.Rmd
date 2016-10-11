@@ -276,26 +276,26 @@ Classical or frequentist hypothesis testing (a.k.a. parametric statistics) invol
 
 We need some kind of statistical evidence to reject the null hypothesis in favor of an alternative hypothesis. This evidence is, in classicical frequentist approaches, some measure of how unexpected it would be for the sample to have been drawn from a given null distribution.
 
-- **$H_o$ = null hypothesis** = a sample statistic shows no deviation from what is expected or neutral
+- **$H_0$ = null hypothesis** = a sample statistic shows no deviation from what is expected or neutral
 
-- **$H_a$ = alternative hypothesis** = a sample statistic deviates more than expected by chance from what is expected or neutral
+- **$H_A$ = alternative hypothesis** = a sample statistic deviates more than expected by chance from what is expected or neutral
 
-We can test several different comparisons between $H_o$ and $H_a$. 
+We can test several different comparisons between $H_0$ and $H_A$.
 
-$H_a$ > $H_o$, which constitutes an "upper one-tailed test (i.e., our sample statistic is greater than that expected under the null)
+$H_A$ > $H_0$, which constitutes an "upper one-tailed test (i.e., our sample statistic is greater than that expected under the null)
 
-$H_a$ < $H_o$, which constitutes an "lower one-tailed test (i.e., our sample statistic is less than that expected under the null)
+$H_A$ < $H_0$, which constitutes an "lower one-tailed test (i.e., our sample statistic is less than that expected under the null)
 
-$H_a$ ≠ $H_o$, which constitutes an "two-tailed test (i.e., our sample statistic is different, maybe greater maybe less, than that expected under the null)
+$H_A$ ≠ $H_0$, which constitutes an "two-tailed test (i.e., our sample statistic is different, maybe greater maybe less, than that expected under the null)
 
 There are then four possible outcomes to our statistical decision:
 
 | What is True | What We Decide | Result                                     |
 | ------------ | -------------- | ------------------------------------------ |
-| Ho           | Ho             | Correctly 'accept' the null                |
-| Ho           | Ha             | Falsely reject the null (Type I error)     |
-| Ha           | Ho             | Falsely 'accept' the null (Type II error)  |
-| Ha           | Ha             | Correctly reject the null                  |
+| $H_0$        | $H_0$          | Correctly 'accept' the null                |
+| $H_0$        | $H_A$          | Falsely reject the null (Type I error)     |
+| $H_A$        | $H_0$          | Falsely 'accept' the null (Type II error)  |
+| $H_A$        | $H_A$          | Correctly reject the null                  |
 
 In classical frequentist (a.k.a. parametric) inference, we perform hypothesis testing by trying to minimize our probability of Type I error... we aim for having a high bar for falsely rejecting the null (e.g., for incorrectly finding an innocent person guilty). When we set a high bar for falsely rejecting the null, we lower the bar for falsely 'accepting' (failing to reject) the null (e.g., for concluding that a guilty person is innocent).
 
@@ -318,7 +318,7 @@ How do we calculate the p value?
   3. Calculate the tail probability, i.e., the probability of obtaining a statistic as or more extreme than was observed based on that distribution
 
 
-## One Sample Z and T Tests
+## One Sample Z and T Tests for Continuous Random Variables
 
 Let's do an example where we try to evaluate whether the mean of a single set of observations is significantly different than expected... i.e., this is a ONE-SAMPLE test.
 
@@ -332,8 +332,8 @@ head(d)
 mean(d$weight)
 ```
 
-- What is our Ho?
-- What is our Ha?
+- What is our $H_0$?
+- What is our $H_A$?
 - What is the hypothesis we want to test? Is it two-tailed? Upper-tailed? Lower-tailed?
 - Calculate the mean, standard deviation, and SEM from our sample
 
@@ -346,21 +346,22 @@ n <- length(x)
 sem <- s/sqrt(n)
 ```
 
-Our test statistic takes a familiar form... it is effectively the standard normalized position of our sample mean (m) in a distribution centered around the expected population mean ($\mu$).
+Our test statistic takes a familiar form... it is effectively the standard normalized position of our sample mean in a distribution centered around the expected population mean.
 
-z=(mean of our sample - $\mu$)/(standard error of the mean)
-z=(m - $\mu$)/(sem)
+<img src="img/one-sample-Z.svg" width="150px"/>
+
+Or, to use our variables fr0m above...
 
 ``` {r}
 z <- (m - mu)/sem
 z
 ```
 
-In this case, z is a quantile... the estimated number of standard errors of the mean away from the population mean that our sample falls.
+In this case, **$z$** is a quantile... the estimated number of standard errors of the mean away from the population mean that our sample falls.
 
-If we then want to see if z is significant, we need to calculate the probability of seeing a deviation from the mean as high or higher than this by chance. To do this, we can use the `pnorm()` function. Because we have converted our sample mean to the standard normal scale, the `mean=` and `sd=` arguments of `pnorm()` are the defaults of 0 and 1, respectively.
+If we then want to see if **$z$** is significant, we need to calculate the probability of seeing a deviation from the mean as high or higher than this by chance. To do this, we can use the `pnorm()` function. Because we have converted our sample mean to the standard normal scale, the `mean=` and `sd=` arguments of `pnorm()` are the defaults of 0 and 1, respectively.
 
-We want the probability of seeing a z statistic this large or larger by chance.
+We want the probability of seeing a $z$ statistic this large or larger by chance.
 
 ``` {r}
 p <- 1 - pnorm(z)
@@ -434,9 +435,9 @@ Before getting to the appropriate test, there are a couple of things that we nee
 
 For the most generic case, where the two samples are independent and we cannot assume the variances of the two samples are equal, we can do what is called **Welch's t test** where our test statistic is:
 
-t=(mean(sample 2) - mean(sample 1) - $\mu$) / sqrt [ (variance in sample 2) / (sample 2 size) + (variance in sample 1) / (sample 1 size) ]
+<img src="img/two-sample-T-unpooled-variance.svg" width="225px"/>
 
-Note that $\mu$ here is the expected difference between the means under the null hypothesis, which is zero.
+Note that $\mu_0$ here is the expected difference between the means under the null hypothesis, which is zero.
 
 #### CHALLENGE:
 
@@ -475,6 +476,8 @@ test
 
 Note that for this test, the number of degrees of freedom is calculated as:
 
+<img src="img/two-sample-df-unpooled-variance.svg" width="400px"/>
+
 ``` {r}
 df <- (s2^2/n2 + s1^2/n1)^2 / ((s2^2/n2)^2/(n2-1) + (s1^2/n1)^2/(n1-1))
 df
@@ -491,7 +494,7 @@ t
 
 There's a simpler t statistic we can use if the variances of the two samples are more or less equal.
 
-t=(mean(sample 2) - mean(sample 1) - $\mu$) / sqrt [ (pooled variance of sample 1 and sample 2) $\times$ (1/n1 + 1/n2) ]
+<img src="img/two-sample-T-unpooled-variance.svg" width="225px"/>
 
 ``` {r}
 s <- sqrt((((n1-1)*s1^2)+((n2-1)*s2^2))/ (n1+n2-2))
@@ -528,9 +531,9 @@ For a paired sample test, the null hypothesis is that the mean of individual pai
 
 Our test statistic is:
 
-t=(mean(difference) - $\mu$) / (standard error of difference)
+<img src="img/two-sample-T-paired.svg" width="140px"/>
 
-Again, note that $\mu$ here is the expected difference between the means under the null hypothesis, which is zero.
+Again, note that $\mu_0$ here is the expected difference between the means under the null hypothesis, which is zero, and we are dividing by the standard error of the mean for the set of differences between pairs.
 
 #### CHALLENGE:
 
@@ -558,3 +561,101 @@ test <- t < -crit || t > crit # boolean test
 test
 t.test(x,df=n-1,alternative="two.sided")
 ```
+
+
+## Summary
+### T Statistics for the One Sample Case
+
+<img src="img/one-sample-T.svg" width="150px"/>
+
+or, equivalently...
+
+<img src="img/one-sample-T-alt.svg" width="150px"/>
+
+with:
+
+<img src="img/one-sample-df.svg" width="100px"/>
+
+where:
+
+  * <img src="img/xbar.svg" width="15px"/> = mean of sample observations
+  * $\mu_0$ = expected mean
+  * $s$ = sample standard deviation
+  * $n$ = number of sample observations
+
+### T Statistics for the Two Sample Case
+
+#### Unpooled Variance
+
+<img src="img/two-sample-T-unpooled-variance.svg" width="225px"/>
+
+with:
+
+<img src="img/two-sample-df-unpooled-variance.svg" width="400px"/>
+
+where:
+
+  * <img src="img/x1bar.svg" width="20px"/> and <img src="img/x2bar.svg" width="20px"/> = means of sample observations
+  * $\mu_0$ = expected mean difference between groups (usually set to zero)
+  * $s_1$ and $s_2$ = sample standard deviations
+  * $n_1$ and $n_2$ = numbers of sample observations
+
+#### Pooled Variance
+
+<img src="img/two-sample-T-pooled-variance.svg" width="250px"/>
+
+with:
+
+<img src="img/two-sample-df-pooled-variance.svg" width="180px"/>
+
+where:
+
+<img src="img/two-sample-s2-pooled-variance.svg" width="240px"/>
+
+  * <img src="img/x1bar.svg" width="20px"/> and <img src="img/x2bar.svg" width="20px"/> = means of sample observations
+  * $\mu_0$ = expected mean difference between groups (usually set to zero)
+  * $s_p$ = pooled sample standard deviation
+  * $n_1$ and $n_2$ = numbers of sample observations
+
+#### Paired Samples
+
+<img src="img/two-sample-T-paired.svg" width="140px"/>
+
+where:
+
+  * <img src="img/dbar.svg" width="12px"/> = mean of difference between paired samples
+  * $\mu_0$ = expected mean between paired difference (usually set to zero)
+  * $s_d$ = standard deviation in differences between paired samples
+  * $n$ = number of sample pairs
+
+
+Assumptions:
+- Dealing with normally distributed continuous variables (or those that can be approximated closely by the normal distribution)
+- When sample size > 30 we can use the Z distribution, but for < 30, use the T distribution
+
+- CI = mean ± T 1-alpha/2 x SE 
+- REJECT Ho if 1-alpha CI around test statistic does not include zero
+- REJECT Ho if p value for obtaining the given test statistic is < alpha
+
+
+For nonnormally distributed variables...
+
+The same principles apply. Let's consider a proportion...
+
+Or a Poisson CI...
+
+Recall the the Poisson distribution models counts and is determined by a single parameter, $\lambda$. The Poisson distribution is also useful for modeling rates, or counts that occur over units of time. If we imagine a variable X ∼ Poisson(λt) where λ = E[X/t] = the expected count per unit of time and t is the total monitoring time and 
+
+Remember that if X ∼ Poisson(λt) then our estimate of λ is λˆ = X/t. Furthermore, we know that V ar(λˆ) = λ/t and so the natural estimate is λˆ/t. While it’s not immediate how the CLT applies in this case, the interval is of the familiar form
+So our Poisson interval is:
+Example
+Estimate ± Z1−α/2SE. λˆ ± Z 1 − α / 2   λˆ
+
+
+
+
+What about other data types, like proportions?
+
+Remember for proportion data, the average proportion = $\pi$ and the standard error of the average proportion was sqrt($\pi(1-\pi)/n$)
+
+The Z statistic is equivalent to the T statistic

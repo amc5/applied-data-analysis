@@ -15,58 +15,11 @@ knitr::opts_chunk$set(
 	fig.path="img/"
 )
 ```
-# Statistical Inference and Basic Hypothesis Testing
+# Errors and Power, Regression
 
 ## Preliminaries
 - Install this package in ***R***: {curl}
 
-## Summary
-
-Z and T Statistics for the One Sample Case (testing an observed sample mean for a continuous normally distributed variable compared to a null expectation)
-
-T = \frac{\bar{x} - \mu_0}{(s/\sqrt{n})}
-
-where:
-\bar{x} = mean of sample observations
-\mu_0 = expected mean
-s = sample standard deviation
-n = number of sample observations
-
-
-Z and T Statistics for the Two Sample Case (comparing two means for a continuous normally distributed variable)
-
-
-
-Assumptions:
-- Dealing with normally distributed continuous variables (or those that can be approximated closely by the normal distribution)
-- When sample size > 30 we can use the Z distribution, but for < 30, use the T distribution
-
-- CI = mean ± T 1-alpha/2 x SE 
-- REJECT Ho if 1-alpha CI around test statistic does not include zero
-- REJECT Ho if p value for obtaining the given test statistic is < alpha
-
-
-For nonnormally distributed variables...
-
-The same principles apply. Let's consider a proportion...
-
-Or a Poisson CI...
-
-Recall the the Poisson distribution models counts and is determined by a single parameter, $\lambda$. The Poisson distribution is also useful for modeling rates, or counts that occur over units of time. If we imagine a variable X ∼ Poisson(λt) where λ = E[X/t] = the expected count per unit of time and t is the total monitoring time and 
-
-Remember that if X ∼ Poisson(λt) then our estimate of λ is λˆ = X/t. Furthermore, we know that V ar(λˆ) = λ/t and so the natural estimate is λˆ/t. While it’s not immediate how the CLT applies in this case, the interval is of the familiar form
-So our Poisson interval is:
-Example
-Estimate ± Z1−α/2SE. λˆ ± Z 1 − α / 2   λˆ
-
-
-
-
-What about other data types, like proportions?
-
-Remember for proportion data, the average proportion = $\pi$ and the standard error of the average proportion was sqrt($\pi(1-\pi)/n$)
-
-The Z statistic is equivalent to the T statistic
 
 
 

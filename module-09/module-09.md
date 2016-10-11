@@ -39,21 +39,21 @@ Recall that in Module 8, we created a vector, *v*, containing 1000 random number
 > m
 ```
 
-    ## [1] 4.282113
+    ## [1] 2.741113
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 5.05076
+    ## [1] 3.85115
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.9221384
+    ## [1] 0.7031206
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -62,7 +62,7 @@ Recall that in Module 8, we created a vector, *v*, containing 1000 random number
 > ci
 ```
 
-    ## [1] 2.474755 6.089471
+    ## [1] 1.363022 4.119204
 
 The Central Limit Theorem
 -------------------------
@@ -100,7 +100,7 @@ Now let's imagine taking a bunch of samples of size 10 from this population. We 
 > sd
 ```
 
-    ## [1] 1.170666
+    ## [1] 1.178908
 
 ``` r
 > qqnorm(x)
@@ -133,7 +133,7 @@ Now let's imagine taking a bunch of samples of size 10 from this population. We 
 > sd
 ```
 
-    ## [1] 0.3788517
+    ## [1] 0.3714597
 
 ``` r
 > qqnorm(x)
@@ -304,21 +304,21 @@ We can see this as follows. Recall that above we estimated the 95% CI for a samp
 > m
 ```
 
-    ## [1] 2.513158
+    ## [1] 2.987032
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 4.293112
+    ## [1] 4.68147
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.7838115
+    ## [1] 0.8547156
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -327,7 +327,7 @@ We can see this as follows. Recall that above we estimated the 95% CI for a samp
 > ci_norm
 ```
 
-    ## [1] 0.976916 4.049401
+    ## [1] 1.311820 4.662243
 
 Now, let's look at the CIs calculated based using the t distribution for the same sample size. For sample size 30, the difference is negligible in the CIs is negligible.
 
@@ -338,7 +338,7 @@ Now, let's look at the CIs calculated based using the t distribution for the sam
 > ci_t
 ```
 
-    ## [1] 0.9100838 4.1162327
+    ## [1] 1.238942 4.735121
 
 However, if we use a sample size of 5, the CI based on the t distribution is much wider.
 
@@ -349,21 +349,21 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > m
 ```
 
-    ## [1] 5.528406
+    ## [1] 3.012955
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 4.08182
+    ## [1] 3.624824
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 1.825446
+    ## [1] 1.621071
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -372,7 +372,7 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > ci_norm
 ```
 
-    ## [1] 1.950599 9.106214
+    ## [1] -0.1642853  6.1901947
 
 ``` r
 > lower <- m - qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -381,7 +381,7 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > ci_t
 ```
 
-    ## [1]  0.4601568 10.5966554
+    ## [1] -1.487859  7.513768
 
 Classical Hypothesis Testing
 ----------------------------
@@ -431,8 +431,8 @@ How do we calculate the p value?
 
 3.  Calculate the tail probability, i.e., the probability of obtaining a statistic as or more extreme than was observed based on that distribution
 
-One Sample Z and T Tests
-------------------------
+One Sample Z and T Tests for Continuous Random Variables
+--------------------------------------------------------
 
 Let's do an example where we try to evaluate whether the mean of a single set of observations is significantly different than expected... i.e., this is a ONE-SAMPLE test.
 
@@ -459,8 +459,8 @@ Suppose we have a vector describing the adult weights of vervet monkeys trapped 
 
     ## [1] 5.323922
 
--   What is our Ho?
--   What is our Ha?
+-   What is our *H*<sub>0</sub>?
+-   What is our *H*<sub>*A*</sub>?
 -   What is the hypothesis we want to test? Is it two-tailed? Upper-tailed? Lower-tailed?
 -   Calculate the mean, standard deviation, and SEM from our sample
 
@@ -473,9 +473,11 @@ Suppose we have a vector describing the adult weights of vervet monkeys trapped 
 > sem <- s/sqrt(n)
 ```
 
-Our test statistic takes a familiar form... it is effectively the standard normalized position of our sample mean (m) in a distribution centered around the expected population mean (*μ*).
+Our test statistic takes a familiar form... it is effectively the standard normalized position of our sample mean in a distribution centered around the expected population mean.
 
-z=(mean of our sample - *μ*)/(standard error of the mean) z=(m - *μ*)/(sem)
+<img src="img/one-sample-Z.svg" width="150px"/>
+
+Or, to use our variables fr0m above...
 
 ``` r
 > z <- (m - mu)/sem
@@ -484,11 +486,11 @@ z=(mean of our sample - *μ*)/(standard error of the mean) z=(m - *μ*)/(sem)
 
     ## [1] 3.103753
 
-In this case, z is a quantile... the estimated number of standard errors of the mean away from the population mean that our sample falls.
+In this case, ***z*** is a quantile... the estimated number of standard errors of the mean away from the population mean that our sample falls.
 
-If we then want to see if z is significant, we need to calculate the probability of seeing a deviation from the mean as high or higher than this by chance. To do this, we can use the `pnorm()` function. Because we have converted our sample mean to the standard normal scale, the `mean=` and `sd=` arguments of `pnorm()` are the defaults of 0 and 1, respectively.
+If we then want to see if ***z*** is significant, we need to calculate the probability of seeing a deviation from the mean as high or higher than this by chance. To do this, we can use the `pnorm()` function. Because we have converted our sample mean to the standard normal scale, the `mean=` and `sd=` arguments of `pnorm()` are the defaults of 0 and 1, respectively.
 
-We want the probability of seeing a z statistic this large or larger by chance.
+We want the probability of seeing a *z* statistic this large or larger by chance.
 
 ``` r
 > p <- 1 - pnorm(z)
@@ -626,9 +628,9 @@ Before getting to the appropriate test, there are a couple of things that we nee
 
 For the most generic case, where the two samples are independent and we cannot assume the variances of the two samples are equal, we can do what is called **Welch's t test** where our test statistic is:
 
-t=(mean(sample 2) - mean(sample 1) - *μ*) / sqrt \[ (variance in sample 2) / (sample 2 size) + (variance in sample 1) / (sample 1 size) \]
+<img src="img/two-sample-T-unpooled-variance.svg" width="225px"/>
 
-Note that *μ* here is the expected difference between the means under the null hypothesis, which is zero.
+Note that *μ*<sub>0</sub> here is the expected difference between the means under the null hypothesis, which is zero.
 
 #### CHALLENGE:
 
@@ -695,6 +697,8 @@ Now calculate the t statistic and test the two-tailed hypothesis that the sample
 
 Note that for this test, the number of degrees of freedom is calculated as:
 
+<img src="img/two-sample-df-unpooled-variance.svg" width="400px"/>
+
 ``` r
 > df <- (s2^2/n2 + s1^2/n1)^2/((s2^2/n2)^2/(n2 - 1) + (s1^2/n1)^2/(n1 - 1))
 > df
@@ -725,7 +729,7 @@ Do the same using the `t.test()` function.
 
 There's a simpler t statistic we can use if the variances of the two samples are more or less equal.
 
-t=(mean(sample 2) - mean(sample 1) - *μ*) / sqrt \[ (pooled variance of sample 1 and sample 2) × (1/n1 + 1/n2) \]
+<img src="img/two-sample-T-unpooled-variance.svg" width="225px"/>
 
 ``` r
 > s <- sqrt((((n1 - 1) * s1^2) + ((n2 - 1) * s2^2))/(n1 + n2 - 2))
@@ -796,9 +800,9 @@ For a paired sample test, the null hypothesis is that the mean of individual pai
 
 Our test statistic is:
 
-t=(mean(difference) - *μ*) / (standard error of difference)
+<img src="img/two-sample-T-paired.svg" width="140px"/>
 
-Again, note that *μ* here is the expected difference between the means under the null hypothesis, which is zero.
+Again, note that *μ*<sub>0</sub> here is the expected difference between the means under the null hypothesis, which is zero, and we are dividing by the standard error of the mean for the set of differences between pairs.
 
 #### CHALLENGE:
 
@@ -869,3 +873,92 @@ Let's play with a sample... IQs of individuals taking a certain statistics cours
     ## sample estimates:
     ## mean of x 
     ##    -3.117
+
+Summary
+-------
+
+### T Statistics for the One Sample Case
+
+<img src="img/one-sample-T.svg" width="150px"/>
+
+or, equivalently...
+
+<img src="img/one-sample-T-alt.svg" width="150px"/>
+
+with:
+
+<img src="img/one-sample-df.svg" width="100px"/>
+
+where:
+
+-   <img src="img/xbar.svg" width="15px"/> = mean of sample observations
+-   *μ*<sub>0</sub> = expected mean
+-   *s* = sample standard deviation
+-   *n* = number of sample observations
+
+### T Statistics for the Two Sample Case
+
+#### Unpooled Variance
+
+<img src="img/two-sample-T-unpooled-variance.svg" width="225px"/>
+
+with:
+
+<img src="img/two-sample-df-unpooled-variance.svg" width="400px"/>
+
+where:
+
+-   <img src="img/x1bar.svg" width="20px"/> and <img src="img/x2bar.svg" width="20px"/> = means of sample observations
+-   *μ*<sub>0</sub> = expected mean difference between groups (usually set to zero)
+-   *s*<sub>1</sub> and *s*<sub>2</sub> = sample standard deviations
+-   *n*<sub>1</sub> and *n*<sub>2</sub> = numbers of sample observations
+
+#### Pooled Variance
+
+<img src="img/two-sample-T-pooled-variance.svg" width="250px"/>
+
+with:
+
+<img src="img/two-sample-df-pooled-variance.svg" width="180px"/>
+
+where:
+
+<img src="img/two-sample-s2-pooled-variance.svg" width="240px"/>
+
+-   <img src="img/x1bar.svg" width="20px"/> and <img src="img/x2bar.svg" width="20px"/> = means of sample observations
+-   *μ*<sub>0</sub> = expected mean difference between groups (usually set to zero)
+-   *s*<sub>*p*</sub> = pooled sample standard deviation
+-   *n*<sub>1</sub> and *n*<sub>2</sub> = numbers of sample observations
+
+#### Paired Samples
+
+<img src="img/two-sample-T-paired.svg" width="140px"/>
+
+where:
+
+-   <img src="img/dbar.svg" width="12px"/> = mean of difference between paired samples
+-   *μ*<sub>0</sub> = expected mean between paired difference (usually set to zero)
+-   *s*<sub>*d*</sub> = standard deviation in differences between paired samples
+-   *n* = number of sample pairs
+
+Assumptions: - Dealing with normally distributed continuous variables (or those that can be approximated closely by the normal distribution) - When sample size &gt; 30 we can use the Z distribution, but for &lt; 30, use the T distribution
+
+-   CI = mean ± T 1-alpha/2 x SE
+-   REJECT Ho if 1-alpha CI around test statistic does not include zero
+-   REJECT Ho if p value for obtaining the given test statistic is &lt; alpha
+
+For nonnormally distributed variables...
+
+The same principles apply. Let's consider a proportion...
+
+Or a Poisson CI...
+
+Recall the the Poisson distribution models counts and is determined by a single parameter, *λ*. The Poisson distribution is also useful for modeling rates, or counts that occur over units of time. If we imagine a variable X ∼ Poisson(λt) where λ = E\[X/t\] = the expected count per unit of time and t is the total monitoring time and
+
+Remember that if X ∼ Poisson(λt) then our estimate of λ is λˆ = X/t. Furthermore, we know that V ar(λˆ) = λ/t and so the natural estimate is λˆ/t. While it’s not immediate how the CLT applies in this case, the interval is of the familiar form So our Poisson interval is: Example Estimate ± Z1−α/2SE. λˆ ± Z 1 − α / 2 λˆ
+
+What about other data types, like proportions?
+
+Remember for proportion data, the average proportion = *π* and the standard error of the average proportion was sqrt(*π*(1 − *π*)/*n*)
+
+The Z statistic is equivalent to the T statistic
