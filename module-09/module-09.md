@@ -39,21 +39,21 @@ Recall that in Module 8, we created a vector, *v*, containing 1000 random number
 > m
 ```
 
-    ## [1] 2.741113
+    ## [1] 4.058629
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.85115
+    ## [1] 4.220077
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.7031206
+    ## [1] 0.7704771
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -62,7 +62,7 @@ Recall that in Module 8, we created a vector, *v*, containing 1000 random number
 > ci
 ```
 
-    ## [1] 1.363022 4.119204
+    ## [1] 2.548522 5.568737
 
 The Central Limit Theorem
 -------------------------
@@ -100,7 +100,7 @@ Now let's imagine taking a bunch of samples of size 10 from this population. We 
 > sd
 ```
 
-    ## [1] 1.178908
+    ## [1] 1.184035
 
 ``` r
 > qqnorm(x)
@@ -133,7 +133,7 @@ Now let's imagine taking a bunch of samples of size 10 from this population. We 
 > sd
 ```
 
-    ## [1] 0.3714597
+    ## [1] 0.3730518
 
 ``` r
 > qqnorm(x)
@@ -304,21 +304,21 @@ We can see this as follows. Recall that above we estimated the 95% CI for a samp
 > m
 ```
 
-    ## [1] 2.987032
+    ## [1] 1.891228
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 4.68147
+    ## [1] 3.70375
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.8547156
+    ## [1] 0.6762091
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -327,7 +327,7 @@ We can see this as follows. Recall that above we estimated the 95% CI for a samp
 > ci_norm
 ```
 
-    ## [1] 1.311820 4.662243
+    ## [1] 0.5658826 3.2165734
 
 Now, let's look at the CIs calculated based using the t distribution for the same sample size. For sample size 30, the difference is negligible in the CIs is negligible.
 
@@ -338,7 +338,7 @@ Now, let's look at the CIs calculated based using the t distribution for the sam
 > ci_t
 ```
 
-    ## [1] 1.238942 4.735121
+    ## [1] 0.5082252 3.2742308
 
 However, if we use a sample size of 5, the CI based on the t distribution is much wider.
 
@@ -349,21 +349,21 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > m
 ```
 
-    ## [1] 3.012955
+    ## [1] 6.425198
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.624824
+    ## [1] 5.906051
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 1.621071
+    ## [1] 2.641266
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -372,7 +372,7 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > ci_norm
 ```
 
-    ## [1] -0.1642853  6.1901947
+    ## [1]  1.248411 11.601984
 
 ``` r
 > lower <- m - qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -381,7 +381,7 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > ci_t
 ```
 
-    ## [1] -1.487859  7.513768
+    ## [1] -0.9081325 13.7585282
 
 Classical Hypothesis Testing
 ----------------------------
@@ -390,26 +390,26 @@ Classical or frequentist hypothesis testing (a.k.a. parametric statistics) invol
 
 We need some kind of statistical evidence to reject the null hypothesis in favor of an alternative hypothesis. This evidence is, in classicical frequentist approaches, some measure of how unexpected it would be for the sample to have been drawn from a given null distribution.
 
--   ***H*<sub>*o*</sub> = null hypothesis** = a sample statistic shows no deviation from what is expected or neutral
+-   ***H*<sub>0</sub> = null hypothesis** = a sample statistic shows no deviation from what is expected or neutral
 
--   ***H*<sub>*a*</sub> = alternative hypothesis** = a sample statistic deviates more than expected by chance from what is expected or neutral
+-   ***H*<sub>*A*</sub> = alternative hypothesis** = a sample statistic deviates more than expected by chance from what is expected or neutral
 
-We can test several different comparisons between *H*<sub>*o*</sub> and *H*<sub>*a*</sub>.
+We can test several different comparisons between *H*<sub>0</sub> and *H*<sub>*A*</sub>.
 
-*H*<sub>*a*</sub> &gt; *H*<sub>*o*</sub>, which constitutes an "upper one-tailed test (i.e., our sample statistic is greater than that expected under the null)
+*H*<sub>*A*</sub> &gt; *H*<sub>0</sub>, which constitutes an "upper one-tailed test (i.e., our sample statistic is greater than that expected under the null)
 
-*H*<sub>*a*</sub> &lt; *H*<sub>*o*</sub>, which constitutes an "lower one-tailed test (i.e., our sample statistic is less than that expected under the null)
+*H*<sub>*A*</sub> &lt; *H*<sub>0</sub>, which constitutes an "lower one-tailed test (i.e., our sample statistic is less than that expected under the null)
 
-*H*<sub>*a*</sub> ≠ *H*<sub>*o*</sub>, which constitutes an "two-tailed test (i.e., our sample statistic is different, maybe greater maybe less, than that expected under the null)
+*H*<sub>*A*</sub> ≠ *H*<sub>0</sub>, which constitutes an "two-tailed test (i.e., our sample statistic is different, maybe greater maybe less, than that expected under the null)
 
 There are then four possible outcomes to our statistical decision:
 
-| What is True | What We Decide | Result                                    |
-|--------------|----------------|-------------------------------------------|
-| Ho           | Ho             | Correctly 'accept' the null               |
-| Ho           | Ha             | Falsely reject the null (Type I error)    |
-| Ha           | Ho             | Falsely 'accept' the null (Type II error) |
-| Ha           | Ha             | Correctly reject the null                 |
+| What is True      | What We Decide    | Result                                    |
+|-------------------|-------------------|-------------------------------------------|
+| *H*<sub>0</sub>   | *H*<sub>0</sub>   | Correctly 'accept' the null               |
+| *H*<sub>0</sub>   | *H*<sub>*A*</sub> | Falsely reject the null (Type I error)    |
+| *H*<sub>*A*</sub> | *H*<sub>0</sub>   | Falsely 'accept' the null (Type II error) |
+| *H*<sub>*A*</sub> | *H*<sub>*A*</sub> | Correctly reject the null                 |
 
 In classical frequentist (a.k.a. parametric) inference, we perform hypothesis testing by trying to minimize our probability of Type I error... we aim for having a high bar for falsely rejecting the null (e.g., for incorrectly finding an innocent person guilty). When we set a high bar for falsely rejecting the null, we lower the bar for falsely 'accepting' (failing to reject) the null (e.g., for concluding that a guilty person is innocent).
 
@@ -477,7 +477,7 @@ Our test statistic takes a familiar form... it is effectively the standard norma
 
 <img src="img/one-sample-Z.svg" width="150px"/>
 
-Or, to use our variables fr0m above...
+Or, to use our variables from above...
 
 ``` r
 > z <- (m - mu)/sem

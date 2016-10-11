@@ -186,7 +186,7 @@ But, when the size of our sample is small (n < 30), instead of using the normal 
 
 Note that this is the **typical** case that we will encounter, as we often do not have information about the population that a sample is drawn from.
 
-The t distribution is a continuous probability distribution very similar in shape to the normal is generally used when dealing with *statistics* (such as means and standard deviations) that are estimated from a sample rather than known population *parameters*. Any particular t distribution looks a lot like a normal distribution in that it is bell-shaped, symmetric, unimodal, and (in normalized) zero-centered.
+The t distribution is a continuous probability distribution very similar in shape to the normal is generally used when dealing with *statistics* (such as means and standard deviations) that are estimated from a sample rather than known population *parameters*. Any particular t distribution looks a lot like a normal distribution in that it is bell-shaped, symmetric, unimodal, and (if standardized) zero-centered.
 
 The choice of the appropriate t distribution to use in any particular statistical test is based on the number of **degrees of freedom (df)**, i.e., the number of individual components in the calculation of a given statistic (such as the standard deviation) that are “free to change”.
 
@@ -196,7 +196,7 @@ Confidence intervals based on the t distribution are of the form:
 
 *mean* ± *T* (the quantile from the t distribution) × *standard error of the mean*
 
-The only change from those based on the normal distribution is that we’ve replaced the Z quantile of the standard normal with a T quantile.
+The only change from those based on the normal distribution is that we’ve replaced the ***Z*** quantile of the standard normal with a ***T*** quantile.
 
 Let's explore this a bit...
 
@@ -305,9 +305,9 @@ The **p value** = the probability of our obtaining a test statistic that is as h
 
 <img src="img/significant.png" width="250px; padding-top: 10px; padding-left: 20px; padding-right: 20px; padding-bottom: 10px" align="right"/>
 
-The test statistic basically summarizes the "location"" of our data relatively to an expected distribution based on our null model. The particular value of our test statistic is determined by both the difference between the original sample statistic and the expected null value (e.g., the difference between the mean of our sample and the expected population mean) and the standard error of the sample statistic. The value of the test statistic (i.e., the distance of the test statistic from zero) and the shape of the null distribution are the sole drivers of the smallness of the p value. The p value effectively represents the area under the sampling distribution associated with test statistic values as or more extreme than the one we observed.
+The test statistic basically summarizes the "location"" of our data relative to an expected distribution based on our null model. The particular value of our test statistic is determined by both the **difference between the original sample statistic and the expected null value** (e.g., the difference between the mean of our sample and the expected population mean) and the **standard error of the sample statistic**. The value of the test statistic (i.e., the distance of the test statistic from zero) and the shape of the null distribution are the sole drivers of the smallness of the p value. The p value effectively represents the area under the sampling distribution associated with test statistic values **as or more extreme** than the one we observed.
 
-We compare the p value associated with our test statistic to some significance level, $\alpha$, typically 0.05 or 0.01, to determine whether we reject or fail to reject the null. If p < $\alpha$, we decide that there is sufficient statistical evidence for rejecting Ho.
+We compare the p value associated with our test statistic to some significance level, $\alpha$, typically 0.05 or 0.01, to determine whether we reject or fail to reject the null. If p < $\alpha$, we decide that there is sufficient statistical evidence for rejecting $H_0$.
 
 How do we calculate the p value?
 
@@ -315,12 +315,12 @@ How do we calculate the p value?
 
   2. Specify our null distribution
 
-  3. Calculate the tail probability, i.e., the probability of obtaining a statistic as or more extreme than was observed based on that distribution
+  3. Calculate the tail probability, i.e., the probability of obtaining a statistic (e.g., a mean) as or more extreme than was observed assuming that null distribution
 
 
-## One Sample Z and T Tests for Continuous Random Variables
+### One Sample Z and T Tests for Sample Means
 
-Let's do an example where we try to evaluate whether the mean of a single set of observations is significantly different than expected... i.e., this is a ONE-SAMPLE test.
+Let's do an example where we try to evaluate whether the mean of a single set of observations is significantly different than expected under a null hypothesis... i.e., this is a ONE-SAMPLE test.
 
 Suppose we have a vector describing the adult weights of vervet monkeys trapped in South Africa during the 2015 trapping season. We have the sense they are heavier than vervets we trapped in previous years, which averaged 4.9 kilograms. The mean is 5.324 kilograms. Is the mean significantly greater than our expectation?
 
@@ -350,7 +350,7 @@ Our test statistic takes a familiar form... it is effectively the standard norma
 
 <img src="img/one-sample-Z.svg" width="150px"/>
 
-Or, to use our variables fr0m above...
+Or, to use our variables from above...
 
 ``` {r}
 z <- (m - mu)/sem
@@ -361,7 +361,7 @@ In this case, **$z$** is a quantile... the estimated number of standard errors o
 
 If we then want to see if **$z$** is significant, we need to calculate the probability of seeing a deviation from the mean as high or higher than this by chance. To do this, we can use the `pnorm()` function. Because we have converted our sample mean to the standard normal scale, the `mean=` and `sd=` arguments of `pnorm()` are the defaults of 0 and 1, respectively.
 
-We want the probability of seeing a $z$ statistic this large or larger by chance.
+We want the probability of seeing a **$z$** this large or larger by chance.
 
 ``` {r}
 p <- 1 - pnorm(z)
@@ -370,7 +370,7 @@ p <- pnorm(z, lower.tail=FALSE)
 p
 ```
 
-However, as noted above, our sample size from a population is typically limited. So, instead of using the normal distribution to determine the p value of our statistic, we should use the t distribution, which, as we've seen, has slightly fatter tails.
+However, as noted above, our sample size from a population is typically limited. So, instead of using the normal distribution to determine the p value of our statistic, we should use the t distribution, which, as we've seen, has slightly fatter tails. The process is exactly the same, though, as for the normal distribution.
 
 ``` {r}
 p <- 1 - pt(z, df=n-1)
@@ -379,7 +379,7 @@ p <- pt(z, df=n-1, lower.tail=FALSE)
 p
 ```
 
-***R*** has built into it single function, `t.test()`, that lets us do all this in one line. We give it our data and the expected population mean, $\mu$, along with the kind of test we want to do.
+***R*** has built into it a single function, `t.test()`, that lets us do all this in one line. We give it our data and the expected population mean, $\mu$, along with the kind of test we want to do.
 
 ``` {r}
 t <- t.test(x=x, mu=mu, alternative="greater")
@@ -416,12 +416,12 @@ t <- (m - mu)/sem
 t
 alpha <- 0.05
 crit <- qt(1 - alpha/2, df=n-1) # identify critical values
-test <- t < -crit || t > crit # boolean test
+test <- t < -crit || t > crit # boolean test as two whether t is larger than the critical value at either tail
 test <- abs(t) > crit
 t.test(x=x, mu=mu, alternative="two.sided")
 ```
 
-## Two Sample Tests - Comparing Means
+### Two Sample Tests Z and T Tests for Comparing Means
 
 Sometimes we want to compare two groups of measurements to one another, which boils down to a hypothesis test for the difference between two means, $\mu1$ and $\mu2$. The null hypothesis is that the difference between the means is zero.
 
@@ -431,13 +431,13 @@ Before getting to the appropriate test, there are a couple of things that we nee
 
 [2] Are the variances in the two samples roughly equal or not? E.g., if we are comparing male and female heights, are the variances comparable?
 
-### Unequal Variances
+#### Samples with Unequal Variances
 
 For the most generic case, where the two samples are independent and we cannot assume the variances of the two samples are equal, we can do what is called **Welch's t test** where our test statistic is:
 
 <img src="img/two-sample-T-unpooled-variance.svg" width="225px"/>
 
-Note that $\mu_0$ here is the expected difference between the means under the null hypothesis, which is zero.
+Note that $\mu$ here is the expected difference between the means under the null hypothesis, which is zero.
 
 #### CHALLENGE:
 
@@ -490,11 +490,11 @@ t <- t.test(x=x, y=y, mu=0, alternative="two.sided")
 t
 ```
 
-### Equal Variances
+#### Samples with Equal Variances
 
 There's a simpler t statistic we can use if the variances of the two samples are more or less equal.
 
-<img src="img/two-sample-T-unpooled-variance.svg" width="225px"/>
+<img src="img/two-sample-T-pooled-variance.svg" width="225px"/>
 
 ``` {r}
 s <- sqrt((((n1-1)*s1^2)+((n2-1)*s2^2))/ (n1+n2-2))
@@ -510,7 +510,7 @@ t
 
 A crude test for equality of variances is to divide the larger by the smaller and if the result is < 2, you can go ahead and used the pooled variance version of the test (which has many fewer degrees of freedom).
 
-In our case, we cannot...
+In our case, we cannot, since the ratio of variances exceeds 2...
 
 ``` {r}
 var(x)/var(y)
@@ -525,7 +525,7 @@ vt <- var.test(x, y)
 vt
 ```
 
-### Paired Samples
+#### Paired Samples
 
 For a paired sample test, the null hypothesis is that the mean of individual paired differences between the two samples (e.g., before and after) is zero.
 
@@ -533,7 +533,7 @@ Our test statistic is:
 
 <img src="img/two-sample-T-paired.svg" width="140px"/>
 
-Again, note that $\mu_0$ here is the expected difference between the means under the null hypothesis, which is zero, and we are dividing by the standard error of the mean for the set of differences between pairs.
+Again, note that $\mu$ here is the expected difference between the means under the null hypothesis, which is zero, and we are dividing by the standard error of the mean for the set of differences between pairs.
 
 #### CHALLENGE:
 
@@ -562,8 +562,24 @@ test
 t.test(x,df=n-1,alternative="two.sided")
 ```
 
+### Summary of Z and T Tests
 
-## Summary
+Z and T tests are used to evaluate whether a given sample statistic (e.g., a mean or proportion) deviates significantly from what is expected under a null model or whether two samples statistics deviate significantly from one another.
+
+When dealing with sample means, the Z statistic is calculated as:
+
+
+
+
+They are used for dealing with normally distributed, continuous variables or those that can be approximated closely by the normal distribution.
+
+When sample size > 30 we can use the Z distribution, but for < 30, use the T distribution
+
+- CI = mean ± T 1-alpha/2 x SE 
+- REJECT Ho if 1-alpha CI around test statistic does not include zero
+- REJECT Ho if p value for obtaining the given test statistic is < alpha
+
+
 ### T Statistics for the One Sample Case
 
 <img src="img/one-sample-T.svg" width="150px"/>
@@ -579,7 +595,7 @@ with:
 where:
 
   * <img src="img/xbar.svg" width="15px"/> = mean of sample observations
-  * $\mu_0$ = expected mean
+  * $\mu$ = expected mean
   * $s$ = sample standard deviation
   * $n$ = number of sample observations
 
@@ -595,10 +611,10 @@ with:
 
 where:
 
-  * <img src="img/x1bar.svg" width="20px"/> and <img src="img/x2bar.svg" width="20px"/> = means of sample observations
-  * $\mu_0$ = expected mean difference between groups (usually set to zero)
-  * $s_1$ and $s_2$ = sample standard deviations
-  * $n_1$ and $n_2$ = numbers of sample observations
+  * <img src="img/x1bar.svg" width="20px"/> and <img src="img/x2bar.svg" width="20px"/> = means of observations in each sample group
+  * $\mu$ = expected mean difference between sample groups (usually set to zero)
+  * $s_1$ and $s_2$ = standard deviations of each sample group
+  * $n_1$ and $n_2$ = numbers of observations in each sample group
 
 #### Pooled Variance
 
@@ -612,10 +628,10 @@ where:
 
 <img src="img/two-sample-s2-pooled-variance.svg" width="240px"/>
 
-  * <img src="img/x1bar.svg" width="20px"/> and <img src="img/x2bar.svg" width="20px"/> = means of sample observations
-  * $\mu_0$ = expected mean difference between groups (usually set to zero)
+  * <img src="img/x1bar.svg" width="20px"/> and <img src="img/x2bar.svg" width="20px"/> = means of observations in each sample group
+  * $\mu$ = expected mean difference between sample groups (usually set to zero)
   * $s_p$ = pooled sample standard deviation
-  * $n_1$ and $n_2$ = numbers of sample observations
+  * $n_1$ and $n_2$ = numbers of observations in each sample group
 
 #### Paired Samples
 
@@ -624,18 +640,11 @@ where:
 where:
 
   * <img src="img/dbar.svg" width="12px"/> = mean of difference between paired samples
-  * $\mu_0$ = expected mean between paired difference (usually set to zero)
-  * $s_d$ = standard deviation in differences between paired samples
+  * $\mu$ = expected mean difference between paired samples (usually set to zero)
+  * $s_d$ = standard deviation in the set of differences between paired samples
   * $n$ = number of sample pairs
 
 
-Assumptions:
-- Dealing with normally distributed continuous variables (or those that can be approximated closely by the normal distribution)
-- When sample size > 30 we can use the Z distribution, but for < 30, use the T distribution
-
-- CI = mean ± T 1-alpha/2 x SE 
-- REJECT Ho if 1-alpha CI around test statistic does not include zero
-- REJECT Ho if p value for obtaining the given test statistic is < alpha
 
 
 For nonnormally distributed variables...
@@ -654,8 +663,34 @@ Estimate ± Z1−α/2SE. λˆ ± Z 1 − α / 2   λˆ
 
 
 
-What about other data types, like proportions?
+### One Sample Z Tests for Proportions
 
-Remember for proportion data, the average proportion = $\pi$ and the standard error of the average proportion was sqrt($\pi(1-\pi)/n$)
+As we have seen, the sampling distribution of sample means for independent and identically distributed random variables is roughly normal (and, as shown by the CLT, this distribution increasingly approaches normal as sample size increases). Similarly, the sampling distribution for another kind of sample statistic, the number of "successes" $x$ out of a series of $k$ trials is also roughly normally distributed. If the true population proportion of "successes" is $\pi$, then the sampling distribution for the proportion of successes in a sample of size $n$ is expected to be roughly normally distributed with mean = $\pi$ and standard error = sqrt($\pi(1-\pi)/n$).
+
+Let's set up a simulation to show this...
+
+First we create a population of 500 "1"s and 500 "0"s, i.e., where $\pi$ = 0.5...
+
+``` {r}
+pop <- c(rep(0,500),rep(1,500))
+```
+
+Now, we will take 1000 random samples of size n=10 from that population and calculate the proportion of "1"s in each sample...
+
+``` {r}
+pi <- 0.5
+x <- NULL
+n <- 10
+for (i in 1:1000){
+  x[i] <- mean(sample(pop,size=n,replace=FALSE)) # taking the mean of a bunch of 0s and 1s yields the proportion of 1s!
+}
+m <- mean(x)
+m
+s <- sd(x)
+s
+sem <- s/sqrt(n)
+sem
+pop_se <- sqrt(pi*(1-pi)/n)
+pop_se
 
 The Z statistic is equivalent to the T statistic
