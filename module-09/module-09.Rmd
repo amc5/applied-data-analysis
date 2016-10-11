@@ -325,6 +325,7 @@ Let's do an example where we try to evaluate whether the mean of a single set of
 Suppose we have a vector describing the adult weights of vervet monkeys trapped in South Africa during the 2015 trapping season. We have the sense they are heavier than vervets we trapped in previous years, which averaged 4.9 kilograms. The mean is 5.324 kilograms. Is the mean significantly greater than our expectation?
 
 ``` {r}
+library(curl)
 f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/vervet-weights.csv")
 d <- read.csv(f, header=TRUE, sep=",", stringsAsFactors=FALSE)
 head(d)
@@ -345,7 +346,7 @@ n <- length(x)
 sem <- s/sqrt(n)
 ```
 
-Our test statistic takes a familiar form... it is effectively the standard normalized position of our sample mean (m) in a distribution centered around the expected population mean ($\mu$), where we use the standard error of the mean of our sample (sem) as an estimate of the population standard deviation.
+Our test statistic takes a familiar form... it is effectively the standard normalized position of our sample mean (m) in a distribution centered around the expected population mean ($\mu$).
 
 z=(mean of our sample - $\mu$)/(standard error of the mean)
 z=(m - $\mu$)/(sem)

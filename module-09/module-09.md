@@ -15,25 +15,19 @@ Objectives
 > The objective of this module is to continue our discussion of *statistical inference* and introduce basic *hypothesis testing* from a frequentist/classical statistics approach.
 
 Standard Errors and Confidence Intervals
-========================================
+----------------------------------------
 
 To recap some of what we have covered in the last two modules, standard errors are key to calculating confidence intervals and to basic inferential statistics.
 
-In Module 7, we calculated confidence intervals for one of our estimates of a population parameter (the population mean, our **estimand**), based on a sample statistic (the sample mean, our **estimator**). Let's revist that process...
+In Module 7, we calculated confidence intervals for one of our estimates of a population parameter (the population mean, an **estimand**), based on a sample statistic (the sample mean, our **estimator**). Let's revist that process...
 
 The general way to define a confidence interval based on data from a sample is as the value of the **statistic** being considered (e.g., the mean) ± some **critical value** × the **standard error** of the statistic.
 
-The **critical value** is derived from the standardized version of a sampling distribution (e.g., the normal distribution) that corresponds the quantile limits we are interested in. For example, for the 95% CI around the mean, the critical value corresponds the range of quantiles above and below which we expect to see only 5% of the distribution of statistic values. This is equivalent to the ± 1 - (*α*/2), where *α* = 0.05, thuse corresponding to the ± 0.975 quantile.
+The **critical value** is derived from the standardized version of a sampling distribution (e.g., the normal distribution) that corresponds the quantile limits we are interested in. For example, for the 95% CI around the mean, the critical value corresponds the range of quantiles above and below which we expect to see only 5% of the distribution of statistic values. This is equivalent to the ± 1 - (*α*/2) quantiles, where *α*=0.05, i.e., the ± 0.975 quantile that we have used before for calculating 95% CIs.
 
-The **standard error** is the standard deviation of the sampling distribution, which, as noted above, is often estimated from the sample itself but can also be calculated directly from the population standard deviation, if that is known.
+The **standard error** is the standard deviation of the sampling distribution, which, as noted above, is often estimated from the sample itself as *σ*/*s**q**r**t*(*n*) but can also be calculated directly from the population standard deviation, if that is known.
 
-#### CHALLENGE:
-
-As we did in Module 8, create a vector, *v*, containing **n** random numbers selected from a normal distribution with mean *μ* and standard deviation *σ*. Use 1000 for **n**, 3.5 for *μ*, and 4 for *σ*.
-
--   Calculate the mean, standard deviation, and standard error of the mean (SEM) based on your sample.
--   Using the SEM, calculate the 95% confidence interval around your estimate of the mean, basing your estimate on quantiles derived from the normal distribution.
--   How does the SEM estimated from your sample compare to the estimate of the standard error you would make based on the knowledge of the population standard deviation, *σ* = 4?
+Recall that in Module 8, we created a vector, *v*, containing 1000 random numbers selected from a normal distribution with mean 3.5 and standard deviation 4. We then calculated the mean, standard deviation, and standard error of the mean (SEM) based on a sample of 30 observations drawn from that vector, and we use the normal distribution to characterize the quantiles associated with the central 95% of the distribution to define the upper and lower bounds of the 95% CI.
 
 ``` r
 > n <- 1000
@@ -45,93 +39,41 @@ As we did in Module 8, create a vector, *v*, containing **n** random numbers sel
 > m
 ```
 
-    ## [1] 2.81692
+    ## [1] 4.282113
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.785812
+    ## [1] 5.05076
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.6911915
+    ## [1] 0.9221384
 
 ``` r
-> lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
-> upper <- m + qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
+> lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
+> upper <- m + qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
 > ci <- c(lower, upper)
 > ci
 ```
 
-    ## [1] 1.462209 4.171630
-
-``` r
-> pop_se <- sigma/sqrt(length(s))
-> pop_se
-```
-
-    ## [1] 0.7302967
-
-#### HOMEWORK PROBLEM:
-
-Using a new `.Rmd` file than you used for Problem 1 pushing both the Markdown and knitted `.html` file to the same "homework-week-4" repository, do the following:
-
-Load in the dataset "zombies.csv" from my ***GitHub*** repo at <https://github.com/difiore/ADA2016>. This data includes the first and last name and gender of the entire population of 1000 people who have survived the zombie apocalypse and are now ekeing out an existence somewhere on the East Coast, along with several other variables (height, weight, age, number of years of education, number of zombies they have killed, and college major [see here for info on important post-zombie apocalypse majors](http://www.thebestschools.org/magazine/best-majors-surviving-zombie-apocalypse/)
-
-``` r
-> library(curl)
-> f <- f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/zombies.csv")
-> d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
-> head(d)
-```
-
-    ##   X.2 X.1 X id first_name last_name gender   height   weight
-    ## 1   1   1 1  1      Sarah    Little Female 62.88951 132.0872
-    ## 2   2   2 2  2       Mark    Duncan   Male 67.80277 146.3753
-    ## 3   3   3 3  3    Brandon     Perez   Male 72.12908 152.9370
-    ## 4   4   4 4  4      Roger   Coleman   Male 66.78484 129.7418
-    ## 5   5   5 5  5      Tammy    Powell Female 64.71832 132.4265
-    ## 6   6   6 6  6    Anthony     Green   Male 71.24326 152.5246
-    ##   zombies_killed years_of_education                           major
-    ## 1              2                  1                medicine/nursing
-    ## 2              5                  3 criminal justice administration
-    ## 3              1                  1                       education
-    ## 4              5                  6                  energy studies
-    ## 5              4                  3                       logistics
-    ## 6              1                  4                  energy studies
-    ##        age
-    ## 1 17.64275
-    ## 2 22.58951
-    ## 3 21.91276
-    ## 4 18.19058
-    ## 5 21.10399
-    ## 6 21.48355
-
-\[1\] Calculate the *population* mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education). NOTE: You will not want to use the built in `var()` and `sd()` commands as these are for *samples*.
-
-\[2\] Use {ggplot} and make boxplots of each of these variable by gender.
-
-\[3\] Use {ggplot} and make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
-
-\[4\] Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution. Which seem to be and which do not (hint: not all are drawn from the normal distribution)? For those that are not, can you determine what common distribution they are drawn from?
-
-\[5\] Now use the `sample()` function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution.
-
-\[6\] Now draw 99 more random samples of 30 zombies out and calculate the mean for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution for each variable? How do the standard deviations compare to the standard errors estimated in \[5\]? What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
+    ## [1] 2.474755 6.089471
 
 The Central Limit Theorem
 -------------------------
 
-Thus far, our construction of CIs has taken advantage of one of the most important theorems in statistics, the Central Limit Theorem. The key importance of the CLT for us is that it states that the distribution of averages (or sums or other summary statistics...) of **iid** random variables becomes normal as the sample size increases. It is this fact that allows us to have a good sense of the average event and of the distribution of average events in a population even though we only observe one set of events and do not know what actual population distribution is. The CLT says nothing about the probability distribution for events in the original population, and that is exactly where its usefulness lies... that distribution can be normal, skewed, all kinds of odd! But we can assume normality for the distribution of **sample mean** (or sum or mode...) no matter what kind of distribution we have in the initial population we have, as long as our sample size is large enough and our samples are independent. It is thus the CLT that allows us to make inferences about a population based on a sample.
+Thus far, our construction of CIs has implicitly 5taken advantage of one of the most important theorems in statistics, the **Central Limit Theorem**. The key importance of the CLT for us is that it states that the distribution of averages (or sums or other summary statistics...) of **iid** random variables becomes normal as the sample size increases. It is this fact that allows us to have a good sense of the mean and distribution of average events in a population even though we only observe one set of events and do not know what actual population distribution is. In fact, the CLT says nothing about the probability distribution for events in the original population, and that is exactly where its usefulness lies... that original probability distribution can be normal, skewed, all kinds of odd!
 
-Just to explore this a bit, let's do some simulations. We are going to take lots of averages of samples from a particular non-normal distribution and then look at the distribution of those averages. Imagine we have some event that occurs in a population according to some probability mass function like the Poisson where we know $= 4 and the expectations of *μ* and *σ*<sup>2</sup> are thus both = 4.
+But we can nonetheless assume normality for the distribution of **sample mean** (or of the sum or mode, etc...) no matter what kind of probability distribution characterizes the initial population, as long as our sample size is large enough and our samples are independent. It is thus the CLT that allows us to make inferences about a population based on a sample.
 
-Now let's imagine taking samples of size 10 from this population. We will take 1000 random samples of this size, calculate the average of each sample, and plot a histogram of those averages... it will be close to normal and the standard deviation of the sampling distribution is roughly equal to the estimated standard error, the square root of (*λ*/*n*).
+Just to explore this a bit, let's do some simulations. We are going to take lots of averages of samples from a particular non-normal distribution and then look at the distribution of those averages. Imagine we have some event that occurs in a population according to some probability mass function like the Poisson where we know *λ*=14. Recall, then, that the expectations of *μ* and *σ*<sup>2</sup> for the Poisson distribution are both=*λ*.
+
+Now let's imagine taking a bunch of samples of size 10 from this population. We will take 1000 random samples of this size, calculate the average of each sample, and plot a histogram of those averages... it will be close to normal, and the standard deviation of the those average - i.e., of the sampling distribution - should be roughly equal to the estimated standard error, the square root of (*λ*/*n*). \[Recall that *λ* is the expected variance, so this is simply the square root of (expected variance / sample size)\]
 
 ``` r
 > lambda <- 14
@@ -151,21 +93,21 @@ Now let's imagine taking samples of size 10 from this population. We will take 1
 +     4 * sqrt(lambda)/sqrt(n), length.out = 20), probability = TRUE)
 ```
 
-![](img/unnamed-chunk-3-1.png)
+![](img/unnamed-chunk-2-1.png)
 
 ``` r
 > sd <- sd(x)  # st dev of the sampling distribution
 > sd
 ```
 
-    ## [1] 1.214119
+    ## [1] 1.170666
 
 ``` r
 > qqnorm(x)
 > qqline(x)
 ```
 
-![](img/unnamed-chunk-3-2.png) We can do this for samples of size 100, too... the mean stays the same, the distribute is still normal, but the standard deviation of the sampling distribution is lower.
+![](img/unnamed-chunk-2-2.png) Let's do this for samples of size 100, too. We see that the mean stays the same, the distribution is still normal, but the standard deviation - the spread - of the sampling distribution is lower.
 
 ``` r
 > n <- 100
@@ -184,23 +126,23 @@ Now let's imagine taking samples of size 10 from this population. We will take 1
 +     4 * sqrt(lambda)/sqrt(n), length.out = 20), probability = TRUE)
 ```
 
-![](img/unnamed-chunk-4-1.png)
+![](img/unnamed-chunk-3-1.png)
 
 ``` r
 > sd <- sd(x)  # st dev of the sampling distribution
 > sd
 ```
 
-    ## [1] 0.3859288
+    ## [1] 0.3788517
 
 ``` r
 > qqnorm(x)
 > qqline(x)
 ```
 
-![](img/unnamed-chunk-4-2.png)
+![](img/unnamed-chunk-3-2.png)
 
-We can normalize these distributions by subtracting off the expected population mean and dividing by the population standard error and then plotting the histogram along with a normal curve.
+We can convert these distributions to standard normals by subtracting off the expected population mean (*λ*) and dividing by the standard error of the mean (an estimate of the standard deviation of the sampling distribution) and then plotting a histogram of those values along with a normal curve.
 
 ``` r
 > curve(dnorm(x, 0, 1), -4, 4, ylim = c(0, 0.8))
@@ -209,11 +151,11 @@ We can normalize these distributions by subtracting off the expected population 
 +     add = TRUE)
 ```
 
-![](img/unnamed-chunk-5-1.png)
+![](img/unnamed-chunk-4-1.png)
 
 Pretty normal looking, right?
 
-Here's an example using `sum()` instead of `mean()`...
+Here's an example of the CLT in action using `sum()` instead of `mean()`...
 
 ``` r
 > n <- 100
@@ -224,41 +166,39 @@ Here's an example using `sum()` instead of `mean()`...
 > hist(x, breaks = seq(min(x), max(x), length.out = 20), probability = TRUE)
 ```
 
-![](img/unnamed-chunk-6-1.png)
+![](img/unnamed-chunk-5-1.png)
 
 Again, pretty normal looking!
 
 **Take Home Points:**
 
-\[1\] The CLT states that, regardless of the underlying distribution, the distribution of averages based on a large number of independent, identically distributed variables...
+\[1\] The CLT states that, regardless of the underlying distribution, the distribution of averages (or sums or standard deviations, etc...) based on a large number of independent, identically distributed variables:
 
 -   will be approximately normal,
--   centered at the population mean, – with standard deviation equal to the standard error of the mean.
+-   will be centered at the population mean, and – will have a standard deviation roughly equal to the standard error of the mean.
 
-Additionally, variables that are expected to be the sum of multiple independent processes (such as measurement errors) will also have distributions that are nearly normal.
+Additionally, it suggests that variables that are expected to be the sum of multiple independent processes (e.g., measurement errors) will also have distributions that are nearly normal.
 
 \[2\] Taking the mean and adding and subtracting the relevant standard normal quantile × the standard error yields a confidence interval for the mean, which gets wider as the coverage increases and gets narrower with less variability or larger sample sizes.
 
 \[3\] As sample size increases, the standard error of the mean decreases and the distribution becomes more and more normal (i.e., has less skew and kurtosis, which are higher order moments of the distribution).
 
-Check out [this website](http://onlinestatbook.com/stat_sim/sampling_dist/index.html) for a nice interactive simulation demonstrating the Central Limit Theorem.
+For a nice interactive simulation demonstrating the Central Limit Theorem, check out [this cool website](http://onlinestatbook.com/stat_sim/sampling_dist/index.html) .
 
 Confidence Intervals for Sample Proportions
 -------------------------------------------
 
-So far, we've talked about CIs for sample means, but what about for other statistics, e.g., sample proportions. For example, if you have a sample of **n** trials where you record the success or failure of a binary event, you obtain an estimate of the proportion of successes, *x*/*n*. If you perform another **n** trials, the new estimate could vary in the same way that a repeated means of the same variable (e.g., zombie age) can vary from sample to sample. Taking a similar approach as above, we can generate confidence intervals for this variability in the proportion of successes across trails.
+So far, we've talked about CIs for sample means, but what about for other statistics, e.g., sample proportions for discrete binary variables. For example, if you have a sample of **n** trials where you record the success or failure of a binary event, you obtain an estimate of the proportion of successes, *x*/*n*. If you perform another **n** trials, the new estimate will vary in the same way that averages of a continuous random variable (e.g., zombie age) will vary from sample to sample. Taking a similar approach as above, we can generate confidence intervals for variability in the proportion of successes across trials.
 
-In this case, the expectation of random binary variable *x*, which we will denote as *π* (analogous to *μ*) \[*π* for proportion versus *μ* for mean\] in a population is simply the average number of successes across multiple trials.
+Recall from our discussion of the Bernoulli distribution when we were discussing discrete random binary variables that the expectation for *x*, i.e., the proportion of successes across trials, which we will denote as *π* (where *π* for "proportion" is analogous to *μ* for "mean") is simply the average number of successes across multiple trials.
 
-The expected distribution of *x* is approximately normal and equal to sqrt(*π*(1 − *π*)/*n*).
+The expected distribution for *x* is approximately normal and its standard deviation is estimated by sqrt(*π*(1 − *π*)/*n*), which is, essentially, the standard error of the mean: it is the square root of (the expected variance / sample size). As above, if we do not already have a population estimate for *π*, we can estimate this from our sample.
 
-This is an okay assumption to make if both *n* × *π* and *n* × (1 − *π*) are greater than roughly 5.
-
-This is akin to calculating the standard error the same was as we did above, as the square root of (the expected variance in a binary variable / sample size). And, as above, if we do not have a population estimate for *π*, we can estimate this from our sample.
+Note: this expectation holds true only if both *n* × *π* and *n* × (1 − *π*) are greater than roughly 5, so we should check this when working with proportion data.
 
 #### CHALLENGE:
 
-Suppose a polling group in the United States is interested in the proportion of voting-age citizens in their state that already know they will vote for Hillary Clinton in the upcoming presidential election. The group obtains a yes or no answer from 1000 suitable randomly selected individuals. Of these individuals, 856 say they know how they’ll vote. How would we characterize the mean and variability associated with this proportion?
+Suppose a polling group in the United States is interested in the proportion of voting-age citizens in their state that already know they will vote for Hillary Clinton in the upcoming presidential election. The group obtains a yes or no answer from 1000 suitable randomly selected individuals. Of these individuals, 856 say they know they’ll vote for Clinton. How would we characterize the mean and variability associated with this proportion?
 
 ``` r
 > n <- 1000
@@ -287,7 +227,7 @@ Are *n* × *π* and *n* × (1 − *π*) both &gt; 5? Yes!
 > pop_se <- sqrt((x/n) * (1 - x/n)/n)
 ```
 
-What is the 95% CI around our estimate of the proportion of people who already know how they will vote?
+So, what is the 95% CI around our estimate of the proportion of people who already know how they will vote?
 
 ``` r
 > curve(dnorm(x, mean = pi, sd = pop_se), pi - 4 * pop_se, pi + 4 * pop_se)
@@ -301,30 +241,30 @@ What is the 95% CI around our estimate of the proportion of people who already k
 > abline(h = 0)
 ```
 
-![](img/unnamed-chunk-9-1.png)
+![](img/unnamed-chunk-8-1.png)
 
 Small Sample Confidence Intervals
 ---------------------------------
 
-Thus far, we have discussed creating a confidence interval based on the CLT and the normal distribution and our intervals took the form:
+Thus far, we have discussed creating a confidence interval based on the CLT and the normal distribution, and our intervals took the form:
 
 *mean* ± *Z* (the quantile from the standard normal curve) × *standard error of the mean*
 
-But, when the size of our sample is small (n &lt; 30), instead of using the normal distribution to calculate our CIs, we typically use a different distribution to generate the relevant quantiles to multiply the standard error by... the **t distribution** (a.k.a., Gosset's t or Student's t distribution).
+But, when the size of our sample is small (n &lt; 30), instead of using the normal distribution to calculate our CIs, statisticians typically use a different distribution to generate the relevant quantiles to multiply the standard error by... the **t distribution** (a.k.a., Gosset's t or Student's t distribution).
 
 Note that this is the **typical** case that we will encounter, as we often do not have information about the population that a sample is drawn from.
 
-The t distribution is thus a continuous probability distribution very similar in shape to the normal that we generally use when dealing with statistics (such as means and standard deviations) that are estimated from a sample. Any particular t distribution looks a lot like a normal distribution in that it is bell-shaped, symmetric, unimodal, and zero-centered.
+The t distribution is a continuous probability distribution very similar in shape to the normal is generally used when dealing with *statistics* (such as means and standard deviations) that are estimated from a sample rather than known population *parameters*. Any particular t distribution looks a lot like a normal distribution in that it is bell-shaped, symmetric, unimodal, and (in normalized) zero-centered.
 
 The choice of the appropriate t distribution to use in any particular statistical test is based on the number of **degrees of freedom (df)**, i.e., the number of individual components in the calculation of a given statistic (such as the standard deviation) that are “free to change”.
 
-We can think of the t distribution as representing a family of curves that, as the number of degrees of freedom increases, approaches the normal or Gaussian curve. At low numbers of degrees of freedom, the tails of the distribution get fatter.
+We can think of the t distribution as representing a family of curves that, as the number of degrees of freedom increases, approaches the normal curve. At low numbers of degrees of freedom, the tails of the distribution get fatter.
 
 Confidence intervals based on the t distribution are of the form:
 
-*mean* ± *t* (the quantile from the t distribution) × *standard error of the mean*
+*mean* ± *T* (the quantile from the t distribution) × *standard error of the mean*
 
-The only change from those based on the normal distribution is that we’ve replaced the Z quantile of the standard normal with a t quantile.
+The only change from those based on the normal distribution is that we’ve replaced the Z quantile of the standard normal with a T quantile.
 
 Let's explore this a bit...
 
@@ -332,105 +272,75 @@ Recall that a standard normal distribution can be generated by normalizing our s
 
 (mean(x)-*μ*)/*σ*
 
-If we subtract the population mean from each observation but then divide each difference, instead, by the standard error of the mean, (mean(x)-*μ*)/SEM$, the result is not a normal distribution, but rather a t distribution! We are taking into account sample size by dividing by the standard error of the mean rather than the population standard deviation.
+If we subtract the population mean from each observation but then divide each difference, instead, by the standard error of the mean, (mean(x)-*μ*)/SEM, the result is not a normal distribution, but rather a t distribution! We are taking into account sample size by dividing by the standard error of the mean rather than the population standard deviation.
 
 The code below plots a standard normal distribution and then t distributions with varying degrees of freedom, specified using the `df=` argument. As for other distributions, ***R*** implements `density`, cumulative `probability`, `quantile`, and `random` functions for the t distribution.
 
 ``` r
 > mu <- 0
 > sigma <- 1
-> curve(dnorm(x, mu, 1), mu - 4 * sigma, mu + 4 * sigma, main = "Normal = red\nStudent's t = blue", 
+> curve(dnorm(x, mu, 1), mu - 4 * sigma, mu + 4 * sigma, main = "Normal Curve=red\nStudent's t=blue", 
 +     xlab = "x", ylab = "f(x)", col = "red", lwd = 3)
 > for (i in c(1, 2, 3, 4, 5, 10, 20, 100)) {
-+     curve(dt(x, df = i), mu - 4 * sigma, mu + 4 * sigma, main = "t Curve", xlab = "x", 
++     curve(dt(x, df = i), mu - 4 * sigma, mu + 4 * sigma, main = "T Curve", xlab = "x", 
 +         ylab = "f(x)", add = TRUE, col = "blue", lty = 5)
 + }
 ```
 
-![](img/unnamed-chunk-10-1.png)
+![](img/unnamed-chunk-9-1.png)
 
-The fatter tails of the t distibution lead naturally to more extreme quantile values given a specific probability than in the normal distribution. If we define a CI based on quantiles of the t distribution, they will be correspondingly slightly wider than those based on the normal distribution for small values of df.
+The fatter tails of the t distibution lead naturally to more extreme quantile values given a specific probability than we would see for the normal distribution. If we define a CI based on quantiles of the t distribution, they will be correspondingly slightly wider than those based on the normal distribution for small values of df.
 
-Last time, we estimated the 95% CI for a sample drawn from a normal distribution as follows:
+We can see this as follows. Recall that above we estimated the 95% CI for a sample drawn from a normal distribution as follows:
 
 ``` r
 > n <- 1e+05
 > mu <- 3.5
 > sigma <- 4
-> sample_size <- 30
 > x <- rnorm(n, mu, sigma)
-> s <- sample(x, size = sample_size, replace = FALSE)
-> m <- mean(s)
-> m
-```
-
-    ## [1] 4.380291
-
-``` r
-> sd <- sd(s)
-> sd
-```
-
-    ## [1] 3.734951
-
-``` r
-> sem <- sd(s)/sqrt(length(s))
-> sem
-```
-
-    ## [1] 0.6819056
-
-``` r
-> lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
-> upper <- m + qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
-> ci <- c(lower, upper)
-> ci
-```
-
-    ## [1] 3.043781 5.716801
-
-Now, let's examine the difference in the CIs calculated based on a sample of size 30 versus one of size 5 using the normal versus t distributions as the basis for estimating the confidence interval. For size 30, the difference is negligible... for size 5, the CI based on the t distribution is wider.
-
-``` r
 > sample_size <- 30
 > s <- sample(x, size = sample_size, replace = FALSE)
 > m <- mean(s)
 > m
 ```
 
-    ## [1] 2.707421
+    ## [1] 2.513158
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 4.700817
+    ## [1] 4.293112
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.8582478
+    ## [1] 0.7838115
 
 ``` r
-> lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
-> upper <- m + qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
+> lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
+> upper <- m + qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
 > ci_norm <- c(lower, upper)
 > ci_norm
 ```
 
-    ## [1] 1.025286 4.389556
+    ## [1] 0.976916 4.049401
+
+Now, let's look at the CIs calculated based using the t distribution for the same sample size. For sample size 30, the difference is negligible in the CIs is negligible.
 
 ``` r
-> lower <- m - qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
-> upper <- m + qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
+> lower <- m - qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
+> upper <- m + qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
 > ci_t <- c(lower, upper)
 > ci_t
 ```
 
-    ## [1] 0.9521069 4.4627348
+    ## [1] 0.9100838 4.1162327
+
+However, if we use a sample size of 5, the CI based on the t distribution is much wider.
 
 ``` r
 > sample_size <- 5
@@ -439,103 +349,79 @@ Now, let's examine the difference in the CIs calculated based on a sample of siz
 > m
 ```
 
-    ## [1] 2.251042
+    ## [1] 5.528406
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.974043
+    ## [1] 4.08182
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 1.777246
+    ## [1] 1.825446
 
 ``` r
-> lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
-> upper <- m + qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
+> lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
+> upper <- m + qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
 > ci_norm <- c(lower, upper)
 > ci_norm
 ```
 
-    ## [1] -1.232297  5.734380
+    ## [1] 1.950599 9.106214
 
 ``` r
-> lower <- m - qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
-> upper <- m + qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in upper and lower trail of distribution
+> lower <- m - qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
+> upper <- m + qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
 > ci_t <- c(lower, upper)
 > ci_t
 ```
 
-    ## [1] -2.683385  7.185468
+    ## [1]  0.4601568 10.5966554
 
-Hypothesis Testing
-==================
+Classical Hypothesis Testing
+----------------------------
 
-Classical, frequentist hypothesis testing (a.k.a. parametric statistics) involves formally stating a claim - the **null hypothesis** - which is then followed up by statistical evaluation of the null versus an alternative hypotheses. The null hypothesis is interpreted as a baseline hypothesis and is the claim is assumed to be true. The **alternative hypothesis** is the conjecture that we are testing.
+Classical or frequentist hypothesis testing (a.k.a. parametric statistics) involves formally stating a claim - the **null hypothesis** - which is then followed up by statistical evaluation of the null versus an alternative hypotheses. The null hypothesis is interpreted as a baseline hypothesis and is the claim that is assumed to be true. The **alternative hypothesis** is the conjecture that we are testing.
 
-We need some kind of statistical evidence to reject the null hypothesis in favor of an alternative hypothesis. This evidence is, in classicical frequentist approaches, some measure of how unexpected it would be for the sample to have been drawn from a given distribution.
+We need some kind of statistical evidence to reject the null hypothesis in favor of an alternative hypothesis. This evidence is, in classicical frequentist approaches, some measure of how unexpected it would be for the sample to have been drawn from a given null distribution.
 
-**Ho = null hypothesis** = a sample shows no deviation from what is expected or neutral **Ha = alternative hypothesis** = a sample deviates more than expected by chance (either greater than, less than, or simply unequal with no directionality presumed) from what is expected or neutral
+-   ***H*<sub>*o*</sub> = null hypothesis** = a sample statistic shows no deviation from what is expected or neutral
 
-Ha &gt; Ho is an upper one-tailed test Ha &lt; Ho is a lower one-tailed test Ha ≠ Ho is a two-tailed test
+-   ***H*<sub>*a*</sub> = alternative hypothesis** = a sample statistic deviates more than expected by chance from what is expected or neutral
 
-There are four possible outcomes to our statistical decision:
+We can test several different comparisons between *H*<sub>*o*</sub> and *H*<sub>*a*</sub>.
 
-<table style="width:88%;">
-<colgroup>
-<col width="18%" />
-<col width="20%" />
-<col width="48%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>What is True</th>
-<th>What We Decide</th>
-<th>Result</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ho</td>
-<td>Ho</td>
-<td>Correctly accept the null</td>
-</tr>
-<tr class="even">
-<td>Ho</td>
-<td>Ha</td>
-<td>Falsely reject the null (Type I error)</td>
-</tr>
-<tr class="odd">
-<td>Ha</td>
-<td>Ho</td>
-<td>Falsely accept (or, better, falsely fail to reject) the null (Type II error)</td>
-</tr>
-<tr class="even">
-<td>Ha</td>
-<td>Ha</td>
-<td>Correctly reject the null</td>
-</tr>
-</tbody>
-</table>
+*H*<sub>*a*</sub> &gt; *H*<sub>*o*</sub>, which constitutes an "upper one-tailed test (i.e., our sample statistic is greater than that expected under the null)
 
-In classical frequentist (a.k.a. parametric) inference, we perform hypothesis testing by trying to minimize our probability of Type I error... we aim for having a high bar for falsely rejecting the null (e.g., for incorrectly finding an innocent person guilty). When we set a high bar for falsely rejecting the null, we lower the bar for falsely failing to reject the null (e.g., for concluding that a guilty person is innocent).
+*H*<sub>*a*</sub> &lt; *H*<sub>*o*</sub>, which constitutes an "lower one-tailed test (i.e., our sample statistic is less than that expected under the null)
 
-To do our test, we typically calculate a **test statistic** based on our data which we compare to some appropriate standardized sampling distribution to yield a **p value**.
+*H*<sub>*a*</sub> ≠ *H*<sub>*o*</sub>, which constitutes an "two-tailed test (i.e., our sample statistic is different, maybe greater maybe less, than that expected under the null)
 
-**p value** = the probability of our obtaining that test statistic or a more extreme on by chance, if the null hypothesis were true.
+There are then four possible outcomes to our statistical decision:
+
+| What is True | What We Decide | Result                                    |
+|--------------|----------------|-------------------------------------------|
+| Ho           | Ho             | Correctly 'accept' the null               |
+| Ho           | Ha             | Falsely reject the null (Type I error)    |
+| Ha           | Ho             | Falsely 'accept' the null (Type II error) |
+| Ha           | Ha             | Correctly reject the null                 |
+
+In classical frequentist (a.k.a. parametric) inference, we perform hypothesis testing by trying to minimize our probability of Type I error... we aim for having a high bar for falsely rejecting the null (e.g., for incorrectly finding an innocent person guilty). When we set a high bar for falsely rejecting the null, we lower the bar for falsely 'accepting' (failing to reject) the null (e.g., for concluding that a guilty person is innocent).
+
+To do any statistical test, we typically calculate a **test statistic** based on our data, which we compare to some appropriate standardized sampling distribution to yield a **p value**.
+
+The **p value** = the probability of our obtaining a test statistic that is as high or higher than our calculated one by chance, assuming the null hypothesis is true.
 
 <img src="img/significant.png" width="250px; padding-top: 10px; padding-left: 20px; padding-right: 20px; padding-bottom: 10px" align="right"/>
 
-We compare the p value associated with our test statistic to some significance level, *α*, typically 0.05 or 0.01.
+The test statistic basically summarizes the "location"" of our data relatively to an expected distribution based on our null model. The particular value of our test statistic is determined by both the difference between the original sample statistic and the expected null value (e.g., the difference between the mean of our sample and the expected population mean) and the standard error of the sample statistic. The value of the test statistic (i.e., the distance of the test statistic from zero) and the shape of the null distribution are the sole drivers of the smallness of the p value. The p value effectively represents the area under the sampling distribution associated with test statistic values as or more extreme than the one we observed.
 
-***α*** = the criteria we use to determine whether we reject or fail to reject the null.
-
-If p &lt; *α*, we decide that there is sufficient evidence for rejecting Ho.
+We compare the p value associated with our test statistic to some significance level, *α*, typically 0.05 or 0.01, to determine whether we reject or fail to reject the null. If p &lt; *α*, we decide that there is sufficient statistical evidence for rejecting Ho.
 
 How do we calculate the p value?
 
@@ -553,6 +439,7 @@ Let's do an example where we try to evaluate whether the mean of a single set of
 Suppose we have a vector describing the adult weights of vervet monkeys trapped in South Africa during the 2015 trapping season. We have the sense they are heavier than vervets we trapped in previous years, which averaged 4.9 kilograms. The mean is 5.324 kilograms. Is the mean significantly greater than our expectation?
 
 ``` r
+> library(curl)
 > f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/vervet-weights.csv")
 > d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
 > head(d)
@@ -586,9 +473,9 @@ Suppose we have a vector describing the adult weights of vervet monkeys trapped 
 > sem <- s/sqrt(n)
 ```
 
-Our test statistic takes a familiar form... it is effectively the standard normalized position of our sample mean (m) in a distribution centered around the expected population mean (*μ*), where we use the standard error of the mean of our sample (sem) as an estimate of the population standard deviation.
+Our test statistic takes a familiar form... it is effectively the standard normalized position of our sample mean (m) in a distribution centered around the expected population mean (*μ*).
 
-z = (mean of our sample - *μ*)/(standard error of the mean) z = (m - *μ*)/(sem)
+z=(mean of our sample - *μ*)/(standard error of the mean) z=(m - *μ*)/(sem)
 
 ``` r
 > z <- (m - mu)/sem
@@ -675,7 +562,7 @@ Note that we can also use the `t.test()` function to calculate t distribution ba
 
 #### CHALLENGE:
 
-Adult lowland woolly monkeys are reported to an average body weight of 7.2 kilograms. You are working with an isolated population of woolly monkeys from the Colombian Andes that you think may be a different species from lowland form, and you collect a sample of 15 weights of from adult individuals at that site. From your sample, you calculate a mean of 6.43 kilograms and a standard deviation of 0.98 kilograms. Perform a hypothesis test to test whether body weights in your population are different from the reported average for lowland woolly monkeys by setting up a "two-tailed" hypothesis, carrying out the analysis, and interpreting the p value (assume the significance level is *α* = 0.05). Your sample is &lt; 30, so you should use the t distribution and do a t test. Do your calculations both by hand and using the `t.test()` function and confirm that they match.
+Adult lowland woolly monkeys are reported to an average body weight of 7.2 kilograms. You are working with an isolated population of woolly monkeys from the Colombian Andes that you think may be a different species from lowland form, and you collect a sample of 15 weights of from adult individuals at that site. From your sample, you calculate a mean of 6.43 kilograms and a standard deviation of 0.98 kilograms. Perform a hypothesis test to test whether body weights in your population are different from the reported average for lowland woolly monkeys by setting up a "two-tailed" hypothesis, carrying out the analysis, and interpreting the p value (assume the significance level is *α*=0.05). Your sample is &lt; 30, so you should use the t distribution and do a t test. Do your calculations both by hand and using the `t.test()` function and confirm that they match.
 
 ``` r
 > f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/woolly-weights.csv")
@@ -739,7 +626,7 @@ Before getting to the appropriate test, there are a couple of things that we nee
 
 For the most generic case, where the two samples are independent and we cannot assume the variances of the two samples are equal, we can do what is called **Welch's t test** where our test statistic is:
 
-t = (mean(sample 2) - mean(sample 1) - *μ*) / sqrt \[ (variance in sample 2) / (sample 2 size) + (variance in sample 1) / (sample 1 size) \]
+t=(mean(sample 2) - mean(sample 1) - *μ*) / sqrt \[ (variance in sample 2) / (sample 2 size) + (variance in sample 1) / (sample 1 size) \]
 
 Note that *μ* here is the expected difference between the means under the null hypothesis, which is zero.
 
@@ -838,7 +725,7 @@ Do the same using the `t.test()` function.
 
 There's a simpler t statistic we can use if the variances of the two samples are more or less equal.
 
-t = (mean(sample 2) - mean(sample 1) - *μ*) / sqrt \[ (pooled variance of sample 1 and sample 2) × (1/n1 + 1/n2) \]
+t=(mean(sample 2) - mean(sample 1) - *μ*) / sqrt \[ (pooled variance of sample 1 and sample 2) × (1/n1 + 1/n2) \]
 
 ``` r
 > s <- sqrt((((n1 - 1) * s1^2) + ((n2 - 1) * s2^2))/(n1 + n2 - 2))
@@ -909,7 +796,7 @@ For a paired sample test, the null hypothesis is that the mean of individual pai
 
 Our test statistic is:
 
-t = (mean(difference) - *μ*) / (standard error of difference)
+t=(mean(difference) - *μ*) / (standard error of difference)
 
 Again, note that *μ* here is the expected difference between the means under the null hypothesis, which is zero.
 
