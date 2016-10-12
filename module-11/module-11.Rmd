@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 
 ## Overview
 
-Let's return to the concepts of error and power. Recall that Type I error occurs when you incorrectly reject a true $H_0$. In any given hypothesis test, the probability of a Type I error is equivalent to the significance level, $\alpha$. Type II error occurs when you incorrectly fail to reject a false $H_0$ (in other words, fail to find evidence in support of a true $H_A$). Since we do not know what the true $H_A$ actually is, the probability of committing such an error, labeled $\beta$, is not usually known in practice.
+Let's return to the concepts of **error** and **power**. Recall that Type I error occurs when you incorrectly reject a true $H_0$. In any given hypothesis test, the probability of a Type I error is equivalent to the significance level, $\alpha$, and it is this type of error we are often trying to minimize when we are doing classical statistical inference. Type II error occurs when you incorrectly fail to reject a false $H_0$ (in other words, fail to find evidence in support of a true $H_A$). Since we do not know what the true $H_A$ actually is, the probability of committing such an error, labeled $\beta$, is not usually known in practice.
 
 | What is True | What We Decide | Result                                     |
 | ------------ | -------------- | ------------------------------------------ |
@@ -31,9 +31,9 @@ Let's return to the concepts of error and power. Recall that Type I error occurs
 | $H_A$        | $H_0$          | Falsely 'accept' the null (Type II error)  |
 | $H_A$        | $H_A$          | Correctly reject the null                  |
 
-### Type I Error and the Multiple Testing Problem
+## Type I Error and the Multiple Testing Problem
 
-Because of how we define $\alpha$, the chance probabilty of falsely rejecting $H_0$, we would expect to find some "significant" results if we run enough independent hypothesis tests. For example, if we set $\alpha$ at 0.05, we expect to find one "significant" result in roughly every 20 tests we run, just by chance. The relation of $\alpha$ to the distribution of a variable under a null hypothesis ($\mu$ = $\mu_0$) versus an alternative hypothesis ($\mu$ > $\mu_0$) is shown in the figure below (this is an example for a one-tailed test). It should be clear that we can reduce the chance of Type I error by decreasing $\alpha$.
+Because of how we define $\alpha$, the chance probabilty of falsely rejecting $H_0$ when $H_0$ is actually true, we would expect to find some "significant" results if we run enough independent hypothesis tests. For example, if we set $\alpha$ at 0.05, we would expect to find one "significant" result in roughly every 20 tests we run, just by chance. The relation of $\alpha$ to the distribution of a variable under a null hypothesis ($\mu$ = $\mu_0$) versus an alternative hypothesis (e.g., $\mu$ > $\mu_0$) is shown in the figure below (this is an example for a one-tailed test). It should be clear that we can reduce the chance of Type I error by decreasing $\alpha$.
 
 <img src="img/typeI.png" width="600px"/>
 
@@ -41,10 +41,10 @@ Let's explore this via simulation.
 
 We will write some code to simulate a bunch of random datasets from a normal distribution where we set the expected population mean ($\mu_0$) and standard deviation and then calculate a T statistic and p value for each one. We will then look at the "Type I" error rate... the proportion of times that, based on our sample, we would conclude that it was not drawn from the distribution we know to be true.
 
-First, let's set up a skeleton function we will call `typeI()`. It should take, as arguments, the parameters of the normal distribution for the null hypothesis we want to simulate from ($\mu_0$ and $\sigma$), our sample size, our alpha level, and the number of simulated datasets we want to generate. Type in the code below (and note that we set default values for $\alpha$ and number of simulations).
+First, let's set up a skeleton function we will call `typeI()` to evaluate the Type I error rate. It should take, as arguments, the parameters of the normal distribution for the null hypothesis we want to simulate from ($\mu_0$ and $\sigma$), our sample size, our alpha level, and the number of simulated datasets we want to generate. Type in the code below (and note that we set default values for $\alpha$ and the number of simulations).
 
 ``` {r}
-typeI <- function(mu0,sigma,n,alpha=0.05,sims=10000){
+typeI <- function(mu0,sigma,n,alpha=0.05,k=10000){
 }
 ```
 
@@ -64,16 +64,17 @@ typeI <- function(mu0,sigma,n,alpha=0.05,k=10000){
 	return(length(p[p<alpha])/k) # returns the proportion of simulations where p < alpha
 }
 ```
+Can you explain what each step of this code is doing?
 
 Now, run our Type I error test function with a couple of different values of $\mu_0$, $\sigma$, and $\alpha$. What error rate is returned? It should be close to $\alpha$!
 
 ``` {r}
-e <- typeI(mu0=3, sigma=4, alpha = 0.05, n=10)
+e <- typeI(mu0=3, sigma=2, alpha = 0.05, n=1000)
 e
 ```
 
 #### CHALLENGE:
-How does the Type I error rate change with $n$?
+How does the Type I error rate change with $n$ and with $\sigma$?
 
 ### Bonferroni Correction
 We can address the multiple testing problem by using what is called the Bonferroni correction, which suggests that when doing a total of $N$ independent hypothesis tests, each with a significance level of $\alpha$, we should adjusted the $\alpha$ level we use to interpret statistical significance as follow: $\alpha_B$ = $\alpha/N$.
@@ -86,11 +87,11 @@ By reducing the $\alpha$ level we use as our criterion for statistical significa
 
 <img src="img/typeII.png" width="600px"/>
 
-It should be clear in this figure that if the critical value (which is defined by $\alpha$) is shifted right or $\mu$ under the alternative hypothesis shifts left, then $\beta$, the area under the curve to the left of the critical value, increases! Intuitively, this makes sense: the lower the difference between the true $\mu_A$ value and $\mu_0$ and/or the smaller the $\alpha$ level, the harder it will be to reject the null hypothesis that $\mu$ = $\mu_0$.
+It should be clear in this figure that if the critical value (which is defined by $\alpha$) is shifted right or if $\mu$ under the alternative hypothesis shifts left, then $\beta$, the area under the curve to the left of the critical value, increases! Intuitively, this makes sense: the lower the difference between the true $\mu_A$ value and $\mu_0$ and/or the smaller the $\alpha$ level, the harder it will be to reject the null hypothesis that $\mu$ = $\mu_0$.
 
 In practice, we cannot usually calculate $\beta$ because of the need to know where the true distribution is really centered (i.e., what is the value of $\mu_A$). However, using our data, we can explore what $\beta$ is expected to look like under different sample sizes, $\alpha$ levels, and expected $\mu_A$.
 
-Let's also explore this by simulation using the approach we developed above. Again, we will write some code to simulate a bunch of random datasets, this time drawn from a normal distribution associated with a particular alternative hypothesis, $H_A$, i.e., where we know that the expected population mean is $\mu_A$ and the standard deviation is $\sigma_A$. We then calculate a T statistic based on each sample dataset relative to $\mu_0$, the expected mean under $H_0$, and determine the associated p value for each one. Based on this, we can calculate the Type II error rate... the proportion of times that, based on our sample, we would conclude that it was drawn from the $H_0$ rather than the $H_A$ distribution we know to be true.
+Let's do this using the simulation approach we developed above. Again, we will write some code to simulate a bunch of random datasets, this time drawn from a normal distribution associated with a particular alternative hypothesis, $H_A$, i.e., where we know that the expected population mean is $\mu_A$ and the standard deviation is $\sigma_A$. We then calculate a T statistic based on each sample dataset relative to $\mu_0$, the expected mean under $H_0$, and determine the associated p value for each one. Based on this, we can calculate the Type II error rate... the proportion of times that, based on our sample, we would conclude that it was drawn from the $H_0$ rather than the $H_A$ distribution we know to be true.
 
 ``` {r}
 typeII <- function(mu0,muA,sigmaA,n,alpha=0.05,k=1000){
@@ -108,57 +109,40 @@ typeII <- function(mu0,muA,sigmaA,n,alpha=0.05,k=1000){
 ```
 
 ``` {r}
-e <- typeII(mu0=-1, muA=4, sigmaA=4, n=10)
+e <- typeII(mu0=0, muA=4, sigmaA=4, n=20)
 e
-```
-
-#### CHALLENGE:
-Explore the effects of increasing the variability ($\sigma$) in a given sample and the impact of increasing sample size ($n$). How do each of these impact the Type II error rate?
-
-``` {r}
-library(ggplot2)
-n <- 1:100
-s <- seq(from=1, to=5, by=1)
-p <- matrix(data=NA,nrow=length(n),ncol=length(s))
-p <- as.data.frame(p)
-for (i in 1:length(n)) {
-	for (j in 1:length(s)){
-	p[i,j] <- 1 - typeII(mu0=2,muA=4,sigmaA=j,alpha=0.05,n=i)
-	}
-}
-p <- cbind(n,p)
-g <- ggplot(data=p, aes(x=,y=p), xlab = "sample size n", ylab = "Power = 1 - Beta") + ylim(0,1) + geom_point(aes(x=n,y=p),colour="blue", alpha=1/2) + geom_line(aes(x=n,y=p),colour="blue") + geom_line(y=0.8, lty=3)
-g
-
-for (i in 1:length(n)) {
-	p[i] <- 1 - typeII(mu0=2,muA=4,sigmaA=2,alpha=0.01,n=i)
-}
-d <- as.data.frame(cbind(n,p))
-g <- g + geom_point(data=d,aes(x=n,y=p), colour="red", alpha=1/2)+ geom_line(data=d,aes(x=n,y=p), colour="red")
-g
-
-for (i in 1:length(n)) {
-	p[i] <- 1 - typeII(mu0=2,muA=4,sigmaA=1,alpha=0.01,n=i)
-}
-d <- as.data.frame(cbind(n,p))
-g <- g + geom_point(data=d,aes(x=n,y=p), colour="green", alpha=1/2)+ geom_line(data=d,aes(x=n,y=p), colour="green")
-g
-
-n <- 100
-s <- seq(from=0.25, to=5, by=0.25)
-p <- rep(NA,max(n)) # sets up a vector of empty p values
-for (i in 1:length(n)) {
-	p[i] <- 1 - typeII(mu0=2,muA=4,sigmaA=2,alpha=0.01,n=i)
-}
-d <- as.data.frame(cbind(n,p))
-g <- ggplot(data=d,aes(x=n,y=p),xlab = "sample size n", ylab = "Power = 1 - Beta") + ylim(0,1) + geom_point() + geom_line(y=0.8)
-g
 ```
 
 ## Power
 
-Power is the probability of correctly rejecting a null hypothesis that is untrue. For a test that has a Type II error rate of $\beta$, the statistical power defined, simply, as $1-\beta$. Power values of 0.8 or greater are considered high.
+Power is the probability of correctly rejecting a null hypothesis that is untrue. For a test that has a Type II error rate of $\beta$, the statistical power is defined, simply, as $1-\beta$. Power values of 0.8 or greater are considered high.
 
 Simulating power...
 
 Let's write a function to do a power simulation for samples of different size. We want a function where we can give it our sample mean, our sample standard deviation, our sample size, and an alternative mean and have it return power.
+
+
+#### CHALLENGE:
+Let's explore the effects of increasing the variability ($\sigma$) in a given sample and the impact of increasing sample size ($n$). How do each of these impact the Type II error rate? How do they effect power?
+
+``` {r}
+library(ggplot2)
+library(manipulate)
+
+n <- 1:100
+s <- seq(from=1, to=10, by=1)
+p <- matrix(data=NA,nrow=length(n),ncol=length(s))
+p <- as.data.frame(p)
+for (i in 1:length(n)) {
+	for (j in 1:length(s)){
+	p[i,j] <- typeII(mu0=2,muA=4,sigmaA=j,alpha=0.05,n=i)
+	}
+}
+p <- cbind(p,n)
+manipulate(
+  ggplot(data = p) + xlab("sample size n") + ylab("Type II Error Rate (Blue)\nand\nPower (Red)") + ylim(0,1) +
+    geom_point(aes(x=n, y=p[,sigma]),colour="blue", alpha=1/2) + geom_line(aes(x=n, y=p[,sigma]),colour="blue", alpha=1/2) + geom_line(aes(x=n,y=0.8), colour="red", lty=3) + geom_point(aes(x=n, y=1-p[,sigma]), colour="red", alpha=1/2) + geom_line(aes(x=n, y=1-p[,sigma]),colour="red", alpha=1/2), sigma=slider(1, 10, initial=3, step=1)
+)
+```
+
+power.test<-
