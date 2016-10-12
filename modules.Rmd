@@ -37,8 +37,11 @@ knitr::opts_chunk$set(
 ## Week 05 (2016-09-29)
 ### No class meeting
 ## Week 06 (2016-10-06)
-### Module 09 - [Statistical Inference and Basic Hypothesis Testing](../applied-data-analysis/module-09/module-09.html)
+### Module 09 - [Introduction to Statistical Inference](../applied-data-analysis/module-09/module-09.html)
+### Module 10 - [Classical Hypothesis Testing](../applied-data-analysis/module-10/module-10.html)
 ## Week 07 (2016-10-13)
+### Module 11 - [Type I and II Error and Power](../applied-data-analysis/module-11/module-11.html)
+### Module 12 - [Simple Regression](../applied-data-analysis/module-12/module-12.html)
 ## Week 08 (2016-10-20)
 ## Week 09 (2016-10-27)
 ## Week 10 (2016-11-03)

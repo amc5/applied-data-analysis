@@ -1,8 +1,8 @@
 Module 09
 ================
 
-Statistical Inference and Basic Hypothesis Testing
-==================================================
+Introduction to Statistical Inference
+=====================================
 
 Preliminaries
 -------------
@@ -39,21 +39,21 @@ Recall that in Module 8, we created a vector, *v*, containing 1000 random number
 > m
 ```
 
-    ## [1] 4.058629
+    ## [1] 2.259597
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 4.220077
+    ## [1] 3.802613
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.7704771
+    ## [1] 0.694259
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -62,7 +62,7 @@ Recall that in Module 8, we created a vector, *v*, containing 1000 random number
 > ci
 ```
 
-    ## [1] 2.548522 5.568737
+    ## [1] 0.8988742 3.6203196
 
 The Central Limit Theorem
 -------------------------
@@ -100,7 +100,7 @@ Now let's imagine taking a bunch of samples of size 10 from this population. We 
 > sd
 ```
 
-    ## [1] 1.184035
+    ## [1] 1.169933
 
 ``` r
 > qqnorm(x)
@@ -133,7 +133,7 @@ Now let's imagine taking a bunch of samples of size 10 from this population. We 
 > sd
 ```
 
-    ## [1] 0.3730518
+    ## [1] 0.3731741
 
 ``` r
 > qqnorm(x)
@@ -190,11 +190,11 @@ Confidence Intervals for Sample Proportions
 
 So far, we've talked about CIs for sample means, but what about for other statistics, e.g., sample proportions for discrete binary variables. For example, if you have a sample of **n** trials where you record the success or failure of a binary event, you obtain an estimate of the proportion of successes, *x*/*n*. If you perform another **n** trials, the new estimate will vary in the same way that averages of a continuous random variable (e.g., zombie age) will vary from sample to sample. Taking a similar approach as above, we can generate confidence intervals for variability in the proportion of successes across trials.
 
-Recall from our discussion of the Bernoulli distribution when we were discussing discrete random binary variables that the expectation for *x*, i.e., the proportion of successes across trials, which we will denote as *π* (where *π* for "proportion" is analogous to *μ* for "mean") is simply the average number of successes across multiple trials.
+Recall from our discussion of discrete random binary variables that the expectation for proportion of successes, which we will denote as *π* (where *π*, for "proportion", is analogous to *μ*, for "mean") is simply the average number of successes across multiple trials.
 
-The expected distribution for *x* is approximately normal and its standard deviation is estimated by sqrt(*π*(1 − *π*)/*n*), which is, essentially, the standard error of the mean: it is the square root of (the expected variance / sample size). As above, if we do not already have a population estimate for *π*, we can estimate this from our sample.
+The expected sampling distribution for the proportion of successes is approximately normal centered at *π* and its standard deviation is estimated by sqrt(*π*(1 − *π*)/*n*), which is, essentially, the standard error of the mean: it is the square root of (the expected variance / sample size). As above for *μ*, if we do not already have a population estimate for *π*, we can estimate this from a sample as <img src="img/phat.svg" width="12px"/> = *x*/*n*
 
-Note: this expectation holds true only if both *n* × *π* and *n* × (1 − *π*) are greater than roughly 5, so we should check this when working with proportion data.
+Note: this expectation based on an approximation of the normal holds true only if both *n* × *π* and *n* × (1 − *π*) are greater than roughly 5, so we should check this when working with proportion data.
 
 #### CHALLENGE:
 
@@ -203,8 +203,8 @@ Suppose a polling group in the United States is interested in the proportion of 
 ``` r
 > n <- 1000
 > x <- 856
-> pi <- x/n
-> pi
+> phat <- x/n  # our estimate of pi
+> phat
 ```
 
     ## [1] 0.856
@@ -212,30 +212,30 @@ Suppose a polling group in the United States is interested in the proportion of 
 Are *n* × *π* and *n* × (1 − *π*) both &gt; 5? Yes!
 
 ``` r
-> n * (x/n)
+> n * phat
 ```
 
     ## [1] 856
 
 ``` r
-> n * (1 - x/n)
+> n * (1 - phat)
 ```
 
     ## [1] 144
 
 ``` r
-> pop_se <- sqrt((x/n) * (1 - x/n)/n)
+> pop_se <- sqrt((phat) * (1 - phat)/n)
 ```
 
 So, what is the 95% CI around our estimate of the proportion of people who already know how they will vote?
 
 ``` r
-> curve(dnorm(x, mean = pi, sd = pop_se), pi - 4 * pop_se, pi + 4 * pop_se)
-> upper <- pi + qnorm(0.975) * pop_se
-> lower <- pi - qnorm(0.975) * pop_se
+> curve(dnorm(x, mean = phat, sd = pop_se), phat - 4 * pop_se, phat + 4 * pop_se)
+> upper <- phat + qnorm(0.975) * pop_se
+> lower <- phat - qnorm(0.975) * pop_se
 > ci <- c(lower, upper)
 > polygon(cbind(c(ci[1], seq(from = ci[1], to = ci[2], length.out = 1000), ci[2]), 
-+     c(0, dnorm(seq(from = ci[1], to = ci[2], length.out = 1000), mean = pi, 
++     c(0, dnorm(seq(from = ci[1], to = ci[2], length.out = 1000), mean = phat, 
 +         sd = pop_se), 0)), border = "black", col = "gray")
 > abline(v = ci)
 > abline(h = 0)
@@ -254,7 +254,7 @@ But, when the size of our sample is small (n &lt; 30), instead of using the norm
 
 Note that this is the **typical** case that we will encounter, as we often do not have information about the population that a sample is drawn from.
 
-The t distribution is a continuous probability distribution very similar in shape to the normal is generally used when dealing with *statistics* (such as means and standard deviations) that are estimated from a sample rather than known population *parameters*. Any particular t distribution looks a lot like a normal distribution in that it is bell-shaped, symmetric, unimodal, and (in normalized) zero-centered.
+The t distribution is a continuous probability distribution very similar in shape to the normal is generally used when dealing with *statistics* (such as means and standard deviations) that are estimated from a sample rather than known population *parameters*. Any particular t distribution looks a lot like a normal distribution in that it is bell-shaped, symmetric, unimodal, and (if standardized) zero-centered.
 
 The choice of the appropriate t distribution to use in any particular statistical test is based on the number of **degrees of freedom (df)**, i.e., the number of individual components in the calculation of a given statistic (such as the standard deviation) that are “free to change”.
 
@@ -264,7 +264,7 @@ Confidence intervals based on the t distribution are of the form:
 
 *mean* ± *T* (the quantile from the t distribution) × *standard error of the mean*
 
-The only change from those based on the normal distribution is that we’ve replaced the Z quantile of the standard normal with a T quantile.
+The only change from those based on the normal distribution is that we’ve replaced the ***Z*** quantile of the standard normal with a ***T*** quantile.
 
 Let's explore this a bit...
 
@@ -304,21 +304,21 @@ We can see this as follows. Recall that above we estimated the 95% CI for a samp
 > m
 ```
 
-    ## [1] 1.891228
+    ## [1] 3.716257
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.70375
+    ## [1] 4.571894
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.6762091
+    ## [1] 0.8347097
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -327,7 +327,7 @@ We can see this as follows. Recall that above we estimated the 95% CI for a samp
 > ci_norm
 ```
 
-    ## [1] 0.5658826 3.2165734
+    ## [1] 2.080256 5.352258
 
 Now, let's look at the CIs calculated based using the t distribution for the same sample size. For sample size 30, the difference is negligible in the CIs is negligible.
 
@@ -338,7 +338,7 @@ Now, let's look at the CIs calculated based using the t distribution for the sam
 > ci_t
 ```
 
-    ## [1] 0.5082252 3.2742308
+    ## [1] 2.009084 5.423430
 
 However, if we use a sample size of 5, the CI based on the t distribution is much wider.
 
@@ -349,21 +349,21 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > m
 ```
 
-    ## [1] 6.425198
+    ## [1] 4.247594
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 5.906051
+    ## [1] 3.121273
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 2.641266
+    ## [1] 1.395876
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -372,7 +372,7 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > ci_norm
 ```
 
-    ## [1]  1.248411 11.601984
+    ## [1] 1.511729 6.983460
 
 ``` r
 > lower <- m - qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -381,584 +381,4 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > ci_t
 ```
 
-    ## [1] -0.9081325 13.7585282
-
-Classical Hypothesis Testing
-----------------------------
-
-Classical or frequentist hypothesis testing (a.k.a. parametric statistics) involves formally stating a claim - the **null hypothesis** - which is then followed up by statistical evaluation of the null versus an alternative hypotheses. The null hypothesis is interpreted as a baseline hypothesis and is the claim that is assumed to be true. The **alternative hypothesis** is the conjecture that we are testing.
-
-We need some kind of statistical evidence to reject the null hypothesis in favor of an alternative hypothesis. This evidence is, in classicical frequentist approaches, some measure of how unexpected it would be for the sample to have been drawn from a given null distribution.
-
--   ***H*<sub>0</sub> = null hypothesis** = a sample statistic shows no deviation from what is expected or neutral
-
--   ***H*<sub>*A*</sub> = alternative hypothesis** = a sample statistic deviates more than expected by chance from what is expected or neutral
-
-We can test several different comparisons between *H*<sub>0</sub> and *H*<sub>*A*</sub>.
-
-*H*<sub>*A*</sub> &gt; *H*<sub>0</sub>, which constitutes an "upper one-tailed test (i.e., our sample statistic is greater than that expected under the null)
-
-*H*<sub>*A*</sub> &lt; *H*<sub>0</sub>, which constitutes an "lower one-tailed test (i.e., our sample statistic is less than that expected under the null)
-
-*H*<sub>*A*</sub> ≠ *H*<sub>0</sub>, which constitutes an "two-tailed test (i.e., our sample statistic is different, maybe greater maybe less, than that expected under the null)
-
-There are then four possible outcomes to our statistical decision:
-
-| What is True      | What We Decide    | Result                                    |
-|-------------------|-------------------|-------------------------------------------|
-| *H*<sub>0</sub>   | *H*<sub>0</sub>   | Correctly 'accept' the null               |
-| *H*<sub>0</sub>   | *H*<sub>*A*</sub> | Falsely reject the null (Type I error)    |
-| *H*<sub>*A*</sub> | *H*<sub>0</sub>   | Falsely 'accept' the null (Type II error) |
-| *H*<sub>*A*</sub> | *H*<sub>*A*</sub> | Correctly reject the null                 |
-
-In classical frequentist (a.k.a. parametric) inference, we perform hypothesis testing by trying to minimize our probability of Type I error... we aim for having a high bar for falsely rejecting the null (e.g., for incorrectly finding an innocent person guilty). When we set a high bar for falsely rejecting the null, we lower the bar for falsely 'accepting' (failing to reject) the null (e.g., for concluding that a guilty person is innocent).
-
-To do any statistical test, we typically calculate a **test statistic** based on our data, which we compare to some appropriate standardized sampling distribution to yield a **p value**.
-
-The **p value** = the probability of our obtaining a test statistic that is as high or higher than our calculated one by chance, assuming the null hypothesis is true.
-
-<img src="img/significant.png" width="250px; padding-top: 10px; padding-left: 20px; padding-right: 20px; padding-bottom: 10px" align="right"/>
-
-The test statistic basically summarizes the "location"" of our data relatively to an expected distribution based on our null model. The particular value of our test statistic is determined by both the difference between the original sample statistic and the expected null value (e.g., the difference between the mean of our sample and the expected population mean) and the standard error of the sample statistic. The value of the test statistic (i.e., the distance of the test statistic from zero) and the shape of the null distribution are the sole drivers of the smallness of the p value. The p value effectively represents the area under the sampling distribution associated with test statistic values as or more extreme than the one we observed.
-
-We compare the p value associated with our test statistic to some significance level, *α*, typically 0.05 or 0.01, to determine whether we reject or fail to reject the null. If p &lt; *α*, we decide that there is sufficient statistical evidence for rejecting Ho.
-
-How do we calculate the p value?
-
-1.  Specify a test statistic (e.g., the mean)
-
-2.  Specify our null distribution
-
-3.  Calculate the tail probability, i.e., the probability of obtaining a statistic as or more extreme than was observed based on that distribution
-
-One Sample Z and T Tests for Continuous Random Variables
---------------------------------------------------------
-
-Let's do an example where we try to evaluate whether the mean of a single set of observations is significantly different than expected... i.e., this is a ONE-SAMPLE test.
-
-Suppose we have a vector describing the adult weights of vervet monkeys trapped in South Africa during the 2015 trapping season. We have the sense they are heavier than vervets we trapped in previous years, which averaged 4.9 kilograms. The mean is 5.324 kilograms. Is the mean significantly greater than our expectation?
-
-``` r
-> library(curl)
-> f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/vervet-weights.csv")
-> d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
-> head(d)
-```
-
-    ##   id weight
-    ## 1  1   5.17
-    ## 2  2   7.13
-    ## 3  3   4.70
-    ## 4  4   6.10
-    ## 5  5   6.36
-    ## 6  6   4.93
-
-``` r
-> mean(d$weight)
-```
-
-    ## [1] 5.323922
-
--   What is our *H*<sub>0</sub>?
--   What is our *H*<sub>*A*</sub>?
--   What is the hypothesis we want to test? Is it two-tailed? Upper-tailed? Lower-tailed?
--   Calculate the mean, standard deviation, and SEM from our sample
-
-``` r
-> mu <- 4.9
-> x <- d$weight
-> m <- mean(x)
-> s <- sd(x)
-> n <- length(x)
-> sem <- s/sqrt(n)
-```
-
-Our test statistic takes a familiar form... it is effectively the standard normalized position of our sample mean in a distribution centered around the expected population mean.
-
-<img src="img/one-sample-Z.svg" width="150px"/>
-
-Or, to use our variables from above...
-
-``` r
-> z <- (m - mu)/sem
-> z
-```
-
-    ## [1] 3.103753
-
-In this case, ***z*** is a quantile... the estimated number of standard errors of the mean away from the population mean that our sample falls.
-
-If we then want to see if ***z*** is significant, we need to calculate the probability of seeing a deviation from the mean as high or higher than this by chance. To do this, we can use the `pnorm()` function. Because we have converted our sample mean to the standard normal scale, the `mean=` and `sd=` arguments of `pnorm()` are the defaults of 0 and 1, respectively.
-
-We want the probability of seeing a *z* statistic this large or larger by chance.
-
-``` r
-> p <- 1 - pnorm(z)
-> p
-```
-
-    ## [1] 0.0009554144
-
-``` r
-> p <- pnorm(z, lower.tail = FALSE)
-> p
-```
-
-    ## [1] 0.0009554144
-
-However, as noted above, our sample size from a population is typically limited. So, instead of using the normal distribution to determine the p value of our statistic, we should use the t distribution, which, as we've seen, has slightly fatter tails.
-
-``` r
-> p <- 1 - pt(z, df = n - 1)
-> p
-```
-
-    ## [1] 0.001570945
-
-``` r
-> p <- pt(z, df = n - 1, lower.tail = FALSE)
-> p
-```
-
-    ## [1] 0.001570945
-
-***R*** has built into it single function, `t.test()`, that lets us do all this in one line. We give it our data and the expected population mean, *μ*, along with the kind of test we want to do.
-
-``` r
-> t <- t.test(x = x, mu = mu, alternative = "greater")
-> t
-```
-
-    ## 
-    ##  One Sample t-test
-    ## 
-    ## data:  x
-    ## t = 3.1038, df = 50, p-value = 0.001571
-    ## alternative hypothesis: true mean is greater than 4.9
-    ## 95 percent confidence interval:
-    ##  5.095021      Inf
-    ## sample estimates:
-    ## mean of x 
-    ##  5.323922
-
-Note that we can also use the `t.test()` function to calculate t distribution based CIs for us easily!
-
-``` r
-> lower <- m - qt(1 - 0.05/2, df = n - 1) * sem
-> upper <- m + qt(1 - 0.05/2, df = n - 1) * sem
-> ci <- c(lower, upper)
-> ci  # by hand
-```
-
-    ## [1] 5.049585 5.598258
-
-``` r
-> t <- t.test(x = x, mu = mu, alternative = "two.sided")
-> ci <- t$conf.int
-> ci  # using t test
-```
-
-    ## [1] 5.049585 5.598258
-    ## attr(,"conf.level")
-    ## [1] 0.95
-
-#### CHALLENGE:
-
-Adult lowland woolly monkeys are reported to an average body weight of 7.2 kilograms. You are working with an isolated population of woolly monkeys from the Colombian Andes that you think may be a different species from lowland form, and you collect a sample of 15 weights of from adult individuals at that site. From your sample, you calculate a mean of 6.43 kilograms and a standard deviation of 0.98 kilograms. Perform a hypothesis test to test whether body weights in your population are different from the reported average for lowland woolly monkeys by setting up a "two-tailed" hypothesis, carrying out the analysis, and interpreting the p value (assume the significance level is *α*=0.05). Your sample is &lt; 30, so you should use the t distribution and do a t test. Do your calculations both by hand and using the `t.test()` function and confirm that they match.
-
-``` r
-> f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/woolly-weights.csv")
-> d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
-> head(d)
-```
-
-    ##   id weight
-    ## 1  1   6.14
-    ## 2  2   6.19
-    ## 3  3   7.08
-    ## 4  4   5.67
-    ## 5  5   4.83
-    ## 6  6   6.83
-
-``` r
-> x <- d$weight
-> m <- mean(x)
-> s <- sd(x)
-> n <- length(x)
-> sem <- s/sqrt(n)
-> mu <- 7.2
-> t <- (m - mu)/sem
-> t
-```
-
-    ## [1] -3.336805
-
-``` r
-> alpha <- 0.05
-> crit <- qt(1 - alpha/2, df = n - 1)  # identify critical values
-> test <- t < -crit || t > crit  # boolean test
-> test <- abs(t) > crit
-> t.test(x = x, mu = mu, alternative = "two.sided")
-```
-
-    ## 
-    ##  One Sample t-test
-    ## 
-    ## data:  x
-    ## t = -3.3368, df = 14, p-value = 0.004891
-    ## alternative hypothesis: true mean is not equal to 7.2
-    ## 95 percent confidence interval:
-    ##  5.930689 6.923978
-    ## sample estimates:
-    ## mean of x 
-    ##  6.427333
-
-Two Sample Tests - Comparing Means
-----------------------------------
-
-Sometimes we want to compare two groups of measurements to one another, which boils down to a hypothesis test for the difference between two means, *μ*1 and *μ*2. The null hypothesis is that the difference between the means is zero.
-
-Before getting to the appropriate test, there are a couple of things that we need to consider:
-
-\[1\] How, if at all, are the two samples related to one another? Sometimes we may have PAIRED samples (e.g., the same individuals before and after some treatment) and sometimes the samples are UNPAIRED or INDEPENDENT (e.g., weights for different samples of black-and-white colobus monkeys collected in the rainy versus dry seasons).
-
-\[2\] Are the variances in the two samples roughly equal or not? E.g., if we are comparing male and female heights, are the variances comparable?
-
-### Unequal Variances
-
-For the most generic case, where the two samples are independent and we cannot assume the variances of the two samples are equal, we can do what is called **Welch's t test** where our test statistic is:
-
-<img src="img/two-sample-T-unpooled-variance.svg" width="225px"/>
-
-Note that *μ*<sub>0</sub> here is the expected difference between the means under the null hypothesis, which is zero.
-
-#### CHALLENGE:
-
-Let's do example. Load in a file of black-and-white colobus weights and examine the `str()` of the file. Then, create 2 vectors, x and y, for male and female weights. Plot these in boxplots side by side and then calculate the mean, sd, and sample size for both males and females.
-
-``` r
-> f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/colobus-weights.csv")
-> d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
-> head(d)
-```
-
-    ##   id weight  sex
-    ## 1  1   7.24 male
-    ## 2  2   6.09 male
-    ## 3  3   6.97 male
-    ## 4  4   6.98 male
-    ## 5  5   6.08 male
-    ## 6  6   6.22 male
-
-``` r
-> x <- d$weight[d$sex == "male"]
-> y <- d$weight[d$sex == "female"]
-> par(mfrow = c(1, 2))
-> boxplot(x, ylim = c(4.5, 8), main = "Weight (kg)", xlab = "Males")
-> boxplot(y, ylim = c(4.5, 8), main = "Weight (kg)", xlab = "Females")
-```
-
-![](img/unnamed-chunk-21-1.png)
-
-``` r
-> m1 <- mean(x)
-> m2 <- mean(y)
-> mu <- 0  # you could leave this out... the default argument value is 0
-> s1 <- sd(x)
-> s2 <- sd(y)
-> n1 <- length(x)
-> n2 <- length(y)
-```
-
-Now calculate the t statistic and test the two-tailed hypothesis that the sample means differ.
-
-``` r
-> t <- (m2 - m1 - mu)/sqrt(s2^2/n2 + s1^2/n1)
-> t
-```
-
-    ## [1] -11.45952
-
-``` r
-> alpha <- 0.05
-> crit <- qt(1 - alpha/2, df = n - 1)  # identify critical values
-> crit
-```
-
-    ## [1] 2.144787
-
-``` r
-> test <- t < -crit || t > crit  # boolean test
-> test <- abs(t) > crit
-> test
-```
-
-    ## [1] TRUE
-
-Note that for this test, the number of degrees of freedom is calculated as:
-
-<img src="img/two-sample-df-unpooled-variance.svg" width="400px"/>
-
-``` r
-> df <- (s2^2/n2 + s1^2/n1)^2/((s2^2/n2)^2/(n2 - 1) + (s1^2/n1)^2/(n1 - 1))
-> df
-```
-
-    ## [1] 31.21733
-
-Do the same using the `t.test()` function.
-
-``` r
-> t <- t.test(x = x, y = y, mu = 0, alternative = "two.sided")
-> t
-```
-
-    ## 
-    ##  Welch Two Sample t-test
-    ## 
-    ## data:  x and y
-    ## t = 11.46, df = 31.217, p-value = 1.023e-12
-    ## alternative hypothesis: true difference in means is not equal to 0
-    ## 95 percent confidence interval:
-    ##  1.191186 1.706814
-    ## sample estimates:
-    ## mean of x mean of y 
-    ##     6.689     5.240
-
-### Equal Variances
-
-There's a simpler t statistic we can use if the variances of the two samples are more or less equal.
-
-<img src="img/two-sample-T-unpooled-variance.svg" width="225px"/>
-
-``` r
-> s <- sqrt((((n1 - 1) * s1^2) + ((n2 - 1) * s2^2))/(n1 + n2 - 2))
-> t <- (m2 - m1 - mu)/(sqrt(s^2 * (1/n1 + 1/n2)))
-> t
-```
-
-    ## [1] -11.45952
-
-``` r
-> df <- n1 + n2 - 2
-> df
-```
-
-    ## [1] 38
-
-``` r
-> t <- t.test(x = x, y = y, mu = 0, var.equal = TRUE, alternative = "two.sided")
-> t
-```
-
-    ## 
-    ##  Two Sample t-test
-    ## 
-    ## data:  x and y
-    ## t = 11.46, df = 38, p-value = 6.787e-14
-    ## alternative hypothesis: true difference in means is not equal to 0
-    ## 95 percent confidence interval:
-    ##  1.193025 1.704975
-    ## sample estimates:
-    ## mean of x mean of y 
-    ##     6.689     5.240
-
-A crude test for equality of variances is to divide the larger by the smaller and if the result is &lt; 2, you can go ahead and used the pooled variance version of the test (which has many fewer degrees of freedom).
-
-In our case, we cannot...
-
-``` r
-> var(x)/var(y)
-```
-
-    ## [1] 2.746196
-
-We can use the `var.test()` function to conduct an actual statistical test on the ratio of variances, which compares the ratio test statistic we just calculated to an **F distribution**. The F distribution is often used to model *ratios* of random variables and thus is useful in regression applications and, as here, for testing whether variances from two samples are different. It is dependent upon the specification of a pair of degrees of freedom values supplied as the arguments `df1=` and `df2=` (or inferred from the number of observations in each sample).
-
-Below, the results of `var.test()` are saved to a variable. Calling the variable provides a brief descriptive summary.
-
-``` r
-> vt <- var.test(x, y)
-> vt
-```
-
-    ## 
-    ##  F test to compare two variances
-    ## 
-    ## data:  x and y
-    ## F = 2.7462, num df = 19, denom df = 19, p-value = 0.03319
-    ## alternative hypothesis: true ratio of variances is not equal to 1
-    ## 95 percent confidence interval:
-    ##  1.086978 6.938128
-    ## sample estimates:
-    ## ratio of variances 
-    ##           2.746196
-
-### Paired Samples
-
-For a paired sample test, the null hypothesis is that the mean of individual paired differences between the two samples (e.g., before and after) is zero.
-
-Our test statistic is:
-
-<img src="img/two-sample-T-paired.svg" width="140px"/>
-
-Again, note that *μ*<sub>0</sub> here is the expected difference between the means under the null hypothesis, which is zero, and we are dividing by the standard error of the mean for the set of differences between pairs.
-
-#### CHALLENGE:
-
-Let's play with a sample... IQs of individuals taking a certain statistics course pre and post a lecture on significance testing. Load in the `iqs.csv` data file, look at it, plot a barchart of values before and after and construct a paired t test to evaluate the means before and after.
-
-``` r
-> f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/iqs.csv")
-> d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
-> head(d)
-```
-
-    ##   id IQ.before IQ.after
-    ## 1  1    124.54   133.50
-    ## 2  2    125.98   131.93
-    ## 3  3    126.93   129.15
-    ## 4  4    114.93   129.38
-    ## 5  5    122.41   132.77
-    ## 6  6    123.64   126.80
-
-``` r
-> x <- d$IQ.before - d$IQ.after
-> m <- mean(x)
-> mu <- 0  # can leave this out
-> s <- sd(x)
-> n <- length(x)
-> sem <- s/sqrt(n)
-> par(mfrow = c(1, 2))
-> boxplot(d$IQ.before, ylim = c(115, 145), main = "IQ", xlab = "Before")
-> boxplot(d$IQ.after, ylim = c(115, 145), main = "IQ", xlab = "After")
-```
-
-![](img/unnamed-chunk-29-1.png)
-
-``` r
-> t <- (m - mu)/sem
-> t
-```
-
-    ## [1] -1.789636
-
-``` r
-> alpha <- 0.05
-> crit <- qt(1 - alpha/2, df = n - 1)  # identify critical values
-> crit
-```
-
-    ## [1] 2.093024
-
-``` r
-> test <- t < -crit || t > crit  # boolean test
-> test
-```
-
-    ## [1] FALSE
-
-``` r
-> t.test(x, df = n - 1, alternative = "two.sided")
-```
-
-    ## 
-    ##  One Sample t-test
-    ## 
-    ## data:  x
-    ## t = -1.7896, df = 19, p-value = 0.08946
-    ## alternative hypothesis: true mean is not equal to 0
-    ## 95 percent confidence interval:
-    ##  -6.762409  0.528409
-    ## sample estimates:
-    ## mean of x 
-    ##    -3.117
-
-Summary
--------
-
-### T Statistics for the One Sample Case
-
-<img src="img/one-sample-T.svg" width="150px"/>
-
-or, equivalently...
-
-<img src="img/one-sample-T-alt.svg" width="150px"/>
-
-with:
-
-<img src="img/one-sample-df.svg" width="100px"/>
-
-where:
-
--   <img src="img/xbar.svg" width="15px"/> = mean of sample observations
--   *μ*<sub>0</sub> = expected mean
--   *s* = sample standard deviation
--   *n* = number of sample observations
-
-### T Statistics for the Two Sample Case
-
-#### Unpooled Variance
-
-<img src="img/two-sample-T-unpooled-variance.svg" width="225px"/>
-
-with:
-
-<img src="img/two-sample-df-unpooled-variance.svg" width="400px"/>
-
-where:
-
--   <img src="img/x1bar.svg" width="20px"/> and <img src="img/x2bar.svg" width="20px"/> = means of sample observations
--   *μ*<sub>0</sub> = expected mean difference between groups (usually set to zero)
--   *s*<sub>1</sub> and *s*<sub>2</sub> = sample standard deviations
--   *n*<sub>1</sub> and *n*<sub>2</sub> = numbers of sample observations
-
-#### Pooled Variance
-
-<img src="img/two-sample-T-pooled-variance.svg" width="250px"/>
-
-with:
-
-<img src="img/two-sample-df-pooled-variance.svg" width="180px"/>
-
-where:
-
-<img src="img/two-sample-s2-pooled-variance.svg" width="240px"/>
-
--   <img src="img/x1bar.svg" width="20px"/> and <img src="img/x2bar.svg" width="20px"/> = means of sample observations
--   *μ*<sub>0</sub> = expected mean difference between groups (usually set to zero)
--   *s*<sub>*p*</sub> = pooled sample standard deviation
--   *n*<sub>1</sub> and *n*<sub>2</sub> = numbers of sample observations
-
-#### Paired Samples
-
-<img src="img/two-sample-T-paired.svg" width="140px"/>
-
-where:
-
--   <img src="img/dbar.svg" width="12px"/> = mean of difference between paired samples
--   *μ*<sub>0</sub> = expected mean between paired difference (usually set to zero)
--   *s*<sub>*d*</sub> = standard deviation in differences between paired samples
--   *n* = number of sample pairs
-
-Assumptions: - Dealing with normally distributed continuous variables (or those that can be approximated closely by the normal distribution) - When sample size &gt; 30 we can use the Z distribution, but for &lt; 30, use the T distribution
-
--   CI = mean ± T 1-alpha/2 x SE
--   REJECT Ho if 1-alpha CI around test statistic does not include zero
--   REJECT Ho if p value for obtaining the given test statistic is &lt; alpha
-
-For nonnormally distributed variables...
-
-The same principles apply. Let's consider a proportion...
-
-Or a Poisson CI...
-
-Recall the the Poisson distribution models counts and is determined by a single parameter, *λ*. The Poisson distribution is also useful for modeling rates, or counts that occur over units of time. If we imagine a variable X ∼ Poisson(λt) where λ = E\[X/t\] = the expected count per unit of time and t is the total monitoring time and
-
-Remember that if X ∼ Poisson(λt) then our estimate of λ is λˆ = X/t. Furthermore, we know that V ar(λˆ) = λ/t and so the natural estimate is λˆ/t. While it’s not immediate how the CLT applies in this case, the interval is of the familiar form So our Poisson interval is: Example Estimate ± Z1−α/2SE. λˆ ± Z 1 − α / 2 λˆ
-
-What about other data types, like proportions?
-
-Remember for proportion data, the average proportion = *π* and the standard error of the average proportion was sqrt(*π*(1 − *π*)/*n*)
-
-The Z statistic is equivalent to the T statistic
+    ## [1] 0.3720226 8.1231661
