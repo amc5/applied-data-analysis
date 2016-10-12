@@ -560,14 +560,14 @@ Now, we will take 1000 random samples of size n=10 from that population and calc
 > m
 ```
 
-    ## [1] 0.4927
+    ## [1] 0.5038
 
 ``` r
 > s <- sd(x)
 > s
 ```
 
-    ## [1] 0.1564007
+    ## [1] 0.1541081
 
 ``` r
 > pop_se <- sqrt(pi * (1 - pi)/n)
@@ -590,14 +590,14 @@ The same is true if we create a population of 800 "1"s and 200 "0"s, i.e., where
 > m
 ```
 
-    ## [1] 0.2025
+    ## [1] 0.1963
 
 ``` r
 > s <- sd(x)
 > s
 ```
 
-    ## [1] 0.1266483
+    ## [1] 0.1252677
 
 ``` r
 > pop_se <- sqrt(pi * (1 - pi)/n)
@@ -694,7 +694,7 @@ Comparing Sample Proportions: Two Sample Z Tests
 
 The Z statistic for the two sample test comparing proportions is also very similar to that for comparing means.
 
-<img src="img/two-sample-Z-prop.svg" width="275px"/>
+<img src="img/two-sample-Z-prop.svg" width="300px"/>
 
 where:
 
@@ -802,7 +802,7 @@ They are used for dealing with normally distributed, continuous variables or tho
 
 ### T Statistics for Testing a Single Mean
 
-<img src="img/one-sample-T-alt.svg" width="145px"/>
+<img src="img/one-sample-T.svg" width="145px"/>
 
 ### T Statistics for the Comparing Means
 
@@ -824,4 +824,4 @@ They are used for dealing with normally distributed, continuous variables or tho
 
 ### Z Statistic for Comparing Proportions
 
-<img src="img/two-sample-Z-prop.svg" width="275px"/>
+<img src="img/two-sample-Z-prop.svg" width="300px"/>
