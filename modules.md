@@ -57,7 +57,7 @@ Week 07 (2016-10-13)
 
 ### Module 11 - [Type I and II Error and Power](../applied-data-analysis/module-11/module-11.html)
 
-### Module 12 - [Simple Regression](../applied-data-analysis/module-12/module-12.html)
+### Module 12 - [Introduction to Linear Regression](../applied-data-analysis/module-12/module-12.html)
 
 Week 08 (2016-10-20)
 --------------------
