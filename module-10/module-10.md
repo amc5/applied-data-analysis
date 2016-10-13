@@ -560,14 +560,14 @@ Now, we will take 1000 random samples of size n=10 from that population and calc
 > m
 ```
 
-    ## [1] 0.5038
+    ## [1] 0.4968
 
 ``` r
 > s <- sd(x)
 > s
 ```
 
-    ## [1] 0.1541081
+    ## [1] 0.158603
 
 ``` r
 > pop_se <- sqrt(pi * (1 - pi)/n)
@@ -590,14 +590,14 @@ The same is true if we create a population of 800 "1"s and 200 "0"s, i.e., where
 > m
 ```
 
-    ## [1] 0.1963
+    ## [1] 0.1945
 
 ``` r
 > s <- sd(x)
 > s
 ```
 
-    ## [1] 0.1252677
+    ## [1] 0.1258395
 
 ``` r
 > pop_se <- sqrt(pi * (1 - pi)/n)

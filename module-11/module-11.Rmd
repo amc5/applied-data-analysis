@@ -51,8 +51,8 @@ typeI <- function(mu0,sigma,n,type="two-tailed",alpha=0.05,k=10000){
 Now, we will add the body of the function.
 
 ``` {r}
-typeI <- function(mu0,sigma,n,type="two-tailed",alpha=0.05,k=10000){
-	pt <- rep(NA,k) # sets up a vector of empty p values
+typeI <- function(mu0,sigma,n,type="two-tailed",alpha=0.05,k=1000){
+	p <- rep(NA,k) # sets up a vector of empty p values
 	for(i in 1:k){ # sets up a loop to run k simulations
 		x <- rnorm(n=n,mean=mu0,sd=sigma) # draws a sample from our distribution
 		m <- mean(x) # calculates the mean
@@ -69,7 +69,7 @@ typeI <- function(mu0,sigma,n,type="two-tailed",alpha=0.05,k=10000){
 			if (t < 0) {p[i] <- 2 * pt(t,df=n-1,lower.tail=TRUE)}
 		}
 	}
-	curve(dnorm(x,mu0,sigma), mu0 - 4*sigma, mu0 + 4*sigma, main="Type I", xlab="x", ylab="Pr(x)")
+	curve(dnorm(x,mu0,sigma), mu0 - 4*sigma, mu0 + 4*sigma, main=paste("Type I = ",length(p[p<alpha])/k,sep=""), xlab="x", ylab="Pr(x)")
 	if (type == "less") {
 	 polygon(cbind(c(mu0-4*sigma, seq(from=mu0-4*sigma, to=mu0-qnorm(1-alpha)*sigma, length.out=100), mu0-qnorm(1-alpha)*sigma)), c(0,dnorm(seq(from=mu0-4*sigma, to=mu0-qnorm(1-alpha)*sigma, length.out=100),mean=mu0,sd=sigma),0), border="black",col="gray")
 	}
@@ -88,7 +88,7 @@ Can you explain what each step of this code is doing?
 Now, run our Type I error test function with a couple of different values of $\mu_0$, $\sigma$, and $\alpha$. What error rates are returned? They should be always be close to $\alpha$!
 
 ``` {r}
-e <- typeI(mu0=-3,sigma=2,n=1000,type="greater",alpha=0.05)
+e <- typeI(mu0=-3,sigma=2,n=500,type="greater",alpha=0.05)
 e
 ```
 
@@ -131,6 +131,7 @@ typeII <- function(mu0,muA,sigma,n,type="two-tailed",alpha=0.05,k=1000){
 			if (t < 0) {p[i] <- 2 * pt(t,df=n-1,lower.tail=TRUE)}
 		}
 	}
+	
 	curve(dnorm(x,mu0,sigma),mu0-4*sigma, mu0+4*sigma,
 	      main=paste("Type II - Prob of Incorrectly Failing To Reject Null\nBeta = ",length(p[p>=alpha])/k,sep=""), 
 	      xlab="x", ylab="Pr(x)",col="blue",lty=3,
@@ -143,70 +144,38 @@ typeII <- function(mu0,muA,sigma,n,type="two-tailed",alpha=0.05,k=1000){
 	curve(dnorm(x,muA,sigma/sqrt(n)),muA-4*sigma/sqrt(n), muA+4*sigma/sqrt(n), col="red", add=TRUE)
 	abline(h=0)
 	
-	if (type == "greater") {
-	 polygon(cbind(
-	   c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=mu0+qt(1-alpha)*sigma/sqrt(n), length.out=100), mu0+qt(1-alpha)*sigma/sqrt(n))),
-	   c(0,dt(seq(from=muA-4*sigma/sqrt(n), to=mu0+qt(1-alpha)*sigma/sqrt(n), length.out=100),
-	             mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
-	  abline(v=mu0+qt(1-alpha)*sigma/sqrt(n), col="black", lty=3, lwd=2)
-	  q<- pnorm(mu0+qt(1-alpha,df=n-1)*sigma/sqrt(n),mean=muA,sd=sigma/sqrt(n))
-	}
 	if (type == "less") {
 	 polygon(cbind(
-	   c(mu0-qnorm(1-alpha)*sigma/sqrt(n), seq(from=mu0-qnorm(1-alpha)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100), muA+4*sigma/sqrt(n))),
-	               c(0,dnorm(seq(mu0-qnorm(1-alpha)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100),
-	                         mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
-	  	  abline(v=mu0-qnorm(1-alpha)*sigma/sqrt(n), col="black", lty=3, lwd=2)
-	}
-
-
-		if (type == "two-tailed") {
-	 # less
-	 if (muA<=mu0){polygon(cbind(
-	   c(mu0-qnorm(1-alpha/2)*sigma/sqrt(n), seq(from=mu0-qnorm(1-alpha/2)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100), muA+4*sigma/sqrt(n))),
-	               c(0,dnorm(seq(mu0-qnorm(1-alpha/2)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100),
-	                         mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
-		  }
-		  # greater	 
-		  if (muA>=mu0){polygon(cbind(
-	   c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha/2)*sigma/sqrt(n), length.out=100), mu0+qnorm(1-alpha/2)*sigma/sqrt(n))),
-	   c(0,dnorm(seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha/2)*sigma/sqrt(n), length.out=100),
-	             mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
-		  }
-	  abline(v=c(mu0-qnorm(1-alpha/2)*sigma/sqrt(n),mu0+qnorm(1-alpha/2)*sigma/sqrt(n)), col="black", lty=3, lwd=2)
-	  q<- pnorm(mu0+qnorm(1-alpha/2)*sigma/sqrt(n),mean=muA,sd=sigma/sqrt(n))
+	   c(mu0-qnorm(1-alpha)*sigma/sqrt(n), seq(from=mu0-qnorm(1-alpha)*sigma/sqrt(n),to=muA+4*sigma/sqrt(n),length.out=100), muA+4*sigma/sqrt(n))),
+	   c(0,dnorm(seq(mu0-qnorm(1-alpha)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
+	  abline(v=mu0-qnorm(1-alpha)*sigma/sqrt(n), col="black", lty=3, lwd=2)
 	}
 	
+	if (type == "greater") {
+	 polygon(cbind(
+	   c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha)*sigma/sqrt(n), length.out=100), mu0+qnorm(1-alpha)*sigma/sqrt(n))),
+	   c(0,dnorm(seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha)*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
+	  abline(v=mu0+qnorm(1-alpha)*sigma/sqrt(n), col="black", lty=3, lwd=2)
+	}
 	
-	#return(length(p[p>=alpha])/k)
-	return(q)
+return(length(p[p>=alpha])/k)
 }
-```
 
-``` {r}
 e <- typeII(mu0=2,muA=5,sigma=3,n=6,type="greater") # Ha > H0
 e
-
-
-e<-typeII(mu0=4,muA=5,sigma=3,n=18,alpha=0.05,type="two-tailed")
+e <- typeII(mu0=2,muA=1,sigma=3,n=6,type="less") # Ha < H0
 e
 ```
-
-
 
 ## Power
 
 Power is the probability of correctly rejecting a null hypothesis that is untrue. For a test that has a Type II error rate of $\beta$, the statistical power is defined, simply, as $1-\beta$. Power values of 0.8 or greater are considered high.
 
-Simulating power...
-
-Let's write a function to do a power simulation for samples of different size. We want a function where we can give it our sample mean, our sample standard deviation, our sample size, and an alternative mean and have it return power.
-
 
 #### CHALLENGE:
 Let's explore the effects of increasing the variability ($\sigma$) in a given sample and the impact of increasing sample size ($n$). How do each of these impact the Type II error rate? How do they effect power?
 
-``` {r}
+``` {r eval=FALSE}
 library(ggplot2)
 library(manipulate)
 
@@ -216,7 +185,7 @@ p <- matrix(data=NA,nrow=length(n),ncol=length(s))
 p <- as.data.frame(p)
 for (i in 1:length(n)) {
 	for (j in 1:length(s)){
-	p[i,j] <- typeII(mu0=2,muA=4,sigmaA=j,type="two-tailed",alpha=0.05,n=i)
+	p[i,j] <- typeII(mu0=2,muA=4,sigma=j,type="two-tailed",alpha=0.05,n=i)
 	}
 }
 p <- cbind(p,n)
@@ -225,5 +194,3 @@ manipulate(
     geom_point(aes(x=n, y=p[,sigma]),colour="blue", alpha=1/2) + geom_line(aes(x=n, y=p[,sigma]),colour="blue", alpha=1/2) + geom_line(aes(x=n,y=0.8), colour="red", lty=3) + geom_point(aes(x=n, y=1-p[,sigma]), colour="red", alpha=1/2) + geom_line(aes(x=n, y=1-p[,sigma]),colour="red", alpha=1/2), sigma=slider(1, 10, initial=3, step=1)
 )
 ```
-
-power.test<-
