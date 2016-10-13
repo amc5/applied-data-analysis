@@ -179,13 +179,35 @@ Let's explore the effects of increasing the variability ($\sigma$) in a given sa
 library(ggplot2)
 library(manipulate)
 
+typeIIa <- function(mu0,muA,sigma,n,type="two-tailed",alpha=0.05,k=1000){
+	p <- rep(NA,k) # sets up a vector of empty p values
+	for(i in 1:k){
+		x <- rnorm(n=n,mean=muA,sd=sigma) # draw from Ha
+		m <- mean(x)
+		s <- sd(x)
+		t <- (m-mu0)/(s/sqrt(n)) # calculates the T statistic for the sample drawn from Ha relative to the null distribution
+		if (type == "less") {
+			p[i] <- pt(t,df=n-1,lower.tail=TRUE) # calculates the associated p value
+		}
+		if (type == "greater") {
+			p[i] <- pt(t,df=n-1,lower.tail=FALSE)
+		}
+	if (type == "two.tailed") {
+			if (t > 0) {p[i] <- 2 * pt(t,df=n-1,lower.tail=FALSE)}
+			if (t < 0) {p[i] <- 2 * pt(t,df=n-1,lower.tail=TRUE)}
+		}
+	}
+
+return(length(p[p>=alpha])/k)
+}
+
 n <- 1:100
 s <- seq(from=1, to=10, by=1)
 p <- matrix(data=NA,nrow=length(n),ncol=length(s))
 p <- as.data.frame(p)
 for (i in 1:length(n)) {
 	for (j in 1:length(s)){
-	p[i,j] <- typeII(mu0=2,muA=4,sigma=j,type="two-tailed",alpha=0.05,n=i)
+	p[i,j] <- typeIIa(mu0=5,muA=7,sigma=j,type="greater",alpha=0.05,n=i)
 	}
 }
 p <- cbind(p,n)
