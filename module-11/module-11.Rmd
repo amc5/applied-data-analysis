@@ -131,27 +131,64 @@ typeII <- function(mu0,muA,sigma,n,type="two-tailed",alpha=0.05,k=1000){
 			if (t < 0) {p[i] <- 2 * pt(t,df=n-1,lower.tail=TRUE)}
 		}
 	}
-	curve(dnorm(x,mu0,sigma),mu0-4*sigma, mu0+4*sigma, main=paste("Type II - Prob of Incorrectly Failing To Reject Null\nBeta=",length(p[p>=alpha])/k,sep=""), xlab="x", ylab="Pr(x)",col="blue",lty=3,xlim=c(min(c(mu0-4*sigma, muA-4*sigma)),max(c(mu0+4*sigma,muA+4*sigma))), ylim=c(0,max(c(dnorm(mu0,mu0, sigma)),dnorm(muA,muA,sigma),dnorm(muA,muA,sigma/sqrt(n)))))
+	curve(dnorm(x,mu0,sigma),mu0-4*sigma, mu0+4*sigma,
+	      main=paste("Type II - Prob of Incorrectly Failing To Reject Null\nBeta = ",length(p[p>=alpha])/k,sep=""), 
+	      xlab="x", ylab="Pr(x)",col="blue",lty=3,
+	      xlim=c(min(c(mu0-4*sigma, muA-4*sigma)),max(c(mu0+4*sigma,muA+4*sigma))),
+	      ylim=c(0,max(c(dnorm(mu0,mu0, sigma)),dnorm(muA,muA,sigma),dnorm(muA,muA,sigma/sqrt(n))))
+	      )
 	curve(dnorm(x,muA,sigma),muA-4*sigma, muA+4*sigma, col="red", lty=3,add=TRUE)
 	
 	curve(dnorm(x,mu0,sigma/sqrt(n)),mu0-4*sigma/sqrt(n), mu0+4*sigma/sqrt(n),col="blue", add=TRUE)
-	curve(dnorm(x,muA,sigma/sqrt(n)), col="red", add=TRUE)
+	curve(dnorm(x,muA,sigma/sqrt(n)),muA-4*sigma/sqrt(n), muA+4*sigma/sqrt(n), col="red", add=TRUE)
+	abline(h=0)
 	
 	if (type == "greater") {
-	 polygon(cbind(c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha)*sigma/sqrt(n), length.out=100), mu0+qnorm(1-alpha)*sigma/sqrt(n))), c(0,dnorm(seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha)*sigma/sqrt(n), length.out=100),mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
+	 polygon(cbind(
+	   c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=mu0+qt(1-alpha)*sigma/sqrt(n), length.out=100), mu0+qt(1-alpha)*sigma/sqrt(n))),
+	   c(0,dt(seq(from=muA-4*sigma/sqrt(n), to=mu0+qt(1-alpha)*sigma/sqrt(n), length.out=100),
+	             mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
+	  abline(v=mu0+qt(1-alpha)*sigma/sqrt(n), col="black", lty=3, lwd=2)
+	  q<- pnorm(mu0+qt(1-alpha,df=n-1)*sigma/sqrt(n),mean=muA,sd=sigma/sqrt(n))
+	}
+	if (type == "less") {
+	 polygon(cbind(
+	   c(mu0-qnorm(1-alpha)*sigma/sqrt(n), seq(from=mu0-qnorm(1-alpha)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100), muA+4*sigma/sqrt(n))),
+	               c(0,dnorm(seq(mu0-qnorm(1-alpha)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100),
+	                         mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
+	  	  abline(v=mu0-qnorm(1-alpha)*sigma/sqrt(n), col="black", lty=3, lwd=2)
 	}
 
-	return(length(p[p>=alpha])/k)
+
+		if (type == "two-tailed") {
+	 # less
+	 if (muA<=mu0){polygon(cbind(
+	   c(mu0-qnorm(1-alpha/2)*sigma/sqrt(n), seq(from=mu0-qnorm(1-alpha/2)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100), muA+4*sigma/sqrt(n))),
+	               c(0,dnorm(seq(mu0-qnorm(1-alpha/2)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100),
+	                         mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
+		  }
+		  # greater	 
+		  if (muA>=mu0){polygon(cbind(
+	   c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha/2)*sigma/sqrt(n), length.out=100), mu0+qnorm(1-alpha/2)*sigma/sqrt(n))),
+	   c(0,dnorm(seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha/2)*sigma/sqrt(n), length.out=100),
+	             mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
+		  }
+	  abline(v=c(mu0-qnorm(1-alpha/2)*sigma/sqrt(n),mu0+qnorm(1-alpha/2)*sigma/sqrt(n)), col="black", lty=3, lwd=2)
+	  q<- pnorm(mu0+qnorm(1-alpha/2)*sigma/sqrt(n),mean=muA,sd=sigma/sqrt(n))
+	}
+	
+	
+	#return(length(p[p>=alpha])/k)
+	return(q)
 }
 ```
 
 ``` {r}
-e <- typeII(mu0=4,muA=6,sigma=2,n=100,type="greater") # Ha > H0
+e <- typeII(mu0=2,muA=5,sigma=3,n=6,type="greater") # Ha > H0
 e
 
 
-mu0=0,muA=0.5,sigma=1,n=40,alpha=0.05
-e<-typeII(mu0=5,muA=7,sigma=2,n=100,alpha=0.05,type="greater")
+e<-typeII(mu0=4,muA=5,sigma=3,n=18,alpha=0.05,type="two-tailed")
 e
 ```
 
