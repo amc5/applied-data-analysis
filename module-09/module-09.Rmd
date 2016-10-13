@@ -240,7 +240,7 @@ ci_norm <- c(lower, upper)
 ci_norm
 ```
 
-Now, let's look at the CIs calculated based using the t distribution for the same sample size. For sample size 30, the difference is negligible in the CIs is negligible.
+Now, let's look at the CIs calculated based using the t distribution for the same sample size. For sample size 30, the difference in the CIs is negligible.
 
 ``` {r}
 lower <- m - qt(1-0.05/2, df=sample_size-1)*sem # (1-alpha)/2 each in the upper and lower tails of the distribution
