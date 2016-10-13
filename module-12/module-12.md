@@ -460,3 +460,11 @@ Calculate the residuals from the regression of zombie height on weight and plot 
 ```
 
 ![](img/unnamed-chunk-19-3.png)
+
+Now, plot a histogram of your residuals... ideally they are normally distributed!
+
+``` r
+> hist(e, xlim = c(-4 * sd(e), 4 * sd(e)), breaks = 20, main = "Histogram of Residuals")
+```
+
+![](img/unnamed-chunk-20-1.png)
