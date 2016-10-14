@@ -11,8 +11,7 @@ knitr::opts_chunk$set(
 	comment = "##",
 	prompt = TRUE,
 	tidy = TRUE,
-	tidy.opts = list(width.cutoff = 75),
-	fig.path = "img/"
+	tidy.opts = list(width.cutoff = 75)
 )
 ```
 
@@ -22,11 +21,11 @@ knitr::opts_chunk$set(
 UNIQUE #31403
 Professor Anthony Di Fiore
 Class: Thursdays, 2-5pm, SAC Room 5.112
-Office Hours: Fridays, 2-4pm, SAC Room 4.100H
+Office Hours: Fridays, 1-3pm, SAC Room 4.102H
 ```
 
 <p align="center">
-<img src="img/math.png" style="width: 400px"/>
+<img src="math.png" style="width: 400px"/>
 </p>
 
 #### [Course Outline](outline.html)
@@ -35,7 +34,7 @@ Office Hours: Fridays, 2-4pm, SAC Room 4.100H
 
 ## Overview
 
-<img src="img/p-values.png" style="width: 250px; padding-top: 10px; padding-left: 20px; padding-right: 20px; padding-bottom: 10px" align="right"/>
+<img src="p-values.png" style="width: 250px; padding-top: 10px; padding-left: 20px; padding-right: 20px; padding-bottom: 10px" align="right"/>
 
 This course provides an overview of methods and tools for applied data analysis. It is geared toward research in biological anthropology, but the material covered is applicable to a wide range of natural and social science disciplines. Students will receive practical, hands-on training in various data science workflows, including digital data acquisition and management, exploratory data analysis and visualization, and statistical analysis and interpretation. Statistical topics to be covered include basic descriptive and inferential statistics, hypothesis testing, regression, and general linear modeling, as well as additional specific methods based on student interest (e.g., geospatial data analysis, phylogenetic comparative methods, social network analysis, corpus construction and text mining, population genetic analysis). The course emphasizes the development of data science skills, focusing on the practical side of data manipulation, analysis, and visualization. Students will learn to use the statistical programming language ***R*** as well as other useful software tools (e.g., shell scripts, text editors, databases, query languages, and version control systems).
 
