@@ -135,7 +135,7 @@ body {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">&gt;<span class="st"> </span>se_yhat &lt;-<span class="st"> </span><span class="kw">sqrt</span>(MSE *<span class="st"> </span>(<span class="dv">1</span>/<span class="dv">1000</span> +<span class="st"> </span>(m$model$weight -<span class="st"> </span><span class="kw">mean</span>(m$model$weight))^<span class="dv">2</span>/SSX))
 &gt;<span class="st"> </span><span class="kw">head</span>(se_yhat)  <span class="co"># just the first 6 rows</span></code></pre></div>
 <pre><code>## [1] 0.08978724 0.07620966 0.08414480 0.09533986 0.08904151 0.08341218</code></pre>
-<p>These same standard errors for <em>β</em><sub>0</sub> and <em>β</em><sub>1</sub> are what returned by the <code>lm()</code> function.</p>
+<p>These same standard errors for <em>β</em><sub>0</sub> and <em>β</em><sub>1</sub> are what are returned by the <code>lm()</code> function.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">&gt;<span class="st"> </span><span class="kw">summary</span>(m)</code></pre></div>
 <pre><code>## 
 ## Call:

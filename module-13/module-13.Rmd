@@ -132,7 +132,7 @@ se_yhat <- sqrt(MSE*(1/1000+(m$model$weight-mean(m$model$weight))^2/SSX))
 head(se_yhat) # just the first 6 rows
 ```
 
-These same standard errors for $\beta_0$ and $\beta_1$ are what returned by the `lm()` function.
+These same standard errors for $\beta_0$ and $\beta_1$ are what are returned by the `lm()` function.
 
 ``` {r}
 summary(m)

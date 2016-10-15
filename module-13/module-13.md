@@ -160,7 +160,7 @@ Finally, the standard error of each predicted value of y is calculated as:
 
     ## [1] 0.08978724 0.07620966 0.08414480 0.09533986 0.08904151 0.08341218
 
-These same standard errors for *β*<sub>0</sub> and *β*<sub>1</sub> are what returned by the `lm()` function.
+These same standard errors for *β*<sub>0</sub> and *β*<sub>1</sub> are what are returned by the `lm()` function.
 
 ``` r
 > summary(m)
