@@ -62,6 +62,8 @@ Week 07 (2016-10-13)
 Week 08 (2016-10-20)
 --------------------
 
+### Module 13 - [Elements of Regression Analysis](../applied-data-analysis/module-13/module-13.html)
+
 Week 09 (2016-10-27)
 --------------------
 
