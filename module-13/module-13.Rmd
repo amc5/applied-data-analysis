@@ -26,7 +26,7 @@ In our linear models, we can separate or "partition" the total variation in our 
 
 Graphically...
 
-<img src="img/partitioningSS.png"/>
+<img src="img/partitioningSS.png" width="500px"/>
 
 Let's make sure we have our zombie data loaded...
 
