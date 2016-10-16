@@ -218,7 +218,9 @@ Week 06 (2016-10-06)
 -   Chapter 17 - Sampling Distributions and Confidence
 -   Chapter 18 - Hypothesis Testing (through section 18.3)
 
-*Statistics Done Wrong* - Chapter 1 - An Introduction to Statistical Significance
+*Statistics Done Wrong*
+
+-   Chapter 1 - An Introduction to Statistical Significance
 
 #### Useful but Optional Readings
 
