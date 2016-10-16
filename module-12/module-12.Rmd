@@ -357,6 +357,7 @@ g2 <- g2 + geom_point(alpha=1/2)
 g2 <- g2 + geom_smooth(method="lm", formula=y~x)
 grid.arrange(g1, g2, ncol=2)
 ```
+
 Again, here the CI band shows where the mean height is expected to fall in 95% of samples and the PI band shows where the individual points are expected to fall 95% of the time.
 
 ### Residuals

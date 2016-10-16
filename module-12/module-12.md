@@ -620,7 +620,9 @@ Construct a linear model for the regression of zombie height on age and predict 
 > grid.arrange(g1, g2, ncol = 2)
 ```
 
-![](img/unnamed-chunk-21-2.png) Again, here the CI band shows where the mean height is expected to fall in 95% of samples and the PI band shows where the individual points are expected to fall 95% of the time.
+![](img/unnamed-chunk-21-2.png)
+
+Again, here the CI band shows where the mean height is expected to fall in 95% of samples and the PI band shows where the individual points are expected to fall 95% of the time.
 
 ### Residuals
 
