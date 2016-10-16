@@ -64,8 +64,12 @@ Week 08 (2016-10-20)
 
 ### Module 13 - [Elements of Regression Analysis](../applied-data-analysis/module-13/module-13.html)
 
+### Module 14 - \[Basic Categorical Data Analysis\]
+
 Week 09 (2016-10-27)
 --------------------
+
+### Module 15 -\[Multiple Regression and GLMM\]
 
 Week 10 (2016-11-03)
 --------------------

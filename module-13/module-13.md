@@ -122,7 +122,8 @@ Note that the this table also shows the coefficient of determination, or the "R-
 
     ## [1] 0.8325862
 
-### Standard Errors of Regression Coefficients
+Standard Errors of Regression Coefficients
+------------------------------------------
 
 We can calculate standard errors for each of the various components of our regression model, i.e., the slope and intercept, and each predicted value of **y**.
 
@@ -185,7 +186,8 @@ These same standard errors for *β*<sub>0</sub> and *β*<sub>1</sub> are what ar
     ## Multiple R-squared:  0.6932, Adjusted R-squared:  0.6929 
     ## F-statistic:  2255 on 1 and 998 DF,  p-value: < 2.2e-16
 
-### Model Checking
+Model Checking
+--------------
 
 So far, we've derived a bunch of summary statistics describing our model and we've looked at ways of testing whether those summary statistics are significantly different from zero. That is...
 
@@ -377,7 +379,8 @@ Load in the "KamilarAndCooper.csv" dataset and develop a linear model to look at
 
 ![](img/unnamed-chunk-15-2.png)![](img/unnamed-chunk-15-3.png)![](img/unnamed-chunk-15-4.png)![](img/unnamed-chunk-15-5.png)
 
-### Data Transformations
+Data Transformations
+--------------------
 
 Return to the "Kamilar and Cooper"" dataset you were looking at above and log transform both of your variables and then run your linear model. Do you notice a difference?
 

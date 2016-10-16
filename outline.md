@@ -62,6 +62,8 @@ Week 01 (2016-09-01)
 Week 02 (2016-09-08)
 --------------------
 
+#### [Homework 1 assigned - DUE 2pm 2016-09-15](homework-01.html)
+
 ### Data Science Preliminaries
 
 #### Topics
@@ -113,6 +115,8 @@ Week 02 (2016-09-08)
 Week 03 (2016-09-15)
 --------------------
 
+#### [Homework 2 assigned - DUE 2pm 2016-09-22](homework-02.html)
+
 ### Statistics and Programming Fundamentals
 
 #### Topics
@@ -150,6 +154,8 @@ Week 03 (2016-09-15)
 
 Week 04 (2016-09-22)
 --------------------
+
+#### [Homework 3 assigned - DUE 2pm 2016-10-06](homework-03.html)
 
 ### Probability and Distributions
 
@@ -199,17 +205,20 @@ Week 06 (2016-10-06)
 
 #### Topics
 
--   Significance and the problem with ***p*** values
--   Statistical power, effect sizes
+-   Significance and ***p*** values
 -   Classic hypothesis testing
-    -   Parametric and nonparametric one- and two-sample tests
+    -   One- and two-sample T and Z tests
+-   Type I and Type II error
+-   Statistical power, effect sizes
 
 #### Required Readings
 
 *The Book of R*
 
 -   Chapter 17 - Sampling Distributions and Confidence
--   Chapter 18 - Hypothesis Testing
+-   Chapter 18 - Hypothesis Testing (through section 18.3)
+
+*Statistics Done Wrong* - Chapter 1 - An Introduction to Statistical Significance
 
 #### Useful but Optional Readings
 
@@ -223,21 +232,26 @@ Week 06 (2016-10-06)
 Week 07 (2016-10-13)
 --------------------
 
-### Simple Regression and Analysis of Variance
+#### [Homework 4 assigned - DUE 2pm 2016-10-23](homework-04.html)
+
+### Introduction to Linear Regression
 
 #### Topics
 
 -   Correlation and covariation
 -   Introduction to linear modeling
-    -   Simple linear regression
-    -   Multivariate regression
--   ANOVA
+    -   Continuous random predictor and reponse variables
+    -   Simple linear regression (1 predictor and 1 reponse variable)
+    -   Estimating and interpreting regression coefficients
+    -   The `lm()` function
+    -   Interference in regression
+        -   Confidence intervals and prediction intervals
+    -   Residuals
 
 #### Required Readings
 
 *The Book of R*
 
--   Chapter 19 - Analysis of Variance
 -   Chapter 20 - Simple Linear Regression
 
 #### Useful but Optional Readings
@@ -245,9 +259,38 @@ Week 07 (2016-10-13)
 *Statistics: An Introduction Using R*
 
 -   Chapter 7 - Regression
--   Chapter 8 - Analysis of Variance
 
 Week 08 (2016-10-20)
+--------------------
+
+### Elements of Regression Analysis and Basic Categorical Data Analysis
+
+#### Topics
+
+-   Partitioning of variance in linear models
+-   Inference in regression
+    -   Estimating standard errors for regression cofficients
+-   Model checking
+-   Data transformations
+-   Simple categorical data analysis
+    -   Chi-Square tests
+    -   ANOVA and Kruskal-Wallis tests
+
+#### Required Readings
+
+*The Book of R*
+
+-   Chapter 20 - Simple Linear Regression
+-   Chapter 18 - Hypothesis Testing (section 18.4)
+-   Chapter 19 - ANOVA
+
+#### Useful but Optional Readings
+
+*Statistics: An Introduction Using R*
+
+-   Chapter 8 - ANOVA
+
+Week 09 (2016-10-27)
 --------------------
 
 ### Multiple Regression and Generalized Linear Modeling
@@ -270,11 +313,6 @@ Week 08 (2016-10-20)
 -   Chapter 15 - Binary Response Variable
 
 > IMPORTANT! Deadline for choosing topic for group statistical methods presentation and vignette
-
-Week 09 (2016-10-27)
---------------------
-
-### Categorical Data Analysis
 
 Week 10 (2016-11-03)
 --------------------

@@ -101,7 +101,7 @@ rho <- sqrt(r_squared)
 rho
 ```
 
-### Standard Errors of Regression Coefficients
+## Standard Errors of Regression Coefficients
 
 We can calculate standard errors for each of the various components of our regression model, i.e., the slope and intercept, and each predicted value of **y**.
 
@@ -138,7 +138,7 @@ These same standard errors for $\beta_0$ and $\beta_1$ are what are returned by 
 summary(m)
 ```
 
-### Model Checking
+## Model Checking
 
 So far, we've derived a bunch of summary statistics describing our model and we've looked at ways of testing whether those summary statistics are significantly different from zero. That is...
 
@@ -197,7 +197,7 @@ summary(model)
 plot(model)
 ```
 
-### Data Transformations
+## Data Transformations
 
 Return to the "Kamilar and Cooper"" dataset you were looking at above and log transform both of your variables and then run your linear model. Do you notice a difference?
 

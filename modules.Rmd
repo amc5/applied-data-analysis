@@ -41,10 +41,12 @@ knitr::opts_chunk$set(
 ### Module 10 - [Classical Hypothesis Testing](../applied-data-analysis/module-10/module-10.html)
 ## Week 07 (2016-10-13)
 ### Module 11 - [Type I and II Error and Power](../applied-data-analysis/module-11/module-11.html)
-### Module 12 - [Introduction to Linear Regression](../applied-data-analysis/module-12/module-12.html)
+### Module 12 - [Introduction to Linear  Regression](../applied-data-analysis/module-12/module-12.html)
 ## Week 08 (2016-10-20)
 ### Module 13 - [Elements of Regression Analysis](../applied-data-analysis/module-13/module-13.html)
+### Module 14 - [Basic Categorical Data Analysis]
 ## Week 09 (2016-10-27)
+### Module 15 -[Multiple Regression and GLMM]
 ## Week 10 (2016-11-03)
 ## Week 11 (2016-11-10)
 ## Week 12 (2016-11-17)
