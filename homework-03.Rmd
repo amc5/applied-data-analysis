@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
 	fig.path = "img/"
 )
 ```
+## DUE 2016-10-06 at 2pm
 
 Using a new `.Rmd` file and pushing both the markdown and knitted `.html` file to your "homework-week-4" repository, do the following:
 

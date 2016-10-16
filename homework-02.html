@@ -25,24 +25,16 @@ body {
 
 <body>
 
-<h1 id="homework-04">Homework 04</h1>
-<h2 id="due-2016-10-23-at-2pm">DUE 2016-10-23 at 2pm</h2>
-<p>Using a new <code>.Rmd</code> file and pushing both the markdown and knitted <code>.html</code> file to a new repository named &quot;homework-week-6&quot; on your <em>GitHub</em> page, answer the following questions:</p>
-<p>[1] Write a simple R function, <code>Z.prop.test()</code>, that can perform one- or two-sample Z-tests for proportion data, using the following guidelines.</p>
+<h1 id="homework-02">Homework 02</h1>
+<h2 id="due-2016-09-22-at-2pm">DUE 2016-09-22 at 2pm</h2>
+<p>Every Saturday, at the same time, a primatologist goes and sits in the forest in the morning and listens for titi monkey calls, counting the number of calls they hear in a 2 hour window from 5am to 7am. Based on previous knowledge, she believes that the mean number calls she will hear in that time is exactly 15. Let X represent the appropriate Poisson random variable of the number of calls heard in each monitoring session.</p>
 <ul>
-<li>Your function should take the following arguments: <strong>p1</strong> and <strong>n1</strong> (no default) to pose as the estimated proportion and sample size (i.e., based on your sample data); <strong>p2</strong> and <strong>n2</strong> (both defaulting to NULL) that contain a second sample's proportion and sample size data in the event of a two-sample test; <strong>p0</strong> (no default) as the expected value for the population proportion; and <strong>alternative</strong> (default &quot;two.sided&quot;) and <strong>conf.level</strong> (default 0.95), to be used in the same way as in the function <code>t.test()</code>.</li>
-<li>When conducting a two-sample test, it should be <strong>p1</strong> that is tested as being smaller or larger than <strong>p2</strong> when alternative=&quot;less&quot; or alternative=&quot;greater&quot;, the same as in the use of x and y in the function <code>t.test()</code>.</li>
-<li>The function should perform a one-sample Z-test using <strong>p1</strong>, <strong>n1</strong>, and <strong>p0</strong> if either <strong>p2</strong> or <strong>n2</strong> (or both) is NULL.</li>
-<li>The function should contain a check for the rules of thumb we have talked about (<em>n</em> * <em>p</em> &gt; 5 and <em>n</em> * (1 − <em>p</em>)&gt;5) to ensure the validity of assuming the normal distribution in both the one- and two-sample settings. If this is violated, the function should still complete but it should also print an appropriate warning message.</li>
-<li>The function should return a list containing the members Z (the test statistic), P (the appropriate p-value), and CI (the two-sided CI with respect to confidence level).</li>
-</ul>
-<p>[2] The dataset from Kamilar and Cooper has in it a large number of variables related to life history and body size. For this exercise, the end aim is to fit a simple linear regression model to predict longevity (&quot;MaxLongevity_m&quot;) measured in months from species' brain size (&quot;Brain_Size_Species_Mean&quot;) measured in grams. Do the following for both <strong>longevity~brain size</strong> and <strong>log(longevity)~log(brain size)</strong>.</p>
-<ul>
-<li>Fit the regression model and, using {ggplot2}, produce a scatterplot with the fitted line superimposed upon the data. Append the the fitted model equation to your plot (HINT: use the function <code>geom_text()</code>).</li>
-<li>Identify and interpret the point estimate of the slope (<em>β</em><sub>1</sub>), as well as the outcome of the test associated with the hypotheses H0: <em>β</em><sub>1</sub> = 0; HA: <em>β</em><sub>1</sub> ≠ 0. Also, find a 90 percent CI for the slope (<em>β</em><sub>1</sub>) parameter.</li>
-<li>Using your model, add lines for the 90 percent confidence and prediction interval bands on the plot and add a legend to differentiate between the lines.</li>
-<li>Produce a point estimate and associated 90 percent PI for the longevity of a species whose brain weight is 800 gm. Do you trust the model to predict observations accurately for this value of the explanatory variable? Why or why not?</li>
-<li>Looking at your two models, which do you think is better? Why?</li>
+<li>What is the probability that she will hear more than 8 calls during any given session?</li>
+<li>What is the probability that she will hear no calls in a session?</li>
+<li>What is the probability that she will hear exactly 3 calls in a session?</li>
+<li>Plot the relevant Poisson mass function over the values in range 0 ≤ x ≤ 30.</li>
+<li>Simulate 104 results from this distribution (i.e., 2 years of Saturday monitoring sessions).</li>
+<li>Plot the simulated results using hist() and use xlim() to set the horizontal limits to be from 0 to 30. How does your histogram compare to the shape of the probability mass function you plotted above?</li>
 </ul>
 
 </body>

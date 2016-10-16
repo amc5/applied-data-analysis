@@ -38,7 +38,7 @@ The ***git*** software we just installed is strictly a command-line tool and is 
 
 <img src="img/github.png" width=500px/>
 
-#### CHALLENGE 1:
+#### CHALLENGE:
 
 Create a new repository on ***GitHub***
 
@@ -65,7 +65,7 @@ Managing ***git*** from the Desktop with a GUI
 
 With ***GitHub Desktop***, we can download, work on, and update remote repos or we can create, work on, and push local repos to remote sites.
 
-#### CHALLENGE 2:
+#### CHALLENGE:
 
 Clone a remote repository from ***GitHub*** to your computer
 
@@ -86,7 +86,7 @@ This should create a local copy of your repo. On MacOS, if you then *right-click
 -   Then switch to ***GitHub Desktop*** (where you should see the changes highlighted) and **Commit** the changes (to save them locally...
 -   Then **Sync** your changes with the remote master on ***GitHub***
 
-#### CHALLENGE 3:
+#### CHALLENGE:
 
 Create a local repository and push it to ***GitHub***
 

@@ -143,7 +143,7 @@ body {
 <pre><code>##  [1] 101 103 105 107 109 111 113 115 117 119 121 123 125 127 129 131 133
 ## [18] 135 137 139 141 143 145 147 149 151 153 155 157 159 161 163 165 167
 ## [35] 169 171 173 175 177 179 181 183 185 187 189 191 193 195 197 199</code></pre>
-<h4 id="challenge-1">CHALLENGE 1:</h4>
+<h4 id="challenge">CHALLENGE:</h4>
 <ul>
 <li><p>First, create a vector of 1 word character strings comprising the first line of the Gettysburg address: &quot;Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal.&quot;</p></li>
 <li><p>Then, extract every third element of this vector.</p>
@@ -169,13 +169,13 @@ body {
 &gt;<span class="st"> </span>x</code></pre></div>
 <pre><code>## [1] 36</code></pre>
 <p>You can also extract an entire row or an entire column (or set of rows or set of columns) from a matrix by specifying the desired row or column number(s) and leaving the other value blank.</p>
-<h4 id="challenge-2">CHALLENGE 2:</h4>
+<h4 id="challenge-1">CHALLENGE:</h4>
 <ul>
 <li><p>Given the matrix, <strong>m</strong>, above, extract the 2nd, 3rd, and 6th columns and assign them to the variable <strong>x</strong></p></li>
 <li><p>Given the matrix, <strong>m</strong>, above, extract the 6th to 8th row and assign them to the variable <strong>x</strong></p></li>
 <li><p>Given the matrix, <strong>m</strong>, above, extract the elements from row 2, column 2 to row 6, column 9 and assign them to the variable <strong>x</strong></p></li>
 </ul>
-<h4 id="challenge-3">CHALLENGE 3:</h4>
+<h4 id="challenge-2">CHALLENGE:</h4>
 <ul>
 <li><p>Construct a 4-dimensional, 400 element array (5 x 5 x 4 x 4) named <strong>a</strong> consisting of the numbers 400 to 1 (i.e., a descending series)</p></li>
 <li><p>Given this matrix, what would the following return?</p>
@@ -259,7 +259,7 @@ body {
 <pre><code>## [1] &quot;this&quot;    &quot;is&quot;      &quot;a&quot;       &quot;vector&quot;  &quot;of&quot;      &quot;strings&quot;</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">&gt;<span class="st"> </span>l$matrix[<span class="dv">3</span>, <span class="dv">5</span>]</code></pre></div>
 <pre><code>## [1] 23</code></pre>
-<h4 id="challenge-4">CHALLENGE 4:</h4>
+<h4 id="challenge-3">CHALLENGE:</h4>
 <ul>
 <li><p>Create a <strong>list</strong> representing this (simplified) primate taxonomy. <strong>HINT:</strong> you can use <strong>lists</strong> as elements in a list.</p></li>
 <li>Primates
@@ -315,7 +315,7 @@ body {
 ## 2     Silvy  Anthro   F             2
 ## 3    Ingrid  Anthro   F             2
 ## 4    Claire     EEB   F             3</code></pre>
-<p>More commonly we read tabular data into <strong><em>R</em></strong>, which typically results in the table being represented as a data frame.</p>
+<p>More commonly we read tabular data into <strong><em>R</em></strong>, which typically results in the table being represented as a data frame. This will read from the file &quot;random-people.csv&quot; stored on a user's desktop.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">&gt;<span class="st"> </span>df &lt;-<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;~/Desktop/random-people.csv&quot;</span>, <span class="dt">sep =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">header =</span> <span class="ot">TRUE</span>, <span class="dt">stringsAsFactors =</span> <span class="ot">FALSE</span>)
 &gt;<span class="st"> </span><span class="co"># only print select columns</span>
 <span class="er">&gt;</span><span class="st"> </span>df[, <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">11</span>, <span class="dv">12</span>)]</code></pre></div>
@@ -618,7 +618,7 @@ body {
 <li><code>Inf</code> (and <code>-Inf</code>) is used when the result of a numerical calculation is too extreme for <strong><em>R</em></strong> to express</li>
 <li><code>NaN</code> (for <em>not a number</em>) is used when <strong><em>R</em></strong> cannot express the results of a calculation , e.g., when you try to take the square root of a negative number</li>
 </ul>
-<h4 id="challenge-5">CHALLENGE 5:</h4>
+<h4 id="challenge-4">CHALLENGE:</h4>
 <ul>
 <li><p>Store the following numbers as a 5 x 3 matrix: 3, 0, 1 ,23, 1, 2, 33, 1, 1, 42, 0, 1, 41, 0, 2. Be sure to fill the matrix ROWWISE.</p></li>
 <li><p>Then, do the following:</p>

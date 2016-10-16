@@ -32,7 +32,7 @@ Some Useful Procedures for Exploratory Data Analysis
 
 -   Summary: The `summary()` function provides a quick overview of each column in a data frame. For **numeric** variables, this includes the minimum, 25th percentile, median, mean, 75th percentile, and maximum of the data, as well as a count of `NA` (missing values). For **factors**, it includes a count of each factor.
 
-#### CHALLENGE 1:
+#### CHALLENGE:
 
 -   Load the **Country-Data-2016** dataset into a data frame variable, **d**, and summarize the variables in that data frame. You can load the file any way you want, e.g., load from a local file, or you can access the data straight from ***GitHub***, as in the code below.
 
@@ -289,7 +289,7 @@ Or, alternatively...
 -   Boxplots : The `boxplot()` function provides a box-and-whiskers visual representation of the five-number summary plus outliers that go beyond the bulk of the data. The function balks if you pass it nonnumeric data, so you may need to reference columns specifically using either **bracket notation** or the **$** operator.
 -   Barplot : The `barplot()` function is useful for crude data, with bar height proportional to the value of the variable. The function `dotchart()` provides a similar graphical summary.
 
-#### CHALLENGE 2:
+#### CHALLENGE:
 
 -   Make boxplots of the raw population and area data, then do the same after `log()` transforming these variables.
 
@@ -309,7 +309,7 @@ Or, alternatively...
 
 -   Histograms : The `hist()` function returns a histogram showing the complete empirical distribution of the data in binned categories, which is useful for checking skewwness of the data, symmetry, multi-modality, etc. Setting the argument `freq=FALSE` will scale the Y axis to represent the *proportion* of observations falling into each bin rather than the *count*.
 
-#### CHALLENGE 3:
+#### CHALLENGE:
 
 -   Make histograms of the `log()` transformed population and area data from the **Country-Data-2016** file. Explore what happens if you set `freq=FALSE` versus the default of `freq=TRUE`. Try looking at other variables as well.
 
@@ -344,7 +344,7 @@ Or, alternatively...
 
 -   Tables : the `table()` function can be used to summarize counts and proportions for categorical variables in your dataset.
 
-#### CHALLENGE 4
+#### CHALLENGE:
 
 -   Using the `table()` function, find what is the most common form of government in the **Country-Data-2016** dataset. How many countries have that form? **HINT:** We can combine `table()` with `sort()` and the argument `decreasing=TRUE` to get the desired answered straight away:
 
@@ -422,7 +422,7 @@ Or, alternatively...
 
 -   Multiple boxplots or histograms can be laid out side-by-side or overlaid. For boxplots, the **~** operator can be read as "by".
 
-#### CHALLENGE 5:
+#### CHALLENGE:
 
 Read in the dataset **KamilarAndCooperData**, which contains a host of summary information about 213 primate species.
 
@@ -656,7 +656,7 @@ Alternatively, plotting using {ggplot2}...
 
 -   Scatterplots : Scatterplots are a natural tool for visualizing two continuous variables and can be made easily with the `plot(x=XXX, y=YYY)` function in {base} graphics (where **XXX\* and **YYY\*\* denote the names of the two variables you wish to plot). Transformations of the variables, e.g., `log` or square-root (`sqrt()`), may be necessary for effective visualization.
 
-#### CHALLENGE 6:
+#### CHALLENGE:
 
 -   Again using data from the *KamilarAndCooperData* dataset, plot the relationship between female body size and female brain size. Then, play with log transforming the data and plot again.
 
@@ -703,7 +703,7 @@ Using {ggplot2}, we can also easily set up a grid for "faceting"" by a grouping 
 
 ![](img/unnamed-chunk-15-1.png)
 
-#### CHALLENGE 7:
+#### CHALLENGE:
 
 -   Build your own bivariate scatterplot using the **KamilarAndCooperData** dataset.
 
@@ -1018,7 +1018,7 @@ The `group_by()` function allows us to do apply summary functions to sets of obs
 
 One other cool thing about the {dplyr} package is that it provides a convenient way to chain together operations on a data frame using the **%&gt;%** operator.
 
-#### CHALLENGE 8:
+#### CHALLENGE:
 
 -   In one line of code, do the following:
     -   Add a variable, *Binomial* to our data frame **d**, which is a concatenation of the *Genus* and *Species*...

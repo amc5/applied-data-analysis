@@ -78,7 +78,7 @@ Taking Our First Steps in ***R***
 -   To clear objects from your workspace, use the `rm()` function \[where an individual object's name or a list of object names is included as the argument to `rm()`\]
 -   To remove all objects from your workspace, you can use `rm(list=ls())` \[in this case, you are passing to `rm()` a list consisting of all the objects in the workspace, provided by the `ls()` function
 
-#### CHALLENGE 1:
+#### CHALLENGE:
 
 Try interacting with ***R*** via the command line or console window.
 
@@ -293,7 +293,7 @@ The **Source** pane is where you work with and edit various file types (e.g., sc
 
 <img src="img/RStudio.png" width="500px"</center>
 
-#### CHALLENGE 2:
+#### CHALLENGE:
 
 Repeat Challenge 1 from above using the editor and console in ***RStudio***.
 
@@ -359,7 +359,7 @@ Some objects in ***R*** also have *attributes*, which we can think of as metadat
 
     ## [1] 10
 
-#### CHALLENGE 3:
+#### CHALLENGE:
 
 Try some vector math using the console in ***RStudio***
 
@@ -433,7 +433,7 @@ As noted above, scripts are text files that store ***R*** commands and they can 
 
 If you save a script, you can then use the `source()` function (with the path to the script file of interest as an argument) at the console prompt (or in another script) to read and execute the entire contents of the script file. In ***RStudio*** you may also go to **Code &gt; Source** to run an entire script, or you can run lines in the script by opening it, highlighting the lines of interest, and sending those lines to the console using the **Run** button or the appropriate keyboard shortcut, `⌘-RETURN` (Mac) or `control-R` (PC).
 
-#### CHALLENGE 4:
+#### CHALLENGE:
 
 Try writing a script containing a function.
 

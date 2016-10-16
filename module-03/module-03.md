@@ -217,7 +217,7 @@ The first line tells ***git*** the remote URL that you are going to push to, and
 
 **Congratulations!** You have now pushed commits from your local repo to ***GitHub***, and you should be able to see those files in your ***GitHub*** repo online. The `Pull` and `Push` buttons in ***RStudio*** should now also work. Remember, after each `Commit`, you will have to push to ***GitHub*** manually. This does not happen automatically.
 
-#### CHALLENGE 1:
+#### CHALLENGE:
 
 -   Start a new ***R*** project using one of the methods above -- call it "ADA-WEEK-2" -- and in it, create an **RMarkdown** document in which you will take notes and complete the coding CHALLENGES from Module 4. You can begin with a standard **RMarkdown** document template created by choosing **File -&gt; New File -&gt; R Markdown** and choosing `HTML` as the `Default Document Output`.
 

@@ -210,7 +210,7 @@ You can also use a function or a calculation to subset a vector. What does the f
     ## [18] 135 137 139 141 143 145 147 149 151 153 155 157 159 161 163 165 167
     ## [35] 169 171 173 175 177 179 181 183 185 187 189 191 193 195 197 199
 
-#### CHALLENGE 1:
+#### CHALLENGE:
 
 -   First, create a vector of 1 word character strings comprising the first line of the Gettysburg address: "Four score and seven years ago our fathers brought forth on this continent, a new nation, conceived in Liberty, and dedicated to the proposition that all men are created equal."
 
@@ -248,7 +248,7 @@ You can extract the element in row 4, column 5 and assign it to a new variable, 
 
 You can also extract an entire row or an entire column (or set of rows or set of columns) from a matrix by specifying the desired row or column number(s) and leaving the other value blank.
 
-#### CHALLENGE 2:
+#### CHALLENGE:
 
 -   Given the matrix, **m**, above, extract the 2nd, 3rd, and 6th columns and assign them to the variable **x**
 
@@ -256,7 +256,7 @@ You can also extract an entire row or an entire column (or set of rows or set of
 
 -   Given the matrix, **m**, above, extract the elements from row 2, column 2 to row 6, column 9 and assign them to the variable **x**
 
-#### CHALLENGE 3:
+#### CHALLENGE:
 
 -   Construct a 4-dimensional, 400 element array (5 x 5 x 4 x 4) named **a** consisting of the numbers 400 to 1 (i.e., a descending series)
 
@@ -395,7 +395,7 @@ Now, you can use the name of an item in the list to refer to it:
 
     ## [1] 23
 
-#### CHALLENGE 4:
+#### CHALLENGE:
 
 -   Create a **list** representing this (simplified) primate taxonomy. **HINT:** you can use **lists** as elements in a list.
 
@@ -440,7 +440,7 @@ The `data.frame()` command can be used to create dataframes from scratch.
     ## 3    Ingrid  Anthro   F             2
     ## 4    Claire     EEB   F             3
 
-More commonly we read tabular data into ***R***, which typically results in the table being represented as a data frame.
+More commonly we read tabular data into ***R***, which typically results in the table being represented as a data frame. This will read from the file "random-people.csv" stored on a user's desktop.
 
 ``` r
 > df <- read.csv("~/Desktop/random-people.csv", sep = ",", header = TRUE, stringsAsFactors = FALSE)
@@ -826,7 +826,7 @@ Finally, ***R*** has three special data values that it uses in a variety of situ
 -   `Inf` (and `-Inf`) is used when the result of a numerical calculation is too extreme for ***R*** to express
 -   `NaN` (for *not a number*) is used when ***R*** cannot express the results of a calculation , e.g., when you try to take the square root of a negative number
 
-#### CHALLENGE 5:
+#### CHALLENGE:
 
 -   Store the following numbers as a 5 x 3 matrix: 3, 0, 1 ,23, 1, 2, 33, 1, 1, 42, 0, 1, 41, 0, 2. Be sure to fill the matrix ROWWISE.
 

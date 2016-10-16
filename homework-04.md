@@ -1,6 +1,9 @@
 Homework 04
 ================
 
+DUE 2016-10-23 at 2pm
+---------------------
+
 Using a new `.Rmd` file and pushing both the markdown and knitted `.html` file to a new repository named "homework-week-6" on your *GitHub* page, answer the following questions:
 
 \[1\] Write a simple R function, `Z.prop.test()`, that can perform one- or two-sample Z-tests for proportion data, using the following guidelines.

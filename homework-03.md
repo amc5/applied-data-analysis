@@ -1,6 +1,9 @@
 Homework 03
 ================
 
+DUE 2016-10-06 at 2pm
+---------------------
+
 Using a new `.Rmd` file and pushing both the markdown and knitted `.html` file to your "homework-week-4" repository, do the following:
 
 Load in the dataset "zombies.csv" from my ***GitHub*** repo at <https://github.com/difiore/ADA2016>. This data includes the first and last name and gender of the entire population of 1000 people who have survived the zombie apocalypse and are now ekeing out an existence somewhere on the East Coast, along with several other variables (height, weight, age, number of years of education, number of zombies they have killed, and college major [see here for info on important post-zombie apocalypse majors](http://www.thebestschools.org/magazine/best-majors-surviving-zombie-apocalypse/)
