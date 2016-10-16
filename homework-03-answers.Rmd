@@ -1,0 +1,28 @@
+---
+title: "Homework 03 Answers"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+``` {r}
+library(curl)
+f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/zombies.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+d<-NULL
+
+``` {r}
+x <- d[c("height", "weight", "age", "zombies_killed","years_of_education")]
+summary(x)
+pop_sd <- function(x){sqrt(sum((x - mean(x))^2)/(length(x)))}
+sds <- c(mean(d$height),mean(d$weight),mean(d$age),mean(d$zombies_killed),mean(d$years_of_education))
+
+```
+
+
+``` {r}
+library(ggplot2)
+p <- ggplot()

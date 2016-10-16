@@ -411,39 +411,37 @@ Estimating our regression coefficients is pretty straightforward... but what do 
 
 -   The intercept, *β*<sub>0</sub>, is the PREDICTED value of **y** when the value of **x** is zero.
 -   The slope, *β*<sub>1</sub> is EXPECTED CHANGE in units of **y** for every 1 unit of change in **x**.
--   The overall equation allows us to calculate PREDICTED values of **y** for new observations of **x**. We can also calculate CONFIDENCE INTERVALS around the predicted mean value of y for each value of x.
+-   The overall equation allows us to calculate PREDICTED values of **y** for new observations of **x**. We can also calculate CONFIDENCE INTERVALS (CIs) around the predicted mean value of **y** for each value of **x** (which addresses our uncertainly in the estimate of the mean), and we can also get PREDICTION INTERVALS (PIs) around our prediction (which gives the range of actual values of **y** we might expect to see at a given value of **x**).
 
 #### CHALLENGE:
 
 -   If zombie weight is measured in *pounds* and zombie height is measured in *inches*, what is the expected height of a zombie weighing 150 pounds?
--   If zombie age is measure in *years* and height is measured in *inches*, what is the predicted difference in height between a zombie who turned at age 25 versus age 20?
+-   What is the predicted difference in height between a zombie weighing 180 and 220 pounds?
 
 ``` r
 > beta0 <- t$Est[1]
 > beta1 <- t$Est[2]
-> predicted_h <- beta1 * 150 + beta0
-> predicted_h
+> h_hat <- beta1 * 150 + beta0
+> h_hat
 ```
 
     ## [1] 68.81825
+
+``` r
+> h_hat_difference <- (beta1 * 220 + beta0) - (beta1 * 180 + beta0)
+> h_hat_difference
+```
+
+    ## [1] 7.800749
 
 The `predict()` function allows us to generate predicted (i.e., <img src="img/yhat.svg" width="12px"/>) values for a vector of values of x. Note the structure of the 2nd argument in the function... it includes the x variable name, and we pass it a vector of values. Here, I pass it a vector of actual x values.
 
 ``` r
 > m <- lm(data = d, height ~ weight)
-> p_height <- predict(m, newdata = data.frame(weight = d$weight))
-> dnew <- data.frame(cbind(d$weight, d$height, p_height))
-> str(dnew)
-```
-
-    ## 'data.frame':    1000 obs. of  3 variables:
-    ##  $ V1      : num  132 146 153 130 132 ...
-    ##  $ V2      : num  62.9 67.8 72.1 66.8 64.7 ...
-    ##  $ p_height: num  65.3 68.1 69.4 64.9 65.4 ...
-
-``` r
-> names(dnew) <- c("x", "y", "yhat")
-> head(dnew)
+> h_hat <- predict(m, newdata = data.frame(weight = d$weight))
+> df <- data.frame(cbind(d$weight, d$height, h_hat))
+> names(df) <- c("x", "y", "yhat")
+> head(df)
 ```
 
     ##          x        y     yhat
@@ -455,7 +453,7 @@ The `predict()` function allows us to generate predicted (i.e., <img src="img/yh
     ## 6 152.5246 71.24326 69.31059
 
 ``` r
-> g <- ggplot(data = dnew, aes(x = x, y = yhat))
+> g <- ggplot(data = df, aes(x = x, y = yhat))
 > g <- g + geom_point()
 > g <- g + geom_point(aes(x = x, y = y), colour = "red")
 > g <- g + geom_segment(aes(x = x, y = yhat, xend = x, yend = y))
@@ -464,21 +462,21 @@ The `predict()` function allows us to generate predicted (i.e., <img src="img/yh
 
 ![](img/unnamed-chunk-18-1.png) Each vertical line in the figure above represents a **residual**, the difference between the observed and the fitted or predicted value of y at the given x values.
 
-The `predict()` function also allows us to generate confidence intervals around our predicted y values easily.
+The `predict()` function also allows us to easily generate confidence intervals around our predicted mean value for **y** values easily.
 
 ``` r
-> predicted_ci <- predict(m, newdata = data.frame(weight = 150), interval = "confidence", 
+> ci <- predict(m, newdata = data.frame(weight = 150), interval = "confidence", 
 +     level = 0.95)  # for a single value
-> predicted_ci
+> ci
 ```
 
     ##        fit      lwr     upr
     ## 1 68.81825 68.66211 68.9744
 
 ``` r
-> predicted_ci <- predict(m, newdata = data.frame(weight = d$weight), interval = "confidence", 
+> ci <- predict(m, newdata = data.frame(weight = d$weight), interval = "confidence", 
 +     level = 0.95)  # for a vector of values
-> head(predicted_ci)
+> head(ci)
 ```
 
     ##        fit      lwr      upr
@@ -490,33 +488,101 @@ The `predict()` function also allows us to generate confidence intervals around 
     ## 6 69.31059 69.14691 69.47428
 
 ``` r
-> dnew <- cbind(dnew, predicted_ci)
-> g <- ggplot(data = dnew, aes(x = x, y = y))
+> df <- cbind(df, ci)
+> names(df) <- c("x", "y", "yhat", "CIfit", "CIlwr", "CIupr")
+> head(df)
+```
+
+    ##          x        y     yhat    CIfit    CIlwr    CIupr
+    ## 1 132.0872 62.88951 65.32492 65.32492 65.14872 65.50111
+    ## 2 146.3753 67.80277 68.11137 68.11137 67.96182 68.26092
+    ## 3 152.9370 72.12908 69.39103 69.39103 69.22591 69.55615
+    ## 4 129.7418 66.78484 64.86753 64.86753 64.68044 65.05462
+    ## 5 132.4265 64.71832 65.39109 65.39109 65.21636 65.56582
+    ## 6 152.5246 71.24326 69.31059 69.31059 69.14691 69.47428
+
+``` r
+> g <- ggplot(data = df, aes(x = x, y = y))
 > g <- g + geom_point(alpha = 1/2)
-> g <- g + geom_line(aes(x = x, y = fit), colour = "black")
-> g <- g + geom_line(aes(x = x, y = lwr), colour = "blue")
-> g <- g + geom_line(aes(x = x, y = upr), colour = "blue")
+> g <- g + geom_line(aes(x = x, y = CIfit), colour = "black")
+> g <- g + geom_line(aes(x = x, y = CIlwr), colour = "blue")
+> g <- g + geom_line(aes(x = x, y = CIupr), colour = "blue")
 > g
 ```
 
-![](img/unnamed-chunk-19-1.png)
+![](img/unnamed-chunk-19-1.png) The same `predict()` function also allows us to easily generate prediction intervals for values of **y** at each **x**.
+
+``` r
+> pi <- predict(m, newdata = data.frame(weight = 150), interval = "prediction", 
++     level = 0.95)  # for a single value
+> pi
+```
+
+    ##        fit      lwr      upr
+    ## 1 68.81825 64.12849 73.50802
+
+``` r
+> pi <- predict(m, newdata = data.frame(weight = d$weight), interval = "prediction", 
++     level = 0.95)  # for a vector of values
+> head(pi)
+```
+
+    ##        fit      lwr      upr
+    ## 1 65.32492 60.63444 70.01539
+    ## 2 68.11137 63.42182 72.80092
+    ## 3 69.39103 64.70095 74.08110
+    ## 4 64.86753 60.17663 69.55843
+    ## 5 65.39109 60.70067 70.08151
+    ## 6 69.31059 64.62057 74.00062
+
+``` r
+> df <- cbind(df, pi)
+> names(df) <- c("x", "y", "yhat", "CIfit", "CIlwr", "CIupr", "PIfit", "PIlwr", 
++     "PIupr")
+> head(df)
+```
+
+    ##          x        y     yhat    CIfit    CIlwr    CIupr    PIfit    PIlwr
+    ## 1 132.0872 62.88951 65.32492 65.32492 65.14872 65.50111 65.32492 60.63444
+    ## 2 146.3753 67.80277 68.11137 68.11137 67.96182 68.26092 68.11137 63.42182
+    ## 3 152.9370 72.12908 69.39103 69.39103 69.22591 69.55615 69.39103 64.70095
+    ## 4 129.7418 66.78484 64.86753 64.86753 64.68044 65.05462 64.86753 60.17663
+    ## 5 132.4265 64.71832 65.39109 65.39109 65.21636 65.56582 65.39109 60.70067
+    ## 6 152.5246 71.24326 69.31059 69.31059 69.14691 69.47428 69.31059 64.62057
+    ##      PIupr
+    ## 1 70.01539
+    ## 2 72.80092
+    ## 3 74.08110
+    ## 4 69.55843
+    ## 5 70.08151
+    ## 6 74.00062
+
+``` r
+> g <- g + geom_line(data = df, aes(x = x, y = PIlwr), colour = "red")
+> g <- g + geom_line(data = df, aes(x = x, y = PIupr), colour = "red")
+> g
+```
+
+![](img/unnamed-chunk-20-1.png)
 
 #### CHALLENGE:
 
-Predict the heights and CIs around these heights for a vector of zombie ages, `v <- seq(from=10, to=30, by=1)`. Then, plot your points, your regression line, and lines for the lower and upper limits of the CI
+Construct a linear model for the regression of zombie height on age and predict the mean height, the 95% confidence interval (CI) around the predicted mean height, and the 95% prediction interval (PI) around that mean for a vector of zombie ages, `v <- seq(from=10, to=30, by=1)`. Then, plot your points, your regression line, and lines for the lower and upper limits of the CI and of the PI.
 
 ``` r
 > v <- seq(from = 10, to = 30, by = 1)
 > m <- lm(data = d, height ~ age)
-> predicted_ci <- predict(m, newdata = data.frame(age = v), interval = "confidence", 
-+     level = 0.95)
+> ci <- predict(m, newdata = data.frame(age = v), interval = "confidence", level = 0.95)
+> pi <- predict(m, newdata = data.frame(age = v), interval = "prediction", level = 0.95)
 > plot(data = d, height ~ age)
-> lines(x = v, y = predicted_ci[, 1], col = "red")
-> lines(x = v, y = predicted_ci[, 2], col = "blue")
-> lines(x = v, y = predicted_ci[, 3], col = "blue")
+> lines(x = v, y = ci[, 1], col = "black")
+> lines(x = v, y = ci[, 2], col = "blue")
+> lines(x = v, y = ci[, 3], col = "blue")
+> lines(x = v, y = pi[, 2], col = "red")
+> lines(x = v, y = pi[, 3], col = "red")
 ```
 
-![](img/unnamed-chunk-20-1.png)
+![](img/unnamed-chunk-21-1.png)
 
 ``` r
 > # or
@@ -527,22 +593,37 @@ Predict the heights and CIs around these heights for a vector of zombie ages, `v
 
 ``` r
 > require(ggplot2)
-> ci <- data.frame(cbind(v, predicted_ci))
+> df <- data.frame(cbind(v, ci, pi))
+> names(df) <- c("age", "CIfit", "CIlwr", "CIupr", "PIfit", "PIlwr", "PIupr")
+> head(df)
+```
+
+    ##   age    CIfit    CIlwr    CIupr    PIfit    PIlwr    PIupr
+    ## 1  10 58.16075 57.44067 58.88083 58.16075 51.67823 64.64327
+    ## 2  11 59.10326 58.44882 59.75770 59.10326 52.62770 65.57882
+    ## 3  12 60.04577 59.45627 60.63527 60.04577 53.57645 66.51509
+    ## 4  13 60.98828 60.46275 61.51380 60.98828 54.52447 67.45208
+    ## 5  14 61.93079 61.46786 62.39371 61.93079 55.47177 68.38980
+    ## 6  15 62.87329 62.47096 63.27563 62.87329 56.41834 69.32825
+
+``` r
 > g1 <- ggplot(data = d, aes(x = age, y = height))
 > g1 <- g1 + geom_point(alpha = 1/2)
-> g1 <- g1 + geom_line(data = ci, aes(x = v, y = fit), colour = "blue", lwd = 1)
-> g1 <- g1 + geom_line(data = ci, aes(x = v, y = lwr), colour = "red")
-> g1 <- g1 + geom_line(data = ci, aes(x = v, y = upr), colour = "red")
+> g1 <- g1 + geom_line(data = df, aes(x = v, y = CIfit), colour = "black", lwd = 1)
+> g1 <- g1 + geom_line(data = df, aes(x = v, y = CIlwr), colour = "blue")
+> g1 <- g1 + geom_line(data = df, aes(x = v, y = CIupr), colour = "blue")
+> g1 <- g1 + geom_line(data = df, aes(x = v, y = PIlwr), colour = "red")
+> g1 <- g1 + geom_line(data = df, aes(x = v, y = PIupr), colour = "red")
 > g2 <- ggplot(data = d, aes(x = age, y = height))
 > g2 <- g2 + geom_point(alpha = 1/2)
 > g2 <- g2 + geom_smooth(method = "lm", formula = y ~ x)
 > grid.arrange(g1, g2, ncol = 2)
 ```
 
-![](img/unnamed-chunk-20-2.png)
+![](img/unnamed-chunk-21-2.png) Again, here the CI band shows where the mean height is expected to fall in 95% of samples and the PI band shows where the individual points are expected to fall 95% of the time.
 
 ### Residuals
 
-From our plots above, it's clear that our model is not explaining all of the variation we see in our dataset... our **y** points do not all fall on the **yhat** line but rather are distributed around it. The distance of each of these points from the predicted value for **y** at that value of **x** is known as the "residual". We can think about the residuals as "what is left over"" after accounting for the predicted relationship between **x** and **y**. Residuals are often thought of as estimates of the "error" term in a regression model, and most regression analyses assume that residuals are random normal variables with uniform variance across the range of **x** values (more on this below). In ordinary least squares regression, the line of best fit minimizes the sum of the squared residuals, and the expected value for a residual is 0.
+From our various plots above, it's clear that our model is not explaining all of the variation we see in our dataset... our **y** points do not all fall on the **yhat** line but rather are distributed around it. The distance of each of these points from the predicted value for **y** at that value of **x** is known as the "residual". We can think about the residuals as "what is left over"" after accounting for the predicted relationship between **x** and **y**. Residuals are often thought of as estimates of the "error" term in a regression model, and most regression analyses assume that residuals are random normal variables with uniform variance across the range of **x** values (more on this below). In ordinary least squares regression, the line of best fit minimizes the sum of the squared residuals, and the expected value for a residual is 0.
 
 Residuals are also used to create "covariate adjusted" variables, as they can be thought of as the response variable, **y**, with the linear effect of the predictor variable(s) removed. We'll return to this idea when we move on to multivariate regression.
