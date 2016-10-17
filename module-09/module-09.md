@@ -25,9 +25,9 @@ The general way to define a confidence interval based on data from a sample is a
 
 The **critical value** is derived from the standardized version of a sampling distribution (e.g., the normal distribution) that corresponds the quantile limits we are interested in. For example, for the 95% CI around the mean, the critical value corresponds the range of quantiles above and below which we expect to see only 5% of the distribution of statistic values. This is equivalent to the ± 1 - (*α*/2) quantiles, where *α*=0.05, i.e., the ± 0.975 quantile that we have used before for calculating 95% CIs.
 
-The **standard error** is the standard deviation of the sampling distribution, which, as noted above, is often estimated from the sample itself as *σ*/*s**q**r**t*(*n*) but can also be calculated directly from the population standard deviation, if that is known.
+The **standard error** is the standard deviation of the sampling distribution, which, as noted above, is often estimated from the sample itself as *σ*/sqrt(*n*) but can also be calculated directly from the population standard deviation, if that is known.
 
-Recall that in Module 8, we created a vector, *v*, containing 1000 random numbers selected from a normal distribution with mean 3.5 and standard deviation 4. We then calculated the mean, standard deviation, and standard error of the mean (SEM) based on a sample of 30 observations drawn from that vector, and we use the normal distribution to characterize the quantiles associated with the central 95% of the distribution to define the upper and lower bounds of the 95% CI.
+Recall that in Module 8, we created a vector, *v*, containing 1000 random numbers selected from a normal distribution with mean 3.5 and standard deviation 4. We then calculated the mean, standard deviation, and standard error of the mean (SEM) based on a sample of 30 observations drawn from that vector, and we used the normal distribution to characterize the quantiles associated with the central 95% of the distribution to define the upper and lower bounds of the 95% CI.
 
 ``` r
 > n <- 1000
@@ -39,21 +39,21 @@ Recall that in Module 8, we created a vector, *v*, containing 1000 random number
 > m
 ```
 
-    ## [1] 2.259597
+    ## [1] 3.388634
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.802613
+    ## [1] 4.095894
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.694259
+    ## [1] 0.7478045
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -62,7 +62,7 @@ Recall that in Module 8, we created a vector, *v*, containing 1000 random number
 > ci
 ```
 
-    ## [1] 0.8988742 3.6203196
+    ## [1] 1.922964 4.854304
 
 The Central Limit Theorem
 -------------------------
@@ -100,7 +100,7 @@ Now let's imagine taking a bunch of samples of size 10 from this population. We 
 > sd
 ```
 
-    ## [1] 1.169933
+    ## [1] 1.203127
 
 ``` r
 > qqnorm(x)
@@ -133,7 +133,7 @@ Now let's imagine taking a bunch of samples of size 10 from this population. We 
 > sd
 ```
 
-    ## [1] 0.3731741
+    ## [1] 0.3556142
 
 ``` r
 > qqnorm(x)
@@ -304,21 +304,21 @@ We can see this as follows. Recall that above we estimated the 95% CI for a samp
 > m
 ```
 
-    ## [1] 3.716257
+    ## [1] 3.355286
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 4.571894
+    ## [1] 3.691978
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 0.8347097
+    ## [1] 0.6740598
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -327,9 +327,9 @@ We can see this as follows. Recall that above we estimated the 95% CI for a samp
 > ci_norm
 ```
 
-    ## [1] 2.080256 5.352258
+    ## [1] 2.034154 4.676419
 
-Now, let's look at the CIs calculated based using the t distribution for the same sample size. For sample size 30, the difference is negligible in the CIs is negligible.
+Now, let's look at the CIs calculated based using the t distribution for the same sample size. For sample size 30, the difference in the CIs is negligible.
 
 ``` r
 > lower <- m - qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -338,7 +338,7 @@ Now, let's look at the CIs calculated based using the t distribution for the sam
 > ci_t
 ```
 
-    ## [1] 2.009084 5.423430
+    ## [1] 1.976679 4.733894
 
 However, if we use a sample size of 5, the CI based on the t distribution is much wider.
 
@@ -349,21 +349,21 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > m
 ```
 
-    ## [1] 4.247594
+    ## [1] 3.085179
 
 ``` r
 > sd <- sd(s)
 > sd
 ```
 
-    ## [1] 3.121273
+    ## [1] 2.961783
 
 ``` r
 > sem <- sd(s)/sqrt(length(s))
 > sem
 ```
 
-    ## [1] 1.395876
+    ## [1] 1.324549
 
 ``` r
 > lower <- m - qnorm(1 - 0.05/2) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -372,7 +372,7 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > ci_norm
 ```
 
-    ## [1] 1.511729 6.983460
+    ## [1] 0.4891098 5.6812483
 
 ``` r
 > lower <- m - qt(1 - 0.05/2, df = sample_size - 1) * sem  # (1-alpha)/2 each in the upper and lower tails of the distribution
@@ -381,4 +381,4 @@ However, if we use a sample size of 5, the CI based on the t distribution is muc
 > ci_t
 ```
 
-    ## [1] 0.3720226 8.1231661
+    ## [1] -0.5923599  6.7627179

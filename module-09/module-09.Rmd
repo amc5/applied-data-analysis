@@ -33,9 +33,9 @@ The general way to define a confidence interval based on data from a sample is a
 
 The **critical value** is derived from the standardized version of a sampling distribution (e.g., the normal distribution) that corresponds the quantile limits we are interested in. For example, for the 95% CI around the mean, the critical value corresponds the range of quantiles above and below which we expect to see only 5% of the distribution of statistic values. This is equivalent to the ± 1 - ($\alpha$/2) quantiles, where $\alpha$=0.05, i.e., the ± 0.975 quantile that we have used before for calculating 95% CIs.
 
-The **standard error** is the standard deviation of the sampling distribution, which, as noted above, is often estimated from the sample itself as $\sigma/sqrt(n)$ but can also be calculated directly from the population standard deviation, if that is known.
+The **standard error** is the standard deviation of the sampling distribution, which, as noted above, is often estimated from the sample itself as $\sigma$/sqrt$(n)$ but can also be calculated directly from the population standard deviation, if that is known.
 
-Recall that in Module 8, we created a vector, *v*, containing 1000 random numbers selected from a normal distribution with mean 3.5 and standard deviation 4. We then calculated the mean, standard deviation, and standard error of the mean (SEM) based on a sample of 30 observations drawn from that vector, and we use the normal distribution to characterize the quantiles associated with the central 95% of the distribution to define the upper and lower bounds of the 95% CI.
+Recall that in Module 8, we created a vector, *v*, containing 1000 random numbers selected from a normal distribution with mean 3.5 and standard deviation 4. We then calculated the mean, standard deviation, and standard error of the mean (SEM) based on a sample of 30 observations drawn from that vector, and we used the normal distribution to characterize the quantiles associated with the central 95% of the distribution to define the upper and lower bounds of the 95% CI.
 
 ``` {r}
 n <- 1000
