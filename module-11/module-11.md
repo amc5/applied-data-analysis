@@ -265,7 +265,12 @@ Explore this function using different values of *μ*<sub>0</sub>, *σ*, *n*, and
 Power
 -----
 
-Power is the probability of correctly rejecting a null hypothesis that is untrue. For a test that has a Type II error rate of *β*, the statistical power is defined, simply, as 1 − *β*. Power values of 0.8 or greater are considered high.
+Power is the **probability of correctly rejecting a null hypothesis that is untrue**. For a test that has a Type II error rate of *β*, the statistical power is defined, simply, as 1 − *β*. Power values of 0.8 or greater are considered high.
+
+Effect Size
+-----------
+
+The effect size is simply the **standardized difference between the means** of the two groups/distributions being compared. In our case |(*μ*<sub>0</sub> - *μ*<sub>*A*</sub>)|/*σ*.
 
 #### CHALLENGE:
 
@@ -310,4 +315,32 @@ Using the code below, which graphs the Type II error rate (*β*) and Power (1 
 +     sigma = slider(1, 10, initial = 3, step = 1), alpha = slider(0.01, 0.1, 
 +         initial = 0.05, step = 0.01), type = picker("two.sample", "paired", 
 +         "one.sample"), alternative = picker("two.sided", "one.sided"))
+```
+
+Graphical Depiction of Power
+----------------------------
+
+``` r
+> library(ggplot2)
+> library(manipulate)
+> power.plot <- function(sigma, muA, mu0, n, alpha) {
++     g <- ggplot(data.frame(mu = c(min(mu0 - 4 * sigma/sqrt(n), muA - 4 * sigma/sqrt(n)), 
++         max(mu0 + 4 * sigma/sqrt(n), muA + 4 * sigma/sqrt(n)))), aes(x = mu))
++     g <- g + stat_function(fun = dnorm, geom = "line", args = list(mean = mu0, 
++         sd = sigma/sqrt(n)), size = 1, col = "red")
++     g <- g + stat_function(fun = dnorm, geom = "line", args = list(mean = muA, 
++         sd = sigma/sqrt(n)), size = 1, col = "blue")
++     xcrit = mu0 + qnorm(1 - alpha) * sigma/sqrt(n)
++     g <- g + geom_vline(xintercept = xcrit, size = 1)
++     g <- g + geom_polygon(data = data.frame(cbind(x = c(xcrit, seq(from = xcrit, 
++         to = muA + 4 * sigma/sqrt(n), length.out = 100), muA + 4 * sigma/sqrt(n)), 
++         y = c(0, dnorm(seq(from = xcrit, to = muA + 4 * sigma/sqrt(n), length.out = 100), 
++             mean = muA, sd = sigma/sqrt(n)), 0))), aes(x = x, y = y))
++     g
++ }
+> 
+> manipulate(power.plot(sigma, muA, mu0, n, alpha), sigma = slider(1, 10, step = 1, 
++     initial = 4), muA = slider(-10, 10, step = 1, initial = 2), mu0 = slider(-10, 
++     10, step = 1, initial = 0), n = slider(1, 50, step = 1, initial = 16), alpha = slider(0.01, 
++     0.1, step = 0.01, initial = 0.05))
 ```

@@ -184,7 +184,10 @@ eII <- typeII(mu0=7,muA=5,sigma=2,n=15,type="two.tailed") # Ha ≠ H0
 
 ## Power
 
-Power is the probability of correctly rejecting a null hypothesis that is untrue. For a test that has a Type II error rate of $\beta$, the statistical power is defined, simply, as $1-\beta$. Power values of 0.8 or greater are considered high.
+Power is the **probability of correctly rejecting a null hypothesis that is untrue**. For a test that has a Type II error rate of $\beta$, the statistical power is defined, simply, as $1-\beta$. Power values of 0.8 or greater are conventionally considered to be high.
+
+## Effect Size
+An effect size is a quantitative measure of the strength of a phenomenon. Here, we are interested in comparing two sample means, and the most common way to describe the effect size is as a **standardized difference between the means** of the groups being compared. In this case, we divide the difference between the means by the standard deviation: $\vert(\mu_0$ - $\mu_A)\vert/\sigma$. This results in a scaleless measure. Effect sizes of 0.2 or less are conventionally considered to be low and of 0.8 or greater are conventionally considered to be high.
 
 
 #### CHALLENGE:
@@ -213,4 +216,61 @@ power.test <- function(mu0,muA,sigma,alpha=0.05,type,alternative){
 
 ``` {r eval=FALSE}
 manipulate(power.test(mu0,muA,sigma,alpha,type,alternative),mu0=slider(-10,10,initial=3,step=1),muA=slider(-10,10,initial=0,step=1),sigma=slider(1, 10, initial=3,step=1), alpha=slider(0.01,0.10,initial=0.05,step=0.01),type=picker("two.sample","paired","one.sample"),alternative=picker("two.sided","one.sided"))
+```
+
+
+
+## Graphical Depiction of Power and Effect Size
+
+Given two distributions
+```{r, echo = TRUE, eval=FALSE}
+library(ggplot2)
+library(manipulate)
+power.plot <- function(sigma, muA, mu0, n, alpha,type="two.tailed"){
+	t <- (muA-mu0)/(sigma/sqrt(n))
+	g <- ggplot(data.frame(mu = c(min(mu0-4*sigma/sqrt(n), muA-4*sigma/sqrt(n)),max(mu0+4*sigma/sqrt(n), muA+4*sigma/sqrt(n)))), aes(x = mu))
+	g <- g + ylim(c(0,max(dnorm(mu0,mu0,sigma/sqrt(n))+0.1,dnorm(muA,muA,sigma/sqrt(n))+0.1)))
+	g <- g + stat_function(fun=dnorm, geom = "line", args = list(mean = mu0, sd = sigma / sqrt(n)), size = 1, col = "red")
+	g <- g + stat_function(fun=dnorm, geom = "line", args = list(mean = muA, sd = sigma / sqrt(n)), size = 1, col = "blue")
+	
+	if (type=="greater"){
+	if (t>0){
+	xcrit = mu0 + qnorm(1 - alpha) * sigma / sqrt(n)
+	g <- g + geom_vline(xintercept=xcrit, size = 1)
+	g <- g + geom_polygon(data=data.frame(cbind(x=c(xcrit, seq(from=xcrit, to=muA+4*sigma/sqrt(n), length.out=100), muA+4*sigma/sqrt(n)), y=c(0,dnorm(seq(from=xcrit, to=muA+4*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0))),aes(x=x,y=y),fill="blue",alpha=0.5)
+	}
+	}
+	if (type=="less"){
+	if (t<0){
+	xcrit = mu0 - qnorm(1 - alpha) * sigma / sqrt(n)
+	g <- g + geom_vline(xintercept=xcrit, size = 1)
+	g <- g + geom_polygon(data=data.frame(cbind(x=c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=xcrit, length.out=100), xcrit), y=c(0,dnorm(seq(from=muA-4*sigma/sqrt(n), to=xcrit, length.out=100), mean=muA,sd=sigma/sqrt(n)),0))),aes(x=x,y=y),fill="blue",alpha=0.5)
+	}
+	}
+	if (type=="two.tailed"){
+	if (t>0){
+	xcrit = mu0 + qnorm(1 - alpha/2) * sigma / sqrt(n)
+	g <- g + geom_vline(xintercept=xcrit, size = 1)
+	g <- g + geom_polygon(data=data.frame(cbind(x=c(xcrit, seq(from=xcrit, to=muA+4*sigma/sqrt(n), length.out=100), muA+4*sigma/sqrt(n)), y=c(0,dnorm(seq(from=xcrit, to=muA+4*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0))),aes(x=x,y=y),fill="blue",alpha=0.5)
+	}
+	if (t<0){
+	xcrit = mu0 - qnorm(1 - alpha/2) * sigma / sqrt(n)
+	g <- g + geom_vline(xintercept=xcrit, size = 1)
+	g <- g + geom_polygon(data=data.frame(cbind(x=c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=xcrit, length.out=100), xcrit), y=c(0,dnorm(seq(from=muA-4*sigma/sqrt(n), to=xcrit, length.out=100), mean=muA,sd=sigma/sqrt(n)),0))),aes(x=x,y=y),fill="blue",alpha=0.5)
+	}
+	}
+	g <- g + annotate("text", x=(mu0+muA)/2, y=max(dnorm(mu0,mu0,sigma/sqrt(n))+0.075,dnorm(muA,muA,sigma/sqrt(n))+0.075), label = paste("Effect Size = ",round((mu0-muA)/sigma,digits=3)))
+	g
+}
+
+manipulate(
+	power.plot(sigma, muA, mu0, n, alpha,type),
+	sigma = slider(1, 10, step = 1, initial = 4),
+	muA = slider(-10, 10, step = 1, initial = 2),
+	mu0 = slider(-10, 10, step = 1, initial = 0),
+	n = slider(1, 50, step = 1, initial = 16),
+	alpha = slider(0.01, 0.1, step = 0.01, initial = 0.05),
+	type = picker("two.tailed","greater","less")
+	)
+
 ```
