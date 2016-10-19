@@ -161,7 +161,7 @@ Finally, the standard error of each predicted value of y is calculated as:
 
     ## [1] 0.08978724 0.07620966 0.08414480 0.09533986 0.08904151 0.08341218
 
-These same standard errors for *β*<sub>0</sub> and *β*<sub>1</sub> are what are returned by the `lm()` function.
+These same standard errors for *β*<sub>0</sub> and *β*<sub>1</sub> are exactly what are returned by the `lm()` function.
 
 ``` r
 > summary(m)
@@ -422,3 +422,11 @@ Return to the "Kamilar and Cooper"" dataset you were looking at above and log tr
 ```
 
 ![](img/unnamed-chunk-16-2.png)![](img/unnamed-chunk-16-3.png)![](img/unnamed-chunk-16-4.png)![](img/unnamed-chunk-16-5.png)
+
+In many cases, the data we have are not normally distributed, but we can often apply some kind of mathematical transformation to our data to changes the distribution to more closely approximate the normal.
+
+The logarithmic or "log" transformation which we used above (taking some log value of each data point) is often applied to positive numeric variables with heavy skew to dramatically reduce the overall range of the data and bring extreme observations closer to a measure of centrality. The logarithm for a number is the power to which you must raise a base value (e.g., *e*, for the natural log) in order to obtain that number.
+
+The following chart shows some other common transformations.
+
+<img src="img/transformations.png" width="500px"/>

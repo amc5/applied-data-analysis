@@ -123,7 +123,6 @@ The standard error of the intercept, $\beta_0$, is calculated as:
 se_beta0 <- sqrt((MSE*sum(m$model$weight^2))/(1000*SSX))
 se_beta0
 ```
-
 Finally, the standard error of each predicted value of y is calculated as:
 
 <img src="img/seyhat.svg" width="350px"/>
@@ -133,7 +132,7 @@ se_yhat <- sqrt(MSE*(1/1000+(m$model$weight-mean(m$model$weight))^2/SSX))
 head(se_yhat) # just the first 6 rows
 ```
 
-These same standard errors for $\beta_0$ and $\beta_1$ are exactly what are returned by the `lm()` function.
+These same standard errors for $\beta_0$ and $\beta_1$ are what are returned by the `lm()` function.
 
 ``` {r}
 summary(m)
@@ -210,16 +209,3 @@ model<-lm(data=d,logWeaningAge~logFemaleBodyMass)
 summary(model)
 plot(model)
 ```
-
-In many cases, the data we have are not normally distributed, but we can often apply some kind of mathematical transformation to our data to changes the distribution to more closely approximate the normal. 
-
-The logarithmic or "log" transformation which we used above (taking some log value of each data point) is often applied to positive numeric variables with heavy skew to dramatically reduce the overall range of the data and bring extreme observations closer to a measure of centrality. The logarithm for a number is the power to which you must raise a base value (e.g., $e$, for the natural log) in order to obtain that number.
-
-The following chart shows some other common transformations.
-
-<img src="img/transformations.png" width="500px"/>
-
-head(zombies)
-
-v1 <- zombies$weight
-v2 <-exp(v1)
