@@ -101,10 +101,46 @@ eI <- typeI(mu0=-3,sigma=2,n=5000,type="two.tailed",alpha=0.05)
 #### CHALLENGE:
 How does the Type I error rate change with $n$? With $\sigma$? With $\alpha$? HINT: It shouldn't change much... the Type I error rate is defined by $\alpha$!
 
-### Bonferroni Correction
-We can address the multiple testing problem discussed above by using what is called the Bonferroni correction, which suggests that when doing a total of $k$ independent hypothesis tests, each with a significance level of $\alpha$, we should adjusted the $\alpha$ level we use to interpret statistical significance as follow: $\alpha_B$ = $\alpha/k$.
+### Multiple Comparison Corrections
+One way we can address the multiple testing problem discussed above by using what is called the **Bonferroni** correction, which suggests that when doing a total of $k$ independent hypothesis tests, each with a significance level of $\alpha$, we should adjust the $\alpha$ level we use to interpret statistical significance as follow: $\alpha_B$ = $\alpha/k$. For example, if we run 10 independent hypothesis tests, then we should set our adjusted $\alpha$ level for each test as 0.05/10 = 0.005. With the Bonferroni correction, we are essentially saying that we want to control the rate at which we have even one incorrect rejection of $H_0$ given the entire family of tests we do. This is also referred to as limiting the "family-wise error rate" to level $\alpha$.
 
-For example, if we run 10 independent hypothesis tests, then we should set our adjusted $\alpha$ level for each test as 0.05/10 = 0.005. Note that many statisticians consider the Bonferroni correction to be a particularly conservative one, and there are other corrections we might use to account for multiple testing.
+Note that many statisticians consider the Bonferroni correction to be a very conservative one, and there are other corrections we might use to account for multiple testing.
+
+``` {r}
+alpha <- 0.05
+pvals <- c(0.0001, 0.003, 0.005, 0.01, 0.02, 0.04, 0.045, 0.11, 0.18, 0.23)
+sig <- pvals <= alpha/length(pvals)
+sig # first 3 values are less than the adjusted alpha
+```
+
+One common alternative to the **Bonferroni** correction is the **Benjamini & Hochberg** correction, which is less conservative. It attempts to control for the "false discovery rate", which is different than the "family-wise error rate". Here, we aim to limit the number of false "discoveries" (i.e., incorrect rejections of the null hypothesis) out of a set of discoveries (i.e., out of the set of results where we would reject the null hypothesis) to $\alpha$.
+
+- Calculate $p$ values for all tests
+- Order $p$ values from smallest to largest (from $p_1$ to $p_m$)
+- Call any $p_i$ ≤ $\alpha$ x i/m significant
+
+``` {r}
+library(ggplot2)
+alpha <- 0.05
+pvals <- c(0.0001, 0.003, 0.005, 0.01, 0.02, 0.04, 0.045, 0.11, 0.18, .27)
+for (i in 1:length(p)){
+  psig[i] <- alpha * i/length(p)
+}
+d <- data.frame(cbind(rank=c(1:10),pvals,psig))
+p <- ggplot(data=d,aes(x=rank,y=pvals))+geom_point()+geom_line(aes(x=rank,y=psig))
+p
+sig <- pvals <= psig # vector of significant pvalues
+sig # first 5 values are less than the adjusted alpha
+```
+
+An alternative way of thinking about this is to adjust the **p values** themselves rather than the $\alpha$ levels. We can do this with a built-in ***R*** function, which makes the calculation easy.
+
+``` {r}
+sig <- p.adjust(pvals, method="bonferroni") <= 0.05
+sig # first 3 adjusted p values are less alpha
+sig <- p.adjust(pvals, method="BH") <= 0.05
+sig # first 4 adjusted p values are less alpha
+```
 
 ## Type II Error
 
@@ -141,18 +177,18 @@ typeII <- function(mu0,muA,sigma,n,type="two.tailed",alpha=0.05,k=1000){
 		}
 	}
 	
-	curve(dnorm(x,mu0,sigma/sqrt(n)),mu0-4*sigma/sqrt(n), mu0+4*sigma/sqrt(n),main=paste("Sampling Distributions Under H0 (blue) and HA (red)\nType II error rate from simulation = ",length(p[p>=alpha])/k,"\nTest: ",hyp,sep=""), xlab="x", ylab="Pr(x)", col="blue", xlim=c(min(c(mu0-4*sigma/sqrt(n),muA-4*sigma/sqrt(n))),max(c(mu0+4*sigma/sqrt(n),muA+4*sigma/sqrt(n)))),ylim=c(0,max(c(dnorm(mu0,mu0, sigma/sqrt(n))),dnorm(muA,muA,sigma/sqrt(n)))))
+	curve(dnorm(x,mu0,sigma/sqrt(n)),mu0-4*sigma/sqrt(n), mu0+4*sigma/sqrt(n),main=paste("Sampling Distributions Under H0 (red) and HA (blue)\nType II error rate from simulation = ",length(p[p>=alpha])/k,"\nTest: ",hyp,sep=""), xlab="x", ylab="Pr(x)", col="red", xlim=c(min(c(mu0-4*sigma/sqrt(n),muA-4*sigma/sqrt(n))),max(c(mu0+4*sigma/sqrt(n),muA+4*sigma/sqrt(n)))),ylim=c(0,max(c(dnorm(mu0,mu0, sigma/sqrt(n))),dnorm(muA,muA,sigma/sqrt(n)))))
 
-		curve(dnorm(x,muA,sigma/sqrt(n)),muA-4*sigma/sqrt(n), muA+4*sigma/sqrt(n), col="red", add=TRUE)
+		curve(dnorm(x,muA,sigma/sqrt(n)),muA-4*sigma/sqrt(n), muA+4*sigma/sqrt(n), col="blue", add=TRUE)
 	abline(h=0)
 	
 	if (type == "less") {
-		polygon(cbind(c(mu0-qnorm(1-alpha)*sigma/sqrt(n), seq(from=mu0-qnorm(1-alpha)*sigma/sqrt(n),to=muA+4*sigma/sqrt(n),length.out=100), muA+4*sigma/sqrt(n))), c(0,dnorm(seq(mu0-qnorm(1-alpha)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
+		polygon(cbind(c(mu0-qnorm(1-alpha)*sigma/sqrt(n), seq(from=mu0-qnorm(1-alpha)*sigma/sqrt(n),to=muA+4*sigma/sqrt(n),length.out=100), muA+4*sigma/sqrt(n))), c(0,dnorm(seq(mu0-qnorm(1-alpha)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0), border="blue",col="grey")
 		abline(v=mu0-qnorm(1-alpha)*sigma/sqrt(n), col="black", lty=3, lwd=2)
 	}
 	
 	if (type == "greater") {
-	 polygon(cbind(c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha)*sigma/sqrt(n), length.out=100), mu0+qnorm(1-alpha)*sigma/sqrt(n))), c(0,dnorm(seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha)*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
+	 polygon(cbind(c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha)*sigma/sqrt(n), length.out=100), mu0+qnorm(1-alpha)*sigma/sqrt(n))), c(0,dnorm(seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha)*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0), border="blue",col="grey")
 		abline(v=mu0+qnorm(1-alpha)*sigma/sqrt(n), col="black", lty=3, lwd=2)
 	}
 	
@@ -162,18 +198,20 @@ typeII <- function(mu0,muA,sigma,n,type="two.tailed",alpha=0.05,k=1000){
 		
 		if (t > 0) {
 		# greater
-			polygon(cbind(c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha/2)*sigma/sqrt(n), length.out=100), mu0+qnorm(1-alpha/2)*sigma/sqrt(n))), c(0,dnorm(seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha/2)*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
+			polygon(cbind(c(muA-4*sigma/sqrt(n), seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha/2)*sigma/sqrt(n), length.out=100), mu0+qnorm(1-alpha/2)*sigma/sqrt(n))), c(0,dnorm(seq(from=muA-4*sigma/sqrt(n), to=mu0+qnorm(1-alpha/2)*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0), border="blue",col="grey")
 		}
 		
 		# less
 		if (t < 0){
-			polygon(cbind(c(mu0-qnorm(1-alpha/2)*sigma/sqrt(n), seq(from=mu0-qnorm(1-alpha/2)*sigma/sqrt(n),to=muA+4*sigma/sqrt(n),length.out=100), muA+4*sigma/sqrt(n))), c(0,dnorm(seq(mu0-qnorm(1-alpha/2)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0), border="red",col="red")
+			polygon(cbind(c(mu0-qnorm(1-alpha/2)*sigma/sqrt(n), seq(from=mu0-qnorm(1-alpha/2)*sigma/sqrt(n),to=muA+4*sigma/sqrt(n),length.out=100), muA+4*sigma/sqrt(n))), c(0,dnorm(seq(mu0-qnorm(1-alpha/2)*sigma/sqrt(n), to=muA+4*sigma/sqrt(n), length.out=100), mean=muA,sd=sigma/sqrt(n)),0), border="blue",col="grey")
 		}
 	}
 	
 return(length(p[p>=alpha])/k)
 }
 ```
+
+#### CHALLENGE:
 Explore this function using different values of $\mu_0$, $\sigma$, $n$, and different types of one- and two-tailed tests.
 
 ``` {r}
@@ -187,42 +225,12 @@ eII <- typeII(mu0=7,muA=5,sigma=2,n=15,type="two.tailed") # Ha ≠ H0
 Power is the **probability of correctly rejecting a null hypothesis that is untrue**. For a test that has a Type II error rate of $\beta$, the statistical power is defined, simply, as $1-\beta$. Power values of 0.8 or greater are conventionally considered to be high.
 
 ## Effect Size
-An effect size is a quantitative measure of the strength of a phenomenon. Here, we are interested in comparing two sample means, and the most common way to describe the effect size is as a **standardized difference between the means** of the groups being compared. In this case, we divide the difference between the means by the standard deviation: $\vert(\mu_0$ - $\mu_A)\vert/\sigma$. This results in a scaleless measure. Effect sizes of 0.2 or less are conventionally considered to be low and of 0.8 or greater are conventionally considered to be high.
-
-
-#### CHALLENGE:
-Using the code below, which graphs the Type II error rate ($\beta$) and Power ($1-\beta$) for T tests (using the `power.t.test()` function), explore the effects of changing $\alpha$, within sample variability ($\sigma$), and the differece between sample means (i.e., $\mu_0$ and $\mu_A$ for a one sample test or, equivalently, $\mu_1$ and $\mu_2$ for a two sample test). The graph shows the effect size, given the difference between the means, (i.e., $\vert(\mu_0 - \mu_A)\vert/\sigma$) and the sample size ($n$) needed to achieve a power of 0.8.
-
-``` {r}
-library(ggplot2)
-library(manipulate)
-power.test <- function(mu0,muA,sigma,alpha=0.05,type,alternative){
-	p <- 0
-	for (i in 2:200){
-		x <- power.t.test(n = i, delta = abs(muA-mu0), sd = sigma, sig.level = alpha, power = NULL,type=type,alternative=alternative)
-		p<-c(p,x$power)
-	}
-	d <-data.frame(cbind(1:200,p, 1-p))
-	critn <- 0 
-	for (i in 1:199)
-		{
-		if (p[i] < 0.8 && p[i+1] >= 0.8) {critn <- i + 1} else {critn <- critn}
-	}
-	names(d) <- c("n","power", "beta")
-	g <- ggplot(data = d) + xlab("sample size n") + ylab("Type II Error Rate, Beta  (Red)\nand\nPower, 1-Beta (Blue)") + ggtitle("Power for T Tests\n(assuming equal n and variance across groups)") + ylim(0,1) + geom_point(aes(x=n, y=power),colour="blue", alpha=1/2) + geom_line(aes(x=n, y=power),colour="blue", alpha=1/2) + geom_line(aes(x=n,y=0.8), colour="red", lty=3) + geom_point(aes(x=n, y=beta),colour="red", alpha=1/2) + geom_line(aes(x=n,y=beta), colour="red", alpha=1/2) + geom_linerange(aes(x=critn,ymin=0,ymax=0.8), colour="blue", alpha=1/4) + annotate("text", x = 150, y = 0.5, label = paste("effect size = ",round(abs(mu0-muA)/sigma,digits=3),"\ncritical n = ", critn, sep=""))
-	print(g)
-}
-```
-
-``` {r eval=FALSE}
-manipulate(power.test(mu0,muA,sigma,alpha,type,alternative),mu0=slider(-10,10,initial=3,step=1),muA=slider(-10,10,initial=0,step=1),sigma=slider(1, 10, initial=3,step=1), alpha=slider(0.01,0.10,initial=0.05,step=0.01),type=picker("two.sample","paired","one.sample"),alternative=picker("two.sided","one.sided"))
-```
-
-
+An effect size is a quantitative measure of the strength of a phenomenon. Here, we are interested in comparing two sample means, and the most common way to describe the effect size is as a **standardized difference between the means** of the groups being compared. In this case, we divide the difference between the means by the standard deviation: $\vert(\mu_0$ - $\mu_A)\vert/\sigma$. This results in a scaleless measure. Conventionally, effect sizes of 0.2 or less are considered to be low and of 0.8 or greater are considered to be high.
 
 ## Graphical Depiction of Power and Effect Size
 
-Given two distributions
+The code below lets you explore power and effect size interactively. You can use the sliders to set $\mu_0$ and $\mu_A$ for a one-sample test (or, alternatively, think about these as $\mu_1$ and $\mu_2$ for a two-sample test), $\sigma$, $\alpha$, $n$, and you can choose whether you are testing the one sided hypothesis of $\mu_A$ being "greater" or "less" than $\mu_A$ or testing the two sided hypothesis that $\mu_A$ ≠ $\mu_0$ ("two.tailed"). The graph will output $Power$ and $Effect Size$.
+
 ```{r, echo = TRUE, eval=FALSE}
 library(ggplot2)
 library(manipulate)
@@ -274,3 +282,35 @@ manipulate(
 	)
 
 ```
+
+#### CHALLENGE:
+Using the code below, which graphs the Type II error rate ($\beta$) and Power ($1-\beta$) for T tests (using the `power.t.test()` function), explore the effects of changing $\alpha$, within sample variability ($\sigma$), and the differece between sample means (i.e., $\mu_0$ and $\mu_A$ for a one sample test or, equivalently, $\mu_1$ and $\mu_2$ for a two sample test). The graph shows the effect size, given the difference between the means, (i.e., $\vert(\mu_0 - \mu_A)\vert/\sigma$) and the sample size ($n$) needed to achieve a power of 0.8.
+
+``` {r}
+library(ggplot2)
+library(manipulate)
+power.test <- function(mu0,muA,sigma,alpha=0.05,type,alternative){
+	p <- 0
+	for (i in 2:200){
+		x <- power.t.test(n = i, delta = abs(muA-mu0), sd = sigma, sig.level = alpha, power = NULL,type=type,alternative=alternative)
+		p<-c(p,x$power)
+	}
+	d <-data.frame(cbind(1:200,p, 1-p))
+	critn <- 0 
+	for (i in 1:199)
+		{
+		if (p[i] < 0.8 && p[i+1] >= 0.8) {critn <- i + 1} else {critn <- critn}
+	}
+	names(d) <- c("n","power", "beta")
+	g <- ggplot(data = d) + xlab("sample size n") + ylab("Type II Error Rate, Beta  (Red)\nand\nPower, 1-Beta (Blue)") + ggtitle("Power for T Tests\n(assuming equal n and variance across groups)") + ylim(0,1) + geom_point(aes(x=n, y=power),colour="blue", alpha=1/2) + geom_line(aes(x=n, y=power),colour="blue", alpha=1/2) + geom_line(aes(x=n,y=0.8), colour="red", lty=3) + geom_point(aes(x=n, y=beta),colour="red", alpha=1/2) + geom_line(aes(x=n,y=beta), colour="red", alpha=1/2) + geom_linerange(aes(x=critn,ymin=0,ymax=0.8), colour="blue", alpha=1/4) + annotate("text", x = 150, y = 0.5, label = paste("effect size = ",round(abs(mu0-muA)/sigma,digits=3),"\ncritical n = ", critn, sep=""))
+	print(g)
+}
+```
+
+``` {r eval=FALSE}
+manipulate(power.test(mu0,muA,sigma,alpha,type,alternative),mu0=slider(-10,10,initial=3,step=1),muA=slider(-10,10,initial=0,step=1),sigma=slider(1, 10, initial=3,step=1), alpha=slider(0.01,0.10,initial=0.05,step=0.01),type=picker("two.sample","paired","one.sample"),alternative=picker("two.sided","one.sided"))
+```
+
+
+
+
