@@ -474,7 +474,9 @@ The `predict()` function allows us to generate predicted (i.e., <img src="img/yh
 > g
 ```
 
-![](img/unnamed-chunk-18-1.png) Each vertical line in the figure above represents a **residual**, the difference between the observed and the fitted or predicted value of y at the given x values.
+![](img/unnamed-chunk-18-1.png)
+
+Each vertical line in the figure above represents a **residual**, the difference between the observed and the fitted or predicted value of y at the given x values.
 
 The `predict()` function also allows us to easily generate confidence intervals around our predicted mean value for **y** values easily.
 

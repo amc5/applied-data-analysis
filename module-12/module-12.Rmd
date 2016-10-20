@@ -295,6 +295,7 @@ g <- g + geom_point(aes(x=x,y=y),colour="red")
 g <- g + geom_segment(aes(x=x, y=yhat, xend=x, yend=y))
 g
 ```
+
 Each vertical line in the figure above represents a **residual**, the difference between the observed and the fitted or predicted value of y at the given x values.
 
 The `predict()` function also allows us to easily generate confidence intervals around our predicted mean value for **y** values easily.
