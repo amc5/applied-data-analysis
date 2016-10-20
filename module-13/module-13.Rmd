@@ -20,7 +20,10 @@ knitr::opts_chunk$set(
 ## Preliminaries
 - Install this package in ***R***: {curl}
 
-## ANOVA Tables
+## Objectives
+> The objective of this module is to continue our discussion of simple linear regression analysis to understand how regression partitions the variance in the response variable among different sources, that explanined by the regression model and the error or residual variance. We also discuss the concept of residuals and how to calculate a measure of uncertainty - the standard error - for our regression coefficients and for the predicted values of our response variable based on a regression model. We also briefly discuss ways to transform non-normally distributed data to make them more appropriate for analysis using linear regression.
+
+## Analysis of Variance and ANOVA Tables
 
 In our linear models, we can separate or "partition" the total variation in our **y** variable (the *sum of squares of y*, or SSY) into that explained by our model (the regression sum of squares, or SSR) and that which is left over as "error" (the error sum of squares, or SSE): $SSY$ = $SSR$ + $SSE$.
 
@@ -200,9 +203,11 @@ plot(model)
 
 ## Data Transformations
 
-In many cases, the continuous metric data we have are not normally distributed, but we can often apply some kind of mathematical transformation to those data to change their distribution to more closely approximate the normal. 
+Recall that two conditions that need to be true for linear regression modeling to be appropriate is that our variables should be **normally distributed** and that should be **homogeneity of variance** in our response variable around the range of our predictor variable.
 
-The logarithmic or "log" transformation (where we take the log value of each data point) is often applied to positive numeric variables with heavy skew to dramatically reduce the overall range of the data and bring extreme observations closer to a measure of centrality. The logarithm for a number is the power to which you must raise a base value (e.g., $e$, for the natural log) in order to obtain that number.
+In many cases, the continuous metric data we have are not, in fact, normally distributed. Nonetheless, we can often apply some kind of mathematical transformation to our data to change their distribution to more closely approximate the normal. 
+
+The logarithmic or "log" transformation (where we take the log value of each data point) is often applied to positive numeric variables with heavy skew to dramatically reduce the overall range of the data and bring extreme observations closer to a measure of centrality. The logarithm for a number is the power to which you must raise a base value (e.g., $e$, for the natural log) in order to obtain that number. This is an example of a "power transformation", other examples of which include the square root transformation and the reciprocal (or multiplicative inverse) transformation.
 
 Return to the "Kamilar and Cooper"" dataset you were looking at above and log transform both of your variables and then run your linear model. Do you notice a difference?
 
@@ -217,9 +222,67 @@ plot(model)
 
 The following chart shows some other common numerical transformations.
 
+``` {r}
+a <- 2
+b <- 3
+x <- seq(1:100)
+y <- 
+
+
 <img src="img/transformations.png" width="500px"/>
 
-head(zombies)
+Examples:
 
-v1 <- zombies$weight
-v2 <-exp(v1)
+Log
+
+Sqrt
+
+Reciprocal
+
+Rank 
+```
+
+``` {r}
+library(curl)
+f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/Country-Data-2016.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+pop<-d$population
+area<-d$area
+plot(pop~area)
+
+lpop<-log(pop)
+larea<-log(area)
+x<-sample(larea,200,replace=TRUE)
+y <- sample(lpop,200,replace=TRUE)
+```
+
+``` {r}
+par(mfrow=c(1,1))
+plotter <- function(a,b,sigma,equation){
+x<-seq(1:200)
+if (equation == "y=a+bx"){
+	y <- a + b*x
+	yhat <- mean(y)
+	xhat <- mean(x)
+	y <- y + rnorm(200,yhat,abs(yhat)*sigma)
+	x <- x + rnorm(200,xhat,xhat*sigma)
+	d <- data.frame(cbind(x,y))
+	p<-ggplot(data=d,aes(x=x,y=y))+geom_point()+geom_smooth(method="lm")
+	p
+}
+if (equation == "y=a+b*log(x)"){
+	y <- a + b*log(x)
+	yhat <- mean(y)
+	xhat <- mean(x)
+	y <- y + rnorm(200,yhat,abs(yhat)*sigma)
+	#x <- x + rnorm(1000,xhat,xhat*sigma)
+	d <- data.frame(cbind(x,y))
+	p<-ggplot(data=d,aes(x=log(x),y=y))+geom_point()+geom_smooth(method="lm")
+	p
+}
+}
+
+manipulate(plotter(a,b,sigma,equation),a=slider(-3,3,initial=1,step=0.25),b=slider(-3, 3, initial=1,step=0.25),sigma=slider(0.01, 1, initial=0.40,step=0.01),equation=picker("y=a+bx","y=a+b*log(x)","y=ae^bx"))
+
+```

@@ -4,6 +4,14 @@ Module 10
 Classical Hypothesis Testing
 ============================
 
+Objectives
+----------
+
+> The objective of this module is to continue our discussion of classical *hypothesis testing* from a frequentist statistics approach.
+
+Null and Alternative Hypotheses
+-------------------------------
+
 Classical or frequentist hypothesis testing (a.k.a. parametric statistics) involves formally stating a claim - the **null hypothesis** - which is then followed up by statistical evaluation of the null versus an alternative hypotheses. The null hypothesis is interpreted as a baseline hypothesis and is the claim that is assumed to be true. The **alternative hypothesis** is the conjecture that we are testing.
 
 We need some kind of statistical evidence to reject the null hypothesis in favor of an alternative hypothesis. This evidence is, in classicical frequentist approaches, some measure of how unexpected it would be for the sample to have been drawn from a given null distribution.
@@ -560,14 +568,14 @@ Now, we will take 1000 random samples of size n=10 from that population and calc
 > m
 ```
 
-    ## [1] 0.4968
+    ## [1] 0.5041
 
 ``` r
 > s <- sd(x)
 > s
 ```
 
-    ## [1] 0.158603
+    ## [1] 0.1594321
 
 ``` r
 > pop_se <- sqrt(pi * (1 - pi)/n)
@@ -590,14 +598,14 @@ The same is true if we create a population of 800 "1"s and 200 "0"s, i.e., where
 > m
 ```
 
-    ## [1] 0.1945
+    ## [1] 0.1967
 
 ``` r
 > s <- sd(x)
 > s
 ```
 
-    ## [1] 0.1258395
+    ## [1] 0.1190516
 
 ``` r
 > pop_se <- sqrt(pi * (1 - pi)/n)

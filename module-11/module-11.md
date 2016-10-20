@@ -9,6 +9,11 @@ Preliminaries
 
 -   Install these packages in ***R***: {curl}, {ggplot2}, {manipulate}
 
+Objectives
+----------
+
+> The objective of this module is to discuss the concepts of Type I and Type II error, the multiple testing problem, statistical power, and effect size and outline how we can use ***R*** to investigate these via simulation and built-in functions.
+
 Overview
 --------
 
@@ -142,7 +147,8 @@ Now, run our Type I error test function with a couple of different values of *μ
 
 How does the Type I error rate change with *n*? With *σ*? With *α*? HINT: It shouldn't change much... the Type I error rate is defined by *α*!
 
-### Multiple Comparison Corrections
+Multiple Comparison Corrections
+-------------------------------
 
 One way we can address the multiple testing problem discussed above by using what is called the **Bonferroni** correction, which suggests that when doing a total of *k* independent hypothesis tests, each with a significance level of *α*, we should adjust the *α* level we use to interpret statistical significance as follow: *α*<sub>*B*</sub> = *α*/*k*. For example, if we run 10 independent hypothesis tests, then we should set our adjusted *α* level for each test as 0.05/10 = 0.005. With the Bonferroni correction, we are essentially saying that we want to control the rate at which we have even one incorrect rejection of *H*<sub>0</sub> given the entire family of tests we do. This is also referred to as limiting the "family-wise error rate" to level *α*.
 

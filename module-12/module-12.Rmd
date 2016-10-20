@@ -20,6 +20,9 @@ knitr::opts_chunk$set(
 ## Preliminaries
 - Install these packages in ***R***: {curl}, {ggplot2}, {gridExtra}, {manipulate}
 
+## Objectives
+> The objective of this module is to discuss the use of simple linear regression to explore the relationship among two continuous variables: a single predictor variable and a single response variable.
+
 ## Covariance and Correlation
 
 So far, we have looked principally at single variables, but one of the main things we are often interested in is the relationships among two or more variables. Regression modeling is one of the most powerful and important set of tools for looking at relationships among more than one variable. With our zombies dataset, we started to do this using simple bivariate scatterplots... let's look at those data again and do a simple bivariate plot of height by weight.

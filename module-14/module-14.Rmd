@@ -20,10 +20,164 @@ knitr::opts_chunk$set(
 ## Preliminaries
 - Install this package in ***R***: {curl}
 
+## Objectives
+> In this module, we examine how simple linear regression can be applied to datasets where our predictor variable is discrete or categorical rather than continuous. Indeed, we will see that one- and two-way analysis of variance (ANOVA) are specific applications of simple linear regression. We also look at other methods for basic statistical analysis of categorical data.
+
 ## Categorical Predictors in Regression
 
-## One-Way and Two-Way ANOVA
+Thus far we have used simple linear regression models involving continuous explanatory variables, but we can also use a discrete or categorical explanatory variable, made up of 2 or more groups that are coded as "factors" (i.e., we use integer values from 1 to $k$ discrete groups as dummy values for our categorical variables). Let's load in our zombie data again, but this time we specify `stringsAsFactors = TRUE` and then look at the class of the variable "gender".
+
+``` {r}
+f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/zombies.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = TRUE)
+class(d$gender)
+summary(d$gender)
+```
+
+As with our prior simple regression analysis, we want to evalute the effect of a predictor variable on a response variable, say "height", but this time we want our predictor to be the discrete variable "sex" rather than a continuous one. We can start off by plotting "height" by "sex" using the same formula notation we have been using.
+
+``` {r}
+plot(d$height~d$gender)
+```
+
+This immediately gives us a nice barplot. Note that if we'd try to use this command after loading in "gender" as character rather than factor data, ***R*** would have thrown an error.
+
+Based on our plot, there indeed seems to be a difference in height between males and females. We can test this directly using linear regression (and, recall, we already know another way to test this, using z or t tests to compare means).
+
+``` {r}
+m <- lm(data=d, height~gender)
+summary(m)
+```
+
+If we take a look at the `summary()` of our model, **m**, we see the same kind of table of results we have seen before, but because the predictor variable in this case is a factor vector instead of a numeric vector, the coefficients are reported and interpreted a bit differently. The coefficient for the intercept, i.e., $\beta_0$, reflects the estimate of the mean height for the first of our level variables.
+
+``` {r}
+levels(d$gender)
+```
+
+The estimate for $\beta_1$ is reported as "genderMale" and the value for that coefficient, 4.0154, is the estimated difference in mean height associated with being a male. The regression equation is basically:
+
+$height = 65.5983 + 4.0154 * gender$, with males assigned a gender value of 0 and females of 1.
+
+In this case, the **p** value associated with the **t** statistic for $\beta_1$ is extremely low, so we conclude that "gender" has a significant effect on height.
+
+We can easilty `relevel()` what is the baseline group. The result is very similar, but the sign of $\beta_1$ is changed.
+
+``` {r}
+d$gender <- relevel(d$gender,ref="Male")
+m <- lm(d$height~d$gender)
+summary(m)
+```
+The last line of the `summary()` output shows the results of the global test of significance of the regression model based on an F statistic compared to an F distribution with, in this case, 1 and 998 degrees of freedom.
+
+``` {r}
+p <- 1-pf(276.9, df1=1,df2=998)
+```
+We can extend this approach to the case where we have more than two categories for a variable... in this case we need to dummy code our factor variable into multiple binary variables. ***R*** takes care of this for us automatically, but it is good to recognize the procedure.
+
+Let's explore this by recoding the variable "major" into four levels. We first create a new variable name.
+
+``` {r}
+d$newmajor <- "temp"
+```
+
+We can use the `unique()` or `levels()` function to list all of the different majors in our dataset. The latter does this alphabetically. The `row()` command returns an index of row numbers, which we can then use to recode "major" into our new variable. 
+
+``` {r}
+unique(d$major)
+levels(d$major)
+row(data.frame(levels(d$major)))
+d$newmajor[row(data.frame(levels(d$major))) %in% c(1,2,3,5,6,14,15,16,18,21,23)] <- "natural science"
+d$newmajor[row(data.frame(levels(d$major))) %in% c(7,8,12,17,19,22)] <- "logistics"
+d$newmajor[row(data.frame(levels(d$major))) %in% c(4,18,20)] <- "engineering"
+d$newmajor[row(data.frame(levels(d$major))) %in% c(9,10,11,13,24,25,26)] <- "other"
+d$newmajor <- as.factor(d$newmajor)
+levels(d$newmajor)
+d$newmajor <- relevel(d$newmajor,ref="natural science")
+levels(d$newmajor)
+```
+
+Again, we can plot our variable by group and run a multilevel linear regression. Each $\beta$ estimate reflects the difference from the estimated mean for the reference level. The `lm()` function also returns the results of the global significance test of our model.
+
+``` {r}
+plot(data=d,zombies_killed~newmajor)
+m <- lm(data=d, zombies_killed~newmajor)
+summary(m)
+p <- 1-pf(0.526, df1=3, df2=996) # F test
+p
+```
+In this case, we see no significant effect of major on zombie killing proficiency.
+
+## One-Way ANOVA
+
+Regression with a single categorical predictor run as we have just done above is exactly equivalent to a "one-way" or "one-factor" analysis of variance, or ANOVA. That is, ANOVA is just one type of special case of least squares regression. We can thus run an ANOVA with one line in ***R***. Compare the results presented in the `summary()` output table from an ANOVA with that from the global test reported in `summary()` from `lm()`
+
+``` {r}
+m <- aov(data=d, zombies_killed~newmajor)
+summary(m)
+```
+
+In general, in ANOVA and simple regression using a single categorical variable, we aim to test the $H_0$ that the means of a variable of interest do not differ among groups, i.e., that $\mu_1$ = $\mu_2$... $\mu_k$ are all equal. This is an extension of our comparison of two means that we did with z and t tests.
+
+#### CHALLENGE:
+Load in the "gibbon-femurs.csv" dataset, which contains the lengths, in centimeters, of the femurs of 400 juvenile, subadult, and adult individuals gibbons. Use both ANOVA and simple linear regession to examine the relationship between age and femur length. Is the omnibus test of this relationship significant? Are femur lengths significantly different for juveniles versus subadults? Subadults versus adults? Juveniles versus adults? Hint: to test these bivariate options, you will need to relevel your factors for simple linear regression.
+
+``` {r}
+``` {r}
+library(reshape2)
+f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/gibbon-femurs-2.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = TRUE)
+head(d)
+d <- select(d,-id)
+d <- melt(d)
+d$sex <- rep(c("male","female"),400)
+head(d)
+names(d) <- c("age","femur_length","sex")
+head(d)
+hist(d$femur_length)
+qqnorm(d$femur_length)
+plot(data=d, femur_length~age) # boxplot with median
+means <- summarise(group_by(d,age),mean(femur_length)) # calculare average by group
+points(1:4,means$`mean(femur_length)`,pch=4,cex=1.5) # add means
+sds <- summarise(group_by(d,age),sd(femur_length))
+max(sds$`sd(femur_length)`)/min(sds$`sd(femur_length)`) # check that variances rougly equal (ratio of max/min is <2)
+mean.ctr <- d$femur_length-means[as.numeric(d$age),2] # subtract relevnant group mean from each data point
+qqnorm(mean.ctr$`mean(femur_length)`) # graphical tests for normality
+par(mfrow=c(4,2))
+hist(d$femur_length[d$age=="femur.inf"], main="femur.inf")
+qqnorm(d$femur_length[d$age=="femur.inf"])
+hist(d$femur_length[d$age=="femur.juv"], main="femur.inf")
+qqnorm(d$femur_length[d$age=="femur.juv"])
+hist(d$femur_length[d$age=="femur.sub"], main="femur.sub")
+qqnorm(d$femur_length[d$age=="femur.sub"])
+hist(d$femur_length[d$age=="femur.adult"], main="femur.adult")
+qqnorm(d$femur_length[d$age=="femur.adult"])
+par(mfrow=c(1,1))
+plot(data=d,femur_length~age)
+m <- aov(data=d,femur_length~age)
+summary(m)
+m <- lm(data=d,femur_length~age)
+summary(m)
+```
 
 ## Kruskal-Wallis Tests and Post-Hoc Tests
+The Kruskal- Wallis test is a nonparametric alternative to one-way ANOVA that relaxes the need for normality in the distribution of data in each group (the different groups should still have roughly equal variances). Essentially, rather than testing the null hypothesis that the means for each group do not differ we are instead testing the null hypothesis that the medians do not differ. The test converts the continuous response variable to RANK (i.e., it does a uniform transformation) and then works with those ranks. The p value associated with the K-W test statistic is evaluated against a Chi-Square distribution.
+
+
+``` {r}
+m <- kruskal.test(data=d,femur_length~age)
+m
+d <- arrange(d,femur_length)
+d <- mutate(d,femur_rank = row(data.frame(d$femur_length)))
+m <- kruskal.test(data=d,femur_rank~age)
+m
+```
+## Two-Way ANOVA
+
+summary(aov(data=d,femur_length~age))
+summary(aov(data=d,femur_length~sex))
+
+summary(aov(data=d,femur_length~age+sex))
+
 
 ## Chi-Square Tests of Independence and Goodness of Fit

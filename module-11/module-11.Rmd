@@ -20,6 +20,9 @@ knitr::opts_chunk$set(
 ## Preliminaries
 - Install these packages in ***R***: {curl}, {ggplot2}, {manipulate}
 
+## Objectives
+> The objective of this module is to discuss the concepts of Type I and Type II error, the multiple testing problem, statistical power, and effect size and outline how we can use ***R*** to investigate these via simulation and built-in functions.
+
 ## Overview
 
 Let's return to the concepts of **error** and **power**. Recall that Type I error occurs when you **incorrectly reject a true $H_0$**. In any given hypothesis test, the probability of a Type I error is equivalent to the significance level, $\alpha$, and it is this type of error we are often trying to minimize when we are doing classical statistical inference. Type II error occurs when you **incorrectly fail to reject a false $H_0$** (in other words, fail to find evidence in support of a true $H_A$). Since we do not know what the true $H_A$ actually is, the probability of committing such an error, labeled $\beta$, is not usually known in practice.
@@ -105,7 +108,7 @@ eI <- typeI(mu0=5,sigma=2,n=1000,alternative="less",alpha=0.01)
 #### CHALLENGE:
 How does the Type I error rate change with $n$? With $\sigma$? With $\alpha$? HINT: It shouldn't change much... the Type I error rate is defined by $\alpha$!
 
-### Multiple Comparison Corrections
+## Multiple Comparison Corrections
 One way we can address the multiple testing problem discussed above by using what is called the **Bonferroni** correction, which suggests that when doing a total of $k$ independent hypothesis tests, each with a significance level of $\alpha$, we should adjust the $\alpha$ level we use to interpret statistical significance as follow: $\alpha_B$ = $\alpha/k$. For example, if we run 10 independent hypothesis tests, then we should set our adjusted $\alpha$ level for each test as 0.05/10 = 0.005. With the Bonferroni correction, we are essentially saying that we want to control the rate at which we have even one incorrect rejection of $H_0$ given the entire family of tests we do. This is also referred to as limiting the "family-wise error rate" to level $\alpha$.
 
 Note that many statisticians consider the Bonferroni correction to be a very conservative one, and there are other corrections we might use to account for multiple testing.

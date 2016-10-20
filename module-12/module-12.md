@@ -9,6 +9,11 @@ Preliminaries
 
 -   Install these packages in ***R***: {curl}, {ggplot2}, {gridExtra}, {manipulate}
 
+Objectives
+----------
+
+> The objective of this module is to discuss the use of simple linear regression to explore the relationship among two continuous variables: a single predictor variable and a single response variable.
+
 Covariance and Correlation
 --------------------------
 
