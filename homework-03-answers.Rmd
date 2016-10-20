@@ -7,22 +7,179 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Load in the dataset "zombies.csv" from my ***GitHub*** repo at https://github.com/difiore/ADA2016. 
+
 ``` {r}
 library(curl)
 f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/zombies.csv")
-d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
-head(d)
-d<-NULL
-
-``` {r}
-x <- d[c("height", "weight", "age", "zombies_killed","years_of_education")]
-summary(x)
-pop_sd <- function(x){sqrt(sum((x - mean(x))^2)/(length(x)))}
-sds <- c(mean(d$height),mean(d$weight),mean(d$age),mean(d$zombies_killed),mean(d$years_of_education))
-
+zombies <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(zombies)
+library(dplyr)
+zombies <- select(zombies,gender,height,weight,age,zombies_killed,years_of_education)
+head(zombies)
 ```
 
+[1] Calculate the *population* mean and standard deviation for each quantitative random variable (height, weight, age, number of zombies killed, and years of education).
+
+``` {r}
+popsd <- function(x){sqrt(sum((x - mean(x))^2)/(length(x)))}
+zombies_summary <- summarize(zombies,mean(height),popsd(height),mean(weight),popsd(weight),mean(age),popsd(age),mean(zombies_killed),popsd(zombies_killed),mean(years_of_education),popsd(years_of_education))
+zombies_summary
+```
+
+[2] Use {ggplot} and make boxplots of each of these variable by gender.
 
 ``` {r}
 library(ggplot2)
-p <- ggplot()
+library(gridExtra)
+p1 <- ggplot(data=zombies,aes(x=gender, y=height))
+p1 <- p1 + geom_boxplot(aes(colour=factor(gender)))
+p1 <- p1 + theme(legend.position="none")
+p2 <- ggplot(data=zombies,aes(x=gender, y=weight))
+p2 <- p2 + geom_boxplot(aes(colour=factor(gender)))
+p2 <- p2 + theme(legend.position="none")
+p3 <- ggplot(data=zombies,aes(x=gender, y=age))
+p3 <- p3 + geom_boxplot(aes(colour=factor(gender)))
+p3 <- p3 + theme(legend.position="none")
+p4 <- ggplot(data=zombies,aes(x=gender, y=zombies_killed))
+p4 <- p4 + geom_boxplot(aes(colour=factor(gender)))
+p4 <- p4 + theme(legend.position="none")
+p5 <- ggplot(data=zombies,aes(x=gender, y=years_of_education))
+p5 <- p5 + geom_boxplot(aes(colour=factor(gender)))
+p5 <- p5 + theme(legend.position="none")
+grid.arrange(p1,p2,p3,p4,p5, ncol=3)
+```
+
+[3] Use {ggplot} and make scatterplots of height and weight in relation to age. Do these variables seem to be related? In what way?
+
+``` {r}
+p1 <- ggplot(data=zombies,aes(x=age, y=height, colour=factor(gender)))
+p1 <- p1 + geom_point() + theme(legend.position="bottom",legend.title=element_blank())
+p2 <- ggplot(data=zombies,aes(x=age, y=weight, colour=factor(gender)))
+p2 <- p2 + geom_point() + theme(legend.position="bottom",legend.title=element_blank())
+grid.arrange(p1,p2,nrow=2)
+```
+Both seem to be positive linear functions of age.
+
+[4] Using histograms and Q-Q plots, check whether the quantitative variables seem to be drawn from a normal distribution.
+
+``` {r}
+par(mfrow=c(2,3))
+hist(zombies$height,main="Height",xlab="",breaks=20)
+hist(zombies$weight,main="Weight",xlab="",breaks=20)
+hist(zombies$age,main="Age",xlab="",breaks=20)
+hist(zombies$zombies_killed,main="Zombies Killed",xlab="",breaks=10)
+hist(zombies$years_of_education,main="Years of Education",xlab="",breaks=10)
+par(mfrow=c(2,3))
+qqnorm(zombies$height,main="Height")
+qqline(zombies$height)
+qqnorm(zombies$weight,main="Weight")
+qqline(zombies$weight)
+qqnorm(zombies$age,main="Age")
+qqline(zombies$age)
+qqnorm(zombies$zombies_killed,main="Zombies Killed")
+qqline(zombies$zombies_killed)
+qqnorm(zombies$years_of_education,main="Years of Education")
+qqline(zombies$years_of_education)
+```
+
+The first three are seemingly drawn from the normal, but the latter two no. These are discrete variables and seem to be drawn from the Poisson distribution.
+
+[5] Now use the `sample()` function to sample ONE subset of 30 zombies (without replacement) from this population and calculate the mean and sample standard deviation for each variable. Also estimate the standard error for each variable and construct the 95% confidence interval for each mean. Note that for the variables that are not drawn from the normal distribution, you will need to base your estimate of the CIs on some different distribution.
+
+``` {r}
+# first some functions
+SE.norm <- function(x){sd(x)/sqrt(length(x))}
+SE.pois <- function(x){sqrt(mean(x)/length(x))} # mean(x) is estimate of lambda
+CI.norm <- function(x){mean(x) + c(-1,1) * qnorm(1-0.05/2)*SE.norm(x)}
+CI.pois.1 <- function(x){mean(x) + c(-1,1) * qnorm(1-0.05/2)*SE.pois(x)} # confidence interval based on normal
+CI.pois.2 <- function(x){
+	set <- NULL
+	for (i in 1:1000){
+		set[i] <- mean(sample(x,length(x),replace=TRUE))
+  }
+	ci <- quantile(set,c(0.025,0.975)) # confidence interval based on simulation
+}
+CI.pois.3 <- function(x){mean(x) + c(-1,1) * qpois(1-0.05/2,lambda=mean(x))*SE.pois(x)} # this would be a confidence interval based on pois... but this isn't appropriate for this problemt, though, as the sampling distribution for our estimate of lambda should be normal (though the original distribution is Poisson)
+
+n <- 30
+zombie_sample <- zombies[sample(1:nrow(zombies),size=n,replace=FALSE),]
+
+zombie_sample_means <- summarize(zombie_sample,mean(height),mean(weight),mean(age),mean(zombies_killed),mean(years_of_education))
+zombie_sample_means
+
+zombie_sample_sd <- summarize(zombie_sample,sd(height),sd(weight),sd(age),sd(zombies_killed),sd(years_of_education))
+zombie_sample_sd
+
+zombie_sample_se <- summarize(zombie_sample,SE.norm(height),SE.norm(weight),SE.norm(age),SE.pois(zombies_killed),SE.pois(years_of_education))
+zombie_sample_se
+
+zombie_sample_cis <- c(CI.norm(zombie_sample$height),CI.norm(zombie_sample$weight),CI.norm(zombie_sample$age),CI.pois.1(zombie_sample$zombies_killed),CI.pois.2(zombie_sample$zombies_killed),CI.pois.1(zombie_sample$years_of_education),CI.pois.2(zombie_sample$years_of_education))
+names(zombie_sample_cis) <- rep(c("2.5%","97.5%"),7)
+zombie_sample_cis
+```
+
+[6] Now draw 99 more random samples of 30 zombies out and calculate the mean for each variable for each of the these samples. Together with the first sample you drew out, you now have a set of 100 means for each variable (each based on 30 observations), which constitutes a sampling distribution for each variable. What are the means and standard deviations of this distribution of means for each variable? How do the standard deviations of means compare to the standard errors estimated in [5]?
+
+``` {r}
+s <- NULL # zombie samples
+s[[1]]<-zombie_sample # start a data frame of sample means with initial sample
+for (i in 2:100){
+	s[[i]] <- zombies[sample(1:nrow(zombies),size=n,replace=FALSE),]
+}
+head(s,1)
+sd <- NULL # zombie sampling distributions
+for (i in 1:100){
+	sd <- rbind(sd,summarize(s[[i]],mean(height),mean(weight),mean(age),mean(zombies_killed),mean(years_of_education)))
+}
+head(sd)
+
+final <- summarize(sd,mean(`mean(height)`),sd(`mean(height)`),mean(`mean(weight)`),sd(`mean(weight)`),mean(`mean(age)`),sd(`mean(age)`),mean(`mean(zombies_killed)`),sd(`mean(zombies_killed)`),mean(`mean(years_of_education)`),sd(`mean(years_of_education)`))
+names(final) <- c("mean_mean_height","sd_mean_height","mean_mean_weight","sd_mean_weight","mean_mean_age","sd_mean_age","mean_mean_zombies_killed","sd_mean_zombies_killed","mean_mean_years_of_education","sd_mean_years_of_education")
+final
+
+# Compare SD of sampling distribution to SE estimated from a single sample and to SE estimated based on what we know of population and sample size. These should all be about the same! As number of samples increases, the SD of the sampling distribution should converge to the standard error, i.e., to population standard deviation/sqrt(n). The SE of each sample should be an estimator of this standard error.
+
+# height
+compare_height <- c(final$sd_mean_height,zombie_sample_se$`SE.norm(height)`,popsd(zombies$height/sqrt(n)))
+
+# weight
+compare_weight <- c(final$sd_mean_weight,zombie_sample_se$`SE.norm(weight)`,popsd(zombies$weight/sqrt(n)))
+
+# age
+compare_age <- c(final$sd_mean_age,zombie_sample_se$`SE.norm(age)`,popsd(zombies$age/sqrt(n)))
+
+# zombies_killed
+compare_zombies_killed <- c(final$sd_mean_zombies_killed,zombie_sample_se$`SE.pois(zombies_killed)`,popsd(zombies$zombies_killed/sqrt(n)))
+
+# years_of_education
+compare_years_of_education <- c(final$sd_mean_years_of_education,zombie_sample_se$`SE.pois(years_of_education)`,popsd(zombies$years_of_education/sqrt(n)))
+
+compare <- data.frame(rbind(compare_height,compare_weight,compare_age,compare_zombies_killed,compare_years_of_education))
+names(compare) <- c("sd of sampling dist","se from single sample","se from population sd and n")
+compare
+```
+What do these sampling distributions look like? Are they normally distributed? What about for those variables that you concluded were not originally drawn from a normal distribution?
+
+``` {r}
+# plot the distributions
+par(mfrow=c(3,2))
+hist(sd$`mean(height)`,main="Height Means",xlab="")
+hist(sd$`mean(weight)`,main="Weight Means",xlab="")
+hist(sd$`mean(age)`,main="Age Means",xlab="")
+hist(sd$`mean(zombies_killed)`,main="Zombies Killed Means",xlab="")
+hist(sd$`mean(years_of_education)`,main="Years of Education Means",xlab="")
+
+par(mfrow=c(2,3))
+qqnorm(sd$`mean(height)`,main="Height")
+qqline(sd$`mean(height)`)
+qqnorm(sd$`mean(weight)`,main="Weight")
+qqline(sd$`mean(weight)`)
+qqnorm(sd$`mean(age)`,main="Age")
+qqline(sd$`mean(age)`)
+qqnorm(sd$`mean(zombies_killed)`,main="Zombies Killed")
+qqline(sd$`mean(zombies_killed)`)
+qqnorm(sd$`mean(years_of_education)`,main="Years of Education")
+qqline(sd$`mean(years_of_education)`)
+```
+These all look more normally distributed now.
