@@ -9,8 +9,13 @@ Preliminaries
 
 -   Install this package in ***R***: {curl}
 
-ANOVA Tables
-------------
+Objectives
+----------
+
+> The objective of this module is to continue our discussion of simple linear regression analysis to understand how regression partitions the variance in the response variable among different sources, that explanined by the regression model and the error or residual variance. We also discuss the concept of residuals and how to calculate a measure of uncertainty - the standard error - for our regression coefficients and for the predicted values of our response variable based on a regression model. We also briefly discuss ways to transform non-normally distributed data to make them more appropriate for analysis using linear regression.
+
+Analysis of Variance and ANOVA Tables
+-------------------------------------
 
 In our linear models, we can separate or "partition" the total variation in our **y** variable (the *sum of squares of y*, or SSY) into that explained by our model (the regression sum of squares, or SSR) and that which is left over as "error" (the error sum of squares, or SSE): *S**S**Y* = *S**S**R* + *S**S**E*.
 
@@ -382,6 +387,14 @@ Load in the "KamilarAndCooper.csv" dataset and develop a linear model to look at
 Data Transformations
 --------------------
 
+Recall that two conditions that need to be true for linear regression modeling to be appropriate is that our variables should be **normally distributed** and that should be **homogeneity of variance** in our response variable around the range of our predictor variable.
+
+In many cases, the continuous metric data we have are not, in fact, normally distributed. Nonetheless, we can often apply some kind of mathematical transformation to our data to change their distribution to more closely approximate the normal.
+
+The logarithmic or "log" transformation (where we take the log value of each data point) is often applied to positive numeric variables with heavy skew to dramatically reduce the overall range of the data and bring extreme observations closer to a measure of centrality. The logarithm for a number is the power to which you must raise a base value (e.g., *e*, for the natural log) in order to obtain that number. This is an example of a "power transformation", other examples of which include the square root transformation and the reciprocal (or multiplicative inverse) transformation.
+
+#### CHALLENGE:
+
 Return to the "Kamilar and Cooper"" dataset you were looking at above and log transform both of your variables and then run your linear model. Do you notice a difference?
 
 ``` r
@@ -423,10 +436,6 @@ Return to the "Kamilar and Cooper"" dataset you were looking at above and log tr
 
 ![](img/unnamed-chunk-16-2.png)![](img/unnamed-chunk-16-3.png)![](img/unnamed-chunk-16-4.png)![](img/unnamed-chunk-16-5.png)
 
-In many cases, the data we have are not normally distributed, but we can often apply some kind of mathematical transformation to our data to changes the distribution to more closely approximate the normal.
-
-The logarithmic or "log" transformation which we used above (taking some log value of each data point) is often applied to positive numeric variables with heavy skew to dramatically reduce the overall range of the data and bring extreme observations closer to a measure of centrality. The logarithm for a number is the power to which you must raise a base value (e.g., *e*, for the natural log) in order to obtain that number.
-
-The following chart shows some other common transformations.
+The following chart shows some other common numerical transformations.
 
 <img src="img/transformations.png" width="500px"/>

@@ -173,3 +173,52 @@ CV <- sd(v)/mean(v)
 #### The Chi Squared Distribution
 
 The **Chi Squared Distribution** models sums of squared normal variates and is thus often used in tests concerning sample variances of normally distributed data. Like the t distribution, it is dependent upon specification of a degrees of freedom using the `df=` argument.
+
+
+
+Transformation code?
+
+``` {r}
+library(curl)
+f <- curl("https://raw.githubusercontent.com/difiore/ADA2016/master/Country-Data-2016.csv")
+d <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(d)
+pop<-d$population
+area<-d$area
+plot(pop~area)
+
+lpop<-log(pop)
+larea<-log(area)
+x<-sample(larea,200,replace=TRUE)
+y <- sample(lpop,200,replace=TRUE)
+```
+
+``` {r}
+par(mfrow=c(1,1))
+plotter <- function(a,b,sigma,equation){
+x<-seq(1:200)
+if (equation == "y=a+bx"){
+y <- a + b*x
+yhat <- mean(y)
+xhat <- mean(x)
+y <- y + rnorm(200,yhat,abs(yhat)*sigma)
+x <- x + rnorm(200,xhat,xhat*sigma)
+d <- data.frame(cbind(x,y))
+p<-ggplot(data=d,aes(x=x,y=y))+geom_point()+geom_smooth(method="lm")
+p
+}
+if (equation == "y=a+b*log(x)"){
+y <- a + b*log(x)
+yhat <- mean(y)
+xhat <- mean(x)
+y <- y + rnorm(200,yhat,abs(yhat)*sigma)
+#x <- x + rnorm(1000,xhat,xhat*sigma)
+d <- data.frame(cbind(x,y))
+p<-ggplot(data=d,aes(x=log(x),y=y))+geom_point()+geom_smooth(method="lm")
+p
+}
+}
+
+manipulate(plotter(a,b,sigma,equation),a=slider(-3,3,initial=1,step=0.25),b=slider(-3, 3, initial=1,step=0.25),sigma=slider(0.01, 1, initial=0.40,step=0.01),equation=picker("y=a+bx","y=a+b*log(x)","y=ae^bx"))
+
+```
