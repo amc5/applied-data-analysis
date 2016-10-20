@@ -315,7 +315,8 @@ g <- g + geom_line(aes(x=x, y=CIlwr), colour = "blue")
 g <- g + geom_line(aes(x=x, y=CIupr), colour = "blue")
 g
 ```
-The same `predict()` function also allows us to easily generate prediction intervals for values of **y** at each **x**.
+
+The same `predict()` function also allows us to easily generate *prediction intervals* for values of **y** at each **x**.
 
 ``` {r}
 pi <- predict(m,newdata=data.frame(weight=150), interval="prediction",level=0.95) # for a single value

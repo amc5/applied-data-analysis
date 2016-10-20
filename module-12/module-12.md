@@ -526,7 +526,9 @@ The `predict()` function also allows us to easily generate confidence intervals 
 > g
 ```
 
-![](img/unnamed-chunk-19-1.png) The same `predict()` function also allows us to easily generate prediction intervals for values of **y** at each **x**.
+![](img/unnamed-chunk-19-1.png)
+
+The same `predict()` function also allows us to easily generate *prediction intervals* for values of **y** at each **x**.
 
 ``` r
 > pi <- predict(m, newdata = data.frame(weight = 150), interval = "prediction", 
