@@ -33,7 +33,7 @@ Week 03 (2016-09-15)
 
 ### Module 06 - [Exploratory Data Analysis](../applied-data-analysis/module-06/module-06.html)
 
-### Module 07 - [Statistics Fundamentals - Central Tendency and Variance](../applied-data-analysis/module-07/module-07.html)
+### Module 07 - [Central Tendency and Variance](../applied-data-analysis/module-07/module-07.html)
 
 Week 04 (2016-09-22)
 --------------------
@@ -64,7 +64,7 @@ Week 08 (2016-10-20)
 
 ### Module 13 - [Elements of Regression Analysis](../applied-data-analysis/module-13/module-13.html)
 
-### Module 14 - \[Basic Categorical Data Analysis\]
+### Module 14 - [Basic Categorical Data Analysis and ANOVA](../applied-data-analysis/module-14/module-14.html)
 
 Week 09 (2016-10-27)
 --------------------
@@ -85,8 +85,8 @@ Week 13 (2016-11-24)
 
 ### No class meeting
 
-Week 14 (2016-12-01)
---------------------
+Week 14 (2016-12-01)\[Student Presentations\]
+---------------------------------------------
 
-Week 15 (2016-12-08)
---------------------
+Week 15 (2016-12-08)\[Student Presentations\]
+---------------------------------------------

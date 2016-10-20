@@ -15,7 +15,10 @@ knitr::opts_chunk$set(
 	fig.path = "img/"
 )
 ```
-# Statistics Fundamentals - Central Tendency and Variance
+# Central Tendency and Variance
+
+## Preliminaries
+- Install this package in ***R***: {sciplot}
 
 ## Objectives
 > The objective of this module to introduce the fundamental concepts of central tendency and variance, which are crucial for describing data and for statistical hypothesis testing.

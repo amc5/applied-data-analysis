@@ -1,8 +1,13 @@
 Module 07
 ================
 
-Statistics Fundamentals - Central Tendency and Variance
-=======================================================
+Central Tendency and Variance
+=============================
+
+Preliminaries
+-------------
+
+-   Install this package in ***R***: {sciplot}
 
 Objectives
 ----------
@@ -33,7 +38,7 @@ These measures are relevant to summarizing observations about processes that add
 -   **Harmonic mean** = the reciprocal of the average of the reciprocals of a set of values
 -   **Geometric mean** = a measure of central tendency for processes that are multiplicative rather than additive = the nth root of the product of the values (for the mathematically inclindes, it also = the antilog of the averaged log values).
 
-#### CHALLENGE 1:
+#### CHALLENGE:
 
 Given a vector, x &lt;- c(1,2,3,4,5,6,7,8,9,10,100,1000) - Write a function to determine the geometric mean of the values in a vector. Remember the general form for functions is:
 
@@ -60,8 +65,7 @@ Given a vector, x &lt;- c(1,2,3,4,5,6,7,8,9,10,100,1000) - Write a function to d
 
 -   What happens if you have `NA`s or zeros or negative numbers in the vector? **HINT:** The argument `na.rm = TRUE` and the function `na.omit()` may help you write more generic functions.
 
-Measures of Spread
-------------------
+### Measures of Spread
 
 A measure of spread or variability in a dataset is the one of the most important summary statistics to calculate. The *range* (min to max) is one measure of spread as is the *interquartile* range (25th to 75th quartile). As we've seen, these are returned by the `summary()` function.
 
@@ -71,7 +75,7 @@ We commonly characterize spread, however, in terms of the **deviation of values 
 
 \[Why do we use the sum of the **squared** deviations of values from the mean rather than just the sum of deviations? Because the latter would simply be ZERO.\]
 
-#### CHALLENGE 2:
+#### CHALLENGE:
 
 -   Write a function to calculate the *sum of squares* for a vector
 
@@ -127,7 +131,7 @@ If, however, we have not measured all of the individual cases in population... i
 
 In this formula, *n - 1* is the number of *degrees of freedom* implied by the sample. The *degrees of freedom* is the number of values used to calculate a sample statistic that are free to vary. We used **n** observations to calculate the mean of our sample, and that implies *n - 1* degrees of freedom. We use that statistic about our sample as an estimate of the population mean, which is used to derive an estimate of the population variance.
 
-#### CHALLENGE 3:
+#### CHALLENGE:
 
 -   Write a function to calculate the variance for a vector of values representing a *sample* of measurements. Compare the results of your function to the built-in function, `var()`, which calculates sample variance.
 
@@ -181,7 +185,7 @@ In ***R*** we can write...
 > pop_sd(x)
 ```
 
-    ## [1] 1.706399
+    ## [1] 2.301106
 
 ``` r
 > sample_sd <- function(x) {
@@ -190,14 +194,14 @@ In ***R*** we can write...
 > sample_sd(x)
 ```
 
-    ## [1] 1.723723
+    ## [1] 2.324468
 
 The built-in ***R*** function `sd()` can be used to calculate the standard deviation of a sample.
 
 Using Measures of Spread
 ------------------------
 
-### Describing uncertainty or unreliability in estimated parameters
+### Describing Uncertainty in Estimated Parameters
 
 We would also like to have an idea, based on characteristics of our sample, how reliable or unreliable our estimates of population parameters based on those samples are. In general, we would expect such a measure of uncertainty, or *error*, to increase with the variability in our sample (estimates with high variability are more uncertain) and to decrease as we sample more. That is, it should be proportional to the ratio of variance to sample size.
 
@@ -211,7 +215,11 @@ or
 
 **SE mean** = square root of (sample variance / number of observations)
 
-#### CHALLENGE 4:
+or
+
+**SE mean** = (sample standard deviation) / square root of (number of observations)
+
+#### CHALLENGE:
 
 -   Write a function to calculate the *standard error of the mean* for a vector of values representing a sample of measurements. You can use either your own function for sample variance or the built-in `var()` function
 
@@ -222,7 +230,7 @@ or
 > SE1(x)
 ```
 
-    ## [1] 0.2437713
+    ## [1] 0.3287294
 
 ``` r
 > SE2 <- function(x) {
@@ -231,7 +239,7 @@ or
 > SE2(x)
 ```
 
-    ## [1] 0.2437713
+    ## [1] 0.3287294
 
 The package {sciplot} also includes the function, `se()`, for calculating standard errors (as do others).
 
@@ -240,9 +248,9 @@ The package {sciplot} also includes the function, `se()`, for calculating standa
 > se(x)
 ```
 
-    ## [1] 0.2437713
+    ## [1] 0.3287294
 
-### Calculating confidence intervals from standard errors
+### Calculating Confidence Intervals using Standard Errors
 
 Standard errors can be used to calculate the **confidence intervals** around an estimate. A confidence interval shows the likely range of values into which an estimate would fall if the sampling exercise were to be repeated. We can talk about different confidence intervals (e.g., 50%, 95%, 99%), and the higher the confidence we want to have, the wider the interval will be.
 
@@ -331,7 +339,7 @@ Alternatively, we can define our own generic CI function based on the normal dis
 -   Based on the given data (with a particular mean, variance, and sample size) we are 95% confident that the true mean of the population is between these bounds.
 -   A repeated sample from the same distribution is expected to fall into this interval 95% of the time.
 
-### Calculating confidence intervals by bootstrapping
+### Calculating Confidence Intervals by Bootstrapping
 
 An alternative way to calculate a confidence interval is by simulation, which does not presume the underlying distribution from which the random variable is drawn. Here, we use the `sample()` function to sample, with replacement, 15 numbers from our vector **x** a total of 10000 times.
 
@@ -359,7 +367,7 @@ The `quantile()` function returns, for your set of data, the observations satisf
     ##      2.5%     97.5% 
     ##  5.866667 10.133333
 
-#### CHALLENGE 5:
+#### CHALLENGE:
 
--   How does the CI calculated this way, by simulation, compares to that calculated based on assuming a normal distribution?
+-   How does the CI calculated this way, by simulation, compare to that calculated based on assuming a normal distribution?
 -   How does the width of the CI change with decreasing or increasing **n** (the number of observations drawn from your sample with replacement)? For example, if we set **n** at 5? At 50? At 500?

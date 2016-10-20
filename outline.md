@@ -117,7 +117,7 @@ Week 03 (2016-09-15)
 
 #### [Homework 2 assigned - DUE 2pm 2016-09-22](homework-02.html)
 
-### Statistics and Programming Fundamentals
+### Statistics Fundamentals - Exploratory Data Analysis, Central Tendency, and Variance
 
 #### Topics
 
@@ -157,7 +157,7 @@ Week 04 (2016-09-22)
 
 #### [Homework 3 assigned - DUE 2pm 2016-10-06](homework-03.html)
 
-### Probability and Distributions
+### Statistics Fundamentals - Probability and Distributions
 
 #### Topics
 
