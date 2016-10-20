@@ -213,7 +213,15 @@ body {
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">&gt;<span class="st"> </span>beta0 &lt;-<span class="st"> </span><span class="kw">mean</span>(d$height) -<span class="st"> </span>beta1 *<span class="st"> </span><span class="kw">mean</span>(d$age)
 &gt;<span class="st"> </span>beta0</code></pre></div>
 <pre><code>## [1] 48.73566</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">&gt;<span class="st"> </span>m &lt;-<span class="st"> </span><span class="kw">lm</span>(height ~<span class="st"> </span>age, <span class="dt">data =</span> d)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">&gt;<span class="st"> </span>m &lt;-<span class="st"> </span><span class="kw">lm</span>(height ~<span class="st"> </span>age, <span class="dt">data =</span> d)
+&gt;<span class="st"> </span>m</code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = height ~ age, data = d)
+## 
+## Coefficients:
+## (Intercept)          age  
+##     48.7357       0.9425</code></pre>
 <h3 id="statistical-inference-in-regression">Statistical Inference in Regression</h3>
 <p>Once we have our linear model and associated regression coefficients, we want to know a bit more about it. First, we want to be able to evaluate whether there is <strong>statistical evidence</strong> that there is indeed a relationship between these variables. If so, then our regression coefficients can indeed allow us to estimate or predict the value of one variable given another. Additionally, we also would like to be able to extend our estimates from our sample out to the population they are drawn from. These next steps involve the process of statistical inference.</p>
 <p>The output of the <code>lm()</code> function provides a lot of information useful for inference. Run the command <code>summary()</code> on the output of <code>lm(data=d,height~weight)</code></p>

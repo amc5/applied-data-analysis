@@ -220,6 +220,7 @@ beta1
 beta0 <- mean(d$height) - beta1*mean(d$age)
 beta0
 m <- lm(height~age, data=d)
+m
 ```
 
 ### Statistical Inference in Regression

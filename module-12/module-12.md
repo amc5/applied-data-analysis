@@ -330,7 +330,16 @@ Using the zombies dataset, work with a partner to...
 
 ``` r
 > m <- lm(height ~ age, data = d)
+> m
 ```
+
+    ## 
+    ## Call:
+    ## lm(formula = height ~ age, data = d)
+    ## 
+    ## Coefficients:
+    ## (Intercept)          age  
+    ##     48.7357       0.9425
 
 ### Statistical Inference in Regression
 
